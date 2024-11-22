@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanzas Retro - Análisis de Acciones</title>
+    <style>
+        /* Estilo general */
+        body {
+            background-color: #f8f9fa; /* Fondo claro */
+            color: #343a40; /* Gris oscuro */
+            font-family: 'Courier New', Courier, monospace; /* Fuente monoespaciada */
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #212529; /* Negro */
+            color: #ffffff; /* Blanco */
+        }
+
+        header img {
+            border-radius: 50%; /* Imagen circular */
+            width: 120px;
+            height: 120px;
+        }
+
+        nav {
+            background-color: #343a40; /* Gris oscuro */
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #ffffff; /* Blanco */
+            text-decoration: none;
+            padding: 10px;
+            font-size: 18px;
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        nav a:hover {
+            background-color: #495057; /* Gris intermedio */
+        }
+
+        /* Sección principal */
+        .container {
+            padding: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .quote {
+            background-color: #e9ecef; /* Gris claro */
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 1.2em;
+            font-style: italic;
+            color: #495057; /* Gris intermedio */
+        }
+
+        .quote p {
+            margin: 0;
+        }
+
+        .quote .author {
+            text-align: right;
+            font-weight: bold;
+            color: #343a40; /* Gris oscuro */
+        }
+
+        footer {
+            background-color: #212529; /* Negro */
+            color: #ffffff; /* Blanco */
+            text-align: center;
+            padding: 20px 0;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #ffffff; /* Blanco */
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Estilo de la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #adb5bd; /* Gris claro */
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            color: #495057; /* Gris intermedio */
+        }
+
+        th {
+            background-color: #343a40; /* Gris oscuro */
+            color: #ffffff; /* Blanco */
+        }
+
+        /* Contenedor de la tabla con desbordamiento horizontal */
+        .table-container {
+            overflow-x: auto; /* Permite el deslizamiento horizontal */
+            -webkit-overflow-scrolling: touch;
+            margin-top: 20px;
+        }
+
+        /* Estilo de los botones */
+        .button {
+            background-color: #007bff; /* Azul marino */
+            color: #ffffff; /* Blanco */
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .button:hover {
+            background-color: #0056b3; /* Azul más oscuro */
+        }
+
+        /* Estilo de la tarjeta de análisis */
+        .card {
+            background-color: #e9ecef; /* Gris claro */
+            border: 1px solid #adb5bd; /* Gris claro */
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #343a40; /* Gris oscuro */
+        }
+
+        .card p {
+            font-size: 1.1em;
+        }
+
+        .card .button {
+            display: block;
+            margin-top: 20px;
+        }
+
+        .card .details {
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .card .details span {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Estilo para el contenido expandido */
+        .expanded-content {
+            display: none;
+            margin-top: 10px;
+            font-size: 1em;
+            color: #343a40; /* Gris oscuro */
+        }
+
+        /* Mostrar contenido expandido */
+        .card.expanded .expanded-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.jpg" alt="Logo Financiero">
+    </header>
+
+    <nav>
+        <a href="#caidas">Caídas 2025</a>
+        <a href="#informacion-educativa">Información Educativa</a>
+        <a href="#todas-las-acciones">Todas las Acciones</a>
+    </nav>
+
+    <div class="quote">
+        <p>“Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada”.</p>
+        <p>- Warren Buffett</p>
+    </div>
+
+    <div class="container">
+        <section id="caidas">
+            <h2>Caídas 2025</h2>
+            <p>Se visualiza las publicaciones más recientes primero.</p>
+            <div class="card">
+                <h3>Acción XYZ - Análisis</h3>
+                <p><strong>Fecha de publicación:</strong> 25/10/2024</p>
+                <div class="details">
+                    <span><strong>Razones de la caída:</strong> Análisis del mercado, crisis sectorial.</span>
+                    <span><strong>Datos financieros importantes:</strong> P/E ratio: 15, Dividendos: 4% anual.</span>
+                </div>
+                <div class="expanded-content">
+                    <p><strong>Más detalles:</strong> La acción ha sufrido una caída debido a varios factores externos, incluyendo una recesión económica global y problemas internos dentro de la empresa.</p>
+                </div>
+                <a href="javascript:void(0);" class="button" onclick="toggleCard(this)">Leer +-</a>
+            </div>
+        </section>
+
+        <section id="informacion-educativa">
+            <h2>Información Educativa</h2>
+            <ul>
+                <li><a href="#">Análisis Fundamental: Qué es y cómo aplicar</a></li>
+                <li><a href="#">Análisis Técnico: Herramientas para evaluar mercados</a></li>
+                <li><a href="#">Estrategias de Inversión: Cómo elegir tus activos</a></li>
+            </ul>
+        </section>
+
+        <section id="todas-las-acciones">
+            <h2>Todas las Acciones</h2>
+            <p>El % de recuperación estará actualizado cada lunes.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Acción</th>
+                            <th>Fecha</th>
+                            <th>% Caída</th>
+                            <th>Recuperación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Acción 1</td>
+                            <td>12/05/2024</td>
+                            <td>-10%</td>
+                            <td>+15%</td>
+                        </tr>
+                        <tr>
+                            <td>Acción 2</td>
+                            <td>01/06/2024</td>
+                            <td>-5%</td>
+                            <td>+8%</td>
+                        </tr>
+                        <tr>
+                            <td>Acción 3</td>
+                            <td>30/08/2024</td>
+                            <td>-12%</td>
+                            <td>+20%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Si tiene alguna sugerencia, queja, aporte o cualquier otro comentario, envíanos un correo a <a href="mailto:mabo050796@gmail.com">mabo050796@gmail.com</a> Responderemos todos los correos.</p>
+        <p>&copy; 2024 Finanzas Retro. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function toggleCard(button) {
+            var card = button.closest('.card');
+            card.classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>
