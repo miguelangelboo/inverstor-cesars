@@ -199,6 +199,44 @@
 #toggle-button:hover {
     background-color: #34495e;
 }
+        #user-guide {
+    margin: 20px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    text-align: left;
+}
+
+#user-guide h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.scroll-container {
+    width: 100%;
+    max-width: 800px;
+    height: 300px;
+    overflow-y: auto;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.scroll-container p {
+    line-height: 1.6;
+    font-size: 16px;
+    margin: 0;
+}
+
+.scroll-container blockquote {
+    margin: 10px 0;
+    font-style: italic;
+    color: #555;
+    border-left: 4px solid #2c3e50;
+    padding-left: 10px;
+        }
     </style>
     <link rel="icon" href="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/android-icon-144x144%20(1).png" type="image/png">
 </head>
@@ -236,21 +274,31 @@
             </div>
         </section>
 
-        <section id="informacion-educativa">
-            <h2>Información Educativa</h2>
-            <ul>
-               <li>
-    <a href="https://www.planetadelibros.com/libro-aventuras-empresariales/207379">
-        Aventuras empresariales: Doce cuentos clásicos sobre Wall Street 
-        Libro de John Brooks, específicamente el primer capítulo, La fluctuación EL PEQUEÑO CRAC DE 1962. 
-        <span id="more-text" style="display: none;">Narra una de las caídas más significativas. Un ejemplo histórico sobre la forma de actuar cuando se presentan situaciones de pánico.</span>
-    </a>
-    <button id="toggle-button">Leer más</button>
-               </li> 
-               
-                <li> <a href="#">Estrategias de Inversión: Cómo elegir tus activos</a></li>
-            </ul>
-        </section>
+        <section id="user-guide">
+    <h2>Guía de Usuario</h2>
+    <div class="scroll-container">
+        <p>
+            Utilice los datos que publicamos aplicando siempre su propio criterio. Como dijo Warren Buffett, es fundamental pensar por uno mismo.
+            <br><br>
+            Publicamos acciones que, según nuestro criterio, han sufrido caídas significativas. No manejamos un porcentaje fijo; por lo general, estas caídas serán muy pronunciadas, superiores al 30%, o destacables por el corto periodo en que ocurrieron, como una caída del 15% en un solo día.
+            <br><br>
+            Nuestra perspectiva sobre las caídas es que estas siempre ocurren, incluso en mercados alcistas. Al observar una caída significativa, nuestro primer pensamiento no es verla como una oportunidad inmediata, sino como un punto de partida para realizar un análisis detallado.
+            <br><br>
+            Aunque no contamos con datos cuantitativos precisos para sustentar esta afirmación, nuestra experiencia personal, diversos hechos históricos y casos recientes nos llevan a considerar que las caídas suelen ser reacciones exageradas del mercado. Un ejemplo reciente que inspira nuestro enfoque es el caso de Netflix y Meta, aunque existen muchos más. Le recomendamos, por ejemplo, leer el primer capítulo del libro Aventuras empresariales, donde se narra el desplome del mercado bursátil de 1962.
+            <br><br>
+            En ocasiones, eventos generales como la pandemia de 2020 o la crisis de las punto com generan abundantes caídas y oportunidades. Sin embargo, estos sucesos son esporádicos. Por ello, aquí encontrará principalmente casos aislados, los cuales ocurren con mayor frecuencia.
+            <br><br>
+            Por último, no creemos que enfocarse en caídas sea la única estrategia para invertir con éxito en la bolsa, pero sí consideramos que es una herramienta muy valiosa. Este enfoque no fomenta el FOMO (miedo a perderse algo) y ayuda a evitar comprar caro, uno de los errores más costosos para obtener buenos rendimientos.
+            <br><br>
+            Si tuviéramos que resumirlo con una frase de Warren Buffett:
+            <blockquote>
+                “Una regla sencilla dicta mis decisiones de compra: ten miedo cuando los demás sean codiciosos y sé codicioso cuando los demás tengan miedo.”
+                <br>— The New York Times, 16 de octubre de 2008
+            </blockquote>
+            Creemos que esta es una estrategia sólida para mantener a largo plazo. La modificaremos lo menos posible y notificaremos cualquier ajuste importante.
+        </p>
+    </div>
+</section>
 
         <section id="todas-las-acciones">
             <h2>Todas las Acciones</h2>
