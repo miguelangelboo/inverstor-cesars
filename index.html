@@ -223,8 +223,14 @@
         <section id="informacion-educativa">
             <h2>Información Educativa</h2>
             <ul>
-                <li><a href="#">Aventuras empresariales: Doce cuentos clásicos sobre Wall Street
-Libro de John Brooks, específicamente el primer capítulo, La fluctuación EL PEQUEÑO CRAC DE 1962. Narra una de las caídas más significativas. Un ejemplo histórico sobre la forma de actuar cuando se presentan situaciones de pánico.</a></li>
+               <li>
+    <a href="#">
+        Aventuras empresariales: Doce cuentos clásicos sobre Wall Street 
+        Libro de John Brooks, específicamente el primer capítulo, La fluctuación EL PEQUEÑO CRAC DE 1962. 
+        <span id="more-text" style="display: none;">Narra una de las caídas más significativas. Un ejemplo histórico sobre la forma de actuar cuando se presentan situaciones de pánico.</span>
+    </a>
+    <button id="toggle-button">Leer más</button>
+               </li> 
                 <li><a href="#">Análisis Técnico: Herramientas para evaluar mercados</a></li>
                 <li><a href="#">Estrategias de Inversión: Cómo elegir tus activos</a></li>
             </ul>
@@ -278,6 +284,18 @@ Libro de John Brooks, específicamente el primer capítulo, La fluctuación EL P
             var card = button.closest('.card');
             card.classList.toggle('expanded');
         }
+        document.getElementById('toggle-button').addEventListener('click', function () {
+    const moreText = document.getElementById('more-text');
+    const button = this;
+
+    if (moreText.style.display === 'none') {
+        moreText.style.display = 'inline';
+        button.textContent = 'Leer menos';
+    } else {
+        moreText.style.display = 'none';
+        button.textContent = 'Leer más';
+    }
+});
     </script>
 </body>
 </html>
