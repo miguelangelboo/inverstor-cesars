@@ -56,10 +56,10 @@
 
         .quote {
             background-color: #e9ecef; /* Gris claro */
-            padding: 0px;
+            padding: 5px;
             border-radius: 0px;
             line-height: 1; /* Interlineado sencillo */
-            margin: 20px 0;
+            margin: 0px 0;
             font-size: 1.2em;
             font-style: italic;
             color: #495057; /* Gris intermedio */
@@ -73,7 +73,7 @@
         .quote .author {
             text-align: center;
             font-weight: bold;
-            color: #343a40; /* Gris oscuro */
+            color: #343a40; 
             text-align: center; 
         }
 
@@ -85,6 +85,7 @@
             width: 100%;
             position: relative;
             bottom: 0;
+            line-height: 1; /* Interlineado sencillo */
         }
 
         footer a {
@@ -224,6 +225,9 @@
     overflow-y: scroll; /* Habilita scroll vertical */
     scrollbar-color: #00ff00 #333; /* Colores para el scroll */
     scrollbar-width: thin; /* Scroll delgado */
+    line-height: 1; /* Interlineado sencillo */
+    text-align: justify; /*
+          
 }
 
 /* Personalización del scrollbar (para navegadores compatibles) */
@@ -239,9 +243,10 @@
 
 /* Espaciado adicional para el texto */
 .scroll-container p {
-    line-height: 1.6;
+    line-height: 1;
     margin: 0;
     white-space: pre-line; /* Mantiene saltos de línea */
+    text-align: justify; 
 }
         
     </style>
