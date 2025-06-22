@@ -217,6 +217,24 @@
     <div class="quote">
         <p>“Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada”.<br><strong>- Warren Buffett</strong></p>
     </div>
+<h2>📉 Acciones con mayor caída hoy</h2>
+<ul id="lista-caidas"></ul>
+
+<script>
+fetch('caidas.json')
+  .then(response => response.json())
+  .then(data => {
+    const lista = document.getElementById('lista-caidas');
+    data.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = `${item.símbolo}: ${item.variación}%`;
+      lista.appendChild(li);
+    });
+  })
+  .catch(error => {
+    console.error('Error al cargar los datos:', error);
+  });
+</script>
 
     <div class="container">
         <section id="user-guide">
