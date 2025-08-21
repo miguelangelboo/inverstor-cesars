@@ -2,8 +2,11 @@
 <html lang="es">
 
 <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Cesars- Caídas de Acciones</title>
     <title>Investor Cesars - Caídas de Acciones</title>
 
     <!-- Fuentes y Estilos -->
@@ -12,6 +15,11 @@
     <link rel="icon" href="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/android-icon-144x144%20(1).png" type="image/png">
 
     <style>
+        /* Estilo general */
+        body {
+            background-color: #f8f9fa; /* Fondo claro */
+            color: #343a40; /* Gris oscuro */
+            font-family: 'Courier New', Courier, monospace; /* Fuente monoespaciada */
         :root {
             --main-color: #007bff;
             --dark: #212529;
@@ -37,15 +45,43 @@
             background: white;
             padding: 20px;
             text-align: center;
+            padding: 0px 10px;
+            background-color: white; /* Negro */
+            color: #ffffff; /* Blanco */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+           
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
 
+        .fb-icon {
+  color: #1877f2;
+  font-size: 24px;
+  text-decoration: none;
+  margin: 0px;
+}
+
+.fb-icon:hover {
+  color: #145dbf;
+}
+
+
         header img {
+            border-radius: 0%; /* Imagen circular */
+            max-width: 100%; /* Ajusta al ancho del contenedor */
+            height: auto; /* Mantiene la proporción */
+            max-height: 120px; /* Opcional: Limita la altura máxima */
+            margin-bottom: 10px;
             max-height: 90px;
             border-radius: var(--border-radius);
         }
 
         nav {
+            background-color: #343a40; /* Gris oscuro */
+            padding: 10px 0;
+            text-align: center;
             background-color: var(--dark);
             display: flex;
             justify-content: center;
@@ -54,8 +90,13 @@
         }
 
         nav a {
+            color: #ffffff; /* Blanco */
             color: white;
             text-decoration: none;
+            padding: 10px;
+            font-size: 18px;
+            display: inline-block;
+            margin: 0 0px;
             padding: 10px 20px;
             transition: background 0.3s;
             border-radius: 4px;
@@ -63,23 +104,57 @@
         }
 
         nav a:hover {
+            background-color: #495057; /* Gris intermedio */
+        }
+
+        /* Sección principal */
+        .container {
+            padding: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
             background-color: #343a40;
         }
 
         .quote {
+            background-color: #e9ecef; /* Gris claro */
+            padding: 5px;
+            border-radius: 0px;
+            line-height: 1; /* Interlineado sencillo */
+            margin: 0px 0;
+            font-size: 1.2em;
             background: #e9ecef;
             padding: 20px;
             text-align: center;
             font-style: italic;
+            color: black; /* Gris intermedio */
+        }
+
+        .quote p {
+            margin: 0;
+            text-align: center; 
             font-size: 1.1rem;
         }
 
+        .quote .author {
+            text-align: center;
+            font-weight: bold;
+            color: #343a40; 
+            text-align: center; 
         .container {
             max-width: 1100px;
             margin: auto;
             padding: 40px 20px;
         }
 
+        footer {
+    background-color: #212529; /* Fondo oscuro */
+    color: #ffffff; /* Texto en blanco */
+    text-align: center; /* Centrar el texto */
+    padding: 20px; /* Espaciado interno */
+    line-height: 1.5; /* Mejora el espaciado entre líneas */
+    font-size: 14px; /* Ajusta el tamaño del texto */
+    border-top: 1px solid #343a40; /* Agrega una línea superior sutil */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Agrega un efecto de sombra para separar del contenido */
         .scroll-container {
             background: #f1f3f5;
             border: 1px solid #ccc;
@@ -88,52 +163,101 @@
             max-height: 400px;
             overflow-y: auto;
         }
+            
+            
+            
+            
+    
+            
+            
+            
+        
 
+        footer a {
+            color: #ffffff; /* Blanco */
+            text-decoration: none;
         .scroll-container::-webkit-scrollbar {
             width: 6px;
         }
 
+        footer a:hover {
+            text-decoration: underline;
         .scroll-container::-webkit-scrollbar-thumb {
             background: var(--gray);
             border-radius: 5px;
         }
 
+        /* Estilo de la tabla */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #adb5bd; /* Gris claro */
             background: white;
             box-shadow: 0 0 12px rgba(0, 0, 0, 0.03);
         }
 
         th, td {
+            padding: 8px;
+            text-align: left;
+            color: #495057; /* Gris intermedio */
             padding: 14px;
             border: 1px solid #dee2e6;
             text-align: center;
         }
 
         th {
+            background-color: #343a40; /* Gris oscuro */
+            color: #ffffff; /* Blanco */
             background-color: var(--dark);
             color: white;
         }
 
+        /* Contenedor de la tabla con desbordamiento horizontal */
+        .table-container {
+            overflow-x: auto; /* Permite el deslizamiento horizontal */
+            overflow-y: auto; /* Permite el deslizamiento vertical */
+            -webkit-overflow-scrolling: touch;
+            margin-top: 20px;
+            max-height: 300px; /* Opcional: Define una altura máxima para habilitar el scroll vertical */
         tr:nth-child(even) {
             background-color: #f8f9fa;
         }
 
+        /* Estilo de los botones */
+        .button {
+            background-color: #007bff; /* Azul marino */
+            color: #ffffff; /* Blanco */
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 0;
+            border-radius: 4px;
         .en-cartera {
             background-color: #d4edda;
             color: #155724;
             font-weight: bold;
         }
 
+        .button:hover {
+            background-color: #0056b3; /* Azul más oscuro */
         .vendida {
             background-color: #f8d7da;
             color: #721c24;
             font-weight: bold;
         }
 
+        /* Estilo de la tarjeta de análisis */
         .card {
+            background-color: #e9ecef; /* Gris claro */
+            border: 1px solid #adb5bd; /* Gris claro */
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
             background: white;
             padding: 24px;
             margin: 20px 0;
@@ -141,11 +265,16 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
+        .card h2 {
+            font-size: 1.5em;
+            color: #343a40; /* Gris oscuro */
         .card .details span {
             display: block;
             margin-top: 8px;
         }
 
+        .card p {
+            font-size: 1.1em;
         .button {
             background: var(--main-color);
             color: white;
@@ -157,10 +286,16 @@
             transition: background 0.3s;
         }
 
+        .card .button {
+            display: block;
+            margin-top: 20px;
         .button:hover {
             background: #0056b3;
         }
 
+        .card .details {
+            font-size: 0.9em;
+            margin-top: 10px;
         footer {
             background: var(--dark);
             color: white;
@@ -169,15 +304,117 @@
             font-size: 0.9rem;
         }
 
+        .card .details span {
+            display: block;
+            margin-bottom: 5px;
         footer a {
             color: #00bfff;
             text-decoration: none;
         }
 
+        
+        .expanded-content {
+            display: none;
+            margin-top: 10px;
+            font-size: 1em;
+            color: #343a40; /* Gris oscuro */
         footer a:hover {
             text-decoration: underline;
         }
 
+        /* Mostrar contenido expandido */
+        .card.expanded .expanded-content {
+            display: block;
+        }
+  
+
+#toggle-button {
+    margin-left: 10px;
+    background-color: #2c3e50;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+#toggle-button:hover {
+    background-color: #34495e;
+}
+            
+        /* Estilo para el título */
+#user-guide h2 {
+    color: black; /* Verde retro */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    text-align: left; 
+}
+
+/* Contenedor de scroll */
+.scroll-container {
+    background-color: #e9ecef;
+    color: black; /* Verde retro */
+    font-family: 'Courier New', Courier, monospace;
+    border: 1px solid #adb5bd; /* Borde retro */
+    border-radius: 5px;
+    padding: 10px;
+    max-height: 350px; /* Altura limitada */
+    overflow-y: scroll; /* Habilita scroll vertical */
+    
+    scrollbar-width: thin; /* Scroll delgado */
+    line-height: 1; /* Interlineado sencillo */
+   
+          
+}
+
+/* Personalización del scrollbar (para navegadores compatibles) */
+.scroll-container::-webkit-scrollbar {
+    width: 8px;
+    background-color: #333; /* Fondo del scrollbar */
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #00ff00; /* Color del scrollbar */
+    border-radius: 5px;
+}
+
+/* Espaciado adicional para el texto */
+.scroll-container p {
+    line-height: 1;
+    margin: 0;
+    white-space: pre-line; /* Mantiene saltos de línea *
+}
+
+         table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+        .en-cartera {
+            background-color: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+        .vendida {
+            background-color: #f8d7da;
+            color: #721c24;
+            font-weight: bold;
+        }
+        .container {
+            padding: 20px;
         .fb-icon {
             font-size: 22px;
             color: #1877f2;
@@ -191,6 +428,7 @@
                 font-size: 15px;
             }
 
+        
             .card, .container, .scroll-container {
                 padding: 15px;
             }
@@ -201,42 +439,51 @@
             }
         }
     </style>
+    <link rel="icon" href="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/android-icon-144x144%20(1).png" type="image/png">
 </head>
 
 <body>
     <header>
+        
+<img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Logo Financiero">
         <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Logo Financiero">
     </header>
 
     <nav>
+        <a href="#caidas">Análisis </a>
+        <a href="#user-guide">Guía de usuario</a>
         <a href="#caidas">Análisis</a>
         <a href="#user-guide">Guía de Usuario</a>
         <a href="#todas-las-acciones">Todas las Acciones</a>
     </nav>
 
     <div class="quote">
+        <p>“Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada”.</p>
+        <p>- Warren Buffett</p>
         <p>“Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada”.<br><strong>- Warren Buffett</strong></p>
     </div>
-<h2>📉 Acciones con mayor caída hoy</h2>
-<ul id="lista-caidas"></ul>
 
-<script>
-fetch('caidas.json')
-  .then(response => response.json())
-  .then(data => {
-    const lista = document.getElementById('lista-caidas');
-    data.forEach(item => {
-      const li = document.createElement('li');
-      li.textContent = `${item.símbolo}: ${item.variación}%`;
-      lista.appendChild(li);
-    });
-  })
-  .catch(error => {
-    console.error('Error al cargar los datos:', error);
-  });
-</script>
+  
 
+ 
     <div class="container">
+
+        <!-- Código en desarrollo: oculto por ahora -->
+    <!--
+        <section id="caidas">
+            <h2>Análisis </h2>
+            <p>Se visualiza las publicaciones más recientes primero.</p>
+            <div class="card">
+                <h3>Acción ZZZ - Análisis</h3>
+                <p><strong>Fecha de publicación:</strong> 00/00/0000</p>
+                <div class="details">
+                    <span><strong>Razones de la caída:</strong> Análisis del mercado, crisis sectorial.</span>
+                    <span><strong>Datos financieros importantes:</strong> P/E ratio: 15, Dividendos: 4% anual.</span>
+                </div>
+                <div class="expanded-content">
+                    <p><strong>Más detalles:</strong> La acción ha sufrido una caída debido a varios factores externos, incluyendo una recesión económica global y problemas internos dentro de la empresa.</p>
+                </div>
+                <a href="javascript:void(0);" class="button" onclick="toggleCard(this)">Leer +-</a>
         <section id="user-guide">
             <h2>Guía de Usuario</h2>
             <div class="scroll-container">
@@ -265,29 +512,91 @@ fetch('caidas.json')
                 <blockquote>“Ten miedo cuando los demás sean codiciosos y sé codicioso cuando los demás tengan miedo.”</blockquote>
             </div>
         </section>
+  -->
+        <section id="user-guide">
+    <h2>Guía de Usuario</h2>
+    <div class="scroll-container">
+        <p>Compartimos caídas de acciones para que puedas identificar cuándo son oportunidades y cuándo no lo son. Buscamos ser una comunidad que invierte con éxito, tomando decisiones informadas y aprovechando oportunidades.</p>
+
+    <h4>Importante</h4>
+<p>Usa nuestra información con tu propio criterio. Como dice Warren Buffett, es clave pensar por uno mismo.</p>
+
+<h4>¿Qué publicamos?</h4>
+<ul>
+    <li>Acciones con caídas significativas.</li>
+    <li>Más del 30% en general o 15% en un solo día.</li>
+    <li>Casos aislados, no solo crisis globales.</li>
+</ul>
+
+<h4>Nuestro enfoque</h4>
+<p>Las caídas siempre ocurren, incluso en mercados alcistas. No asumimos que son oportunidades automáticas, sino señales para analizar a fondo.</p>
+
+<h4>La importancia del precio</h4>
+<p>Comprar a buen precio mejora la rentabilidad. Explicamos esto con un ejemplo <a href="https://www.facebook.com/share/18WefSGfV6/" target="_blank">aquí</a>.</p>
+
+<h4>¿Por qué caen las acciones?</h4>
+<p>Las acciones pueden caer por muchas razones. Entre los principales factores están:</p>
+<ul>
+    <li><strong>Pánico e irracionalidad</strong> – Inversionistas vendiendo por miedo.</li>
+    <li><strong>Resultados financieros débiles</strong> – Empresas que no cumplen expectativas.</li>
+    <li><strong>Crisis económicas o tasas de interés altas</strong> – Factores que afectan a todo el mercado.</li>
+    <li><strong>Cambios en la industria</strong> – Innovaciones que vuelven obsoletos ciertos negocios.</li>
+    <li><strong>Factores externos</strong> – Guerras, regulaciones o eventos globales.</li>
+</ul>
+<p>Ejemplos históricos incluyen:</p>
+<ul>
+    <li>Netflix y Meta (caídas recientes).</li>
+    <li>Crisis bursátil de 1962 (relatada en el libro <em>Aventuras empresariales</em>).</li>
+    <li>Pandemia de 2020 y la crisis de las punto com.</li>
+</ul>
+
+<h4>No es la única estrategia, pero sí valiosa</h4>
+<ul>
+    <li>Evita el FOMO (miedo a perderse algo).</li>
+    <li>Reduce el riesgo de comprar caro.</li>
+</ul>
+
+<h4>En palabras de Warren Buffett</h4>
+<blockquote>
+    “Ten miedo cuando los demás sean codiciosos y sé codicioso cuando los demás tengan miedo.”<br>
+    <small>(The New York Times, 2008)</small>
+</blockquote>
+
+<h4>Lo que viene</h4>
+<ul>
+    <li>Análisis detallados con datos financieros.</li>
+    <li>Herramienta para valorar el S&P 500 y detectar sobrevaloración.</li>
+    <li>Cambios mínimos en nuestra estrategia, pero notificaremos ajustes clave.</li>
+</ul>
+
+    </div>
+</section>
+
+         
 
         <section id="todas-las-acciones">
             <h2>Todas las Acciones</h2>
             <p>El precio actual estará actualizado los lunes. Actualizado 10-02-2025 al cierre del mercado.</p>
+            
+
             <div class="table-container">
                 <table>
                     <thead>
-                        <tr>
-                            <th>Acción</th>
-                            <th>Fecha</th>
-                            <th>% Caída</th>
-                            <th>Precio actual</th>
+@@ -433,172 +262,26 @@ <h2>Todas las Acciones</h2>
                         </tr>
                     </thead>
                     <tbody>
+
+                       
+                          <tr>
+                             <td>Electronic Arts</td>
                         <tr>
                             <td>Electronic Arts</td>
                             <td>23/01/2025</td>
                             <td>-18% $2417MXN</td>
                             <td>$2690 MXN</td>
                         </tr>
-                        <!-- Más filas aquí -->
-                         <tr>
+                        <tr>
                              <td>Constellation Brands</td>
                             <td>10/01/2025</td>
                             <td>-24% $3775 MXN</td>
@@ -412,6 +721,7 @@ fetch('caidas.json')
                             <td>-67.71% $752.97 MXN</td>
                             <td>$660 MXN</td>
                         </tr>
+                        <!-- Más filas aquí -->
                     </tbody>
                 </table>
             </div>
@@ -419,12 +729,37 @@ fetch('caidas.json')
     </div>
 
     <footer>
+              <a href="https://www.facebook.com/InvestorCesar" target="_blank" class="fb-icon">
+  <i class="fab fa-facebook-f"></i>
+</a>
+         <p>Contacto: enviar un correo ✉️ a mabo050796@gmail.com</p>
+    
+
         <a href="https://www.facebook.com/InvestorCesar" target="_blank" class="fb-icon">
             <i class="fab fa-facebook-f"></i>
         </a>
         <p>Contacto: enviar un correo ✉️ a mabo050796@gmail.com</p>
         <p>&copy; 2024-2025 Investor Cesar's.</p>
     </footer>
+
+    <script>
+        function toggleCard(button) {
+            var card = button.closest('.card');
+            card.classList.toggle('expanded');
+        }
+        document.getElementById('toggle-button').addEventListener('click', function () {
+    const moreText = document.getElementById('more-text');
+    const button = this;
+
+    if (moreText.style.display === 'none') {
+        moreText.style.display = 'inline';
+        button.textContent = 'Leer menos';
+    } else {
+        moreText.style.display = 'none';
+        button.textContent = 'Leer más';
+    }
+});
+    </script>
 </body>
 
 </html>
