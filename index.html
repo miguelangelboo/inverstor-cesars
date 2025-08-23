@@ -3,21 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Investor Cesars - Panel de Caídas de Acciones</title>
+  <title>Investor Cesars - Herramienta Avanzada</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* ===== Reset ===== */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    /* ===== Reset y tipografía ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: "Inter", Arial, sans-serif;
-      background-color: #121926; /* Fondo estilo dashboard */
-      color: #e0e6f1; /* Texto claro */
-      line-height: 1.6;
+      background-color: #121926; /* Dashboard oscuro */
+      color: #e0e6f1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     a { text-decoration: none; color: inherit; }
@@ -28,281 +25,149 @@
       padding: 15px 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       border-bottom: 1px solid #2c3e50;
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
+    header img { height: 50px; }
 
-    header img {
-      height: 50px;
+    /* ===== Frase central ===== */
+    .quote {
+      flex: 0 0 auto;
+      text-align: center;
+      margin: 40px 20px;
+      font-size: 1.5rem;
+      font-style: italic;
+      color: #00d1b2; /* Verde de acento */
     }
+    .quote small { display: block; margin-top: 10px; font-style: normal; font-weight: bold; color: #00aaff; }
 
-    /* ===== Nav ===== */
-    nav {
+    /* ===== Contenedor principal ===== */
+    main {
+      flex: 1 0 auto;
       display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .tool-container {
+      background: #1f2a40;
+      border: 1px solid #2c3e50;
+      border-radius: 10px;
+      padding: 30px;
+      width: 100%;
+      max-width: 900px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
       gap: 20px;
     }
 
-    nav a {
-      font-weight: 500;
-      color: #cfd8e3;
-      padding: 6px 12px;
-      border-radius: 5px;
-      transition: background 0.3s, color 0.3s;
+    .tool-container h2 {
+      color: #00aaff;
+      text-align: center;
+      margin-bottom: 20px;
     }
 
-    nav a:hover {
+    /* ===== Inputs y botones ===== */
+    .tool-container input, .tool-container select, .tool-container button {
+      padding: 12px 15px;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .tool-container input, .tool-container select {
+      background: #121926;
+      color: #e0e6f1;
+      border: 1px solid #2c3e50;
+    }
+
+    .tool-container button {
       background: #2563eb;
       color: white;
-    }
-
-    /* ===== Mobile Nav ===== */
-    .menu-toggle {
-      display: none;
-      font-size: 22px;
       cursor: pointer;
-      color: #cfd8e3;
-    }
-
-    @media (max-width: 768px) {
-      nav {
-        display: none;
-        flex-direction: column;
-        background: #1f2a40;
-        position: absolute;
-        top: 70px;
-        right: 20px;
-        width: 200px;
-        border: 1px solid #2c3e50;
-        border-radius: 8px;
-        padding: 15px;
-      }
-
-      nav.active { display: flex; }
-
-      .menu-toggle { display: block; }
-    }
-
-    /* ===== Hero Quote ===== */
-    .quote {
-      background: #1f2a40;
-      padding: 30px 15px;
-      text-align: center;
-      font-style: italic;
-      font-size: 1.2rem;
-      border-bottom: 1px solid #2c3e50;
-    }
-
-    .quote p:last-child {
-      margin-top: 10px;
-      font-weight: bold;
-      font-style: normal;
-      color: #00d1b2; /* Acento empresarial verde */
-    }
-
-    /* ===== Container ===== */
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-    }
-
-    h1, h2 {
-      margin-bottom: 15px;
-      color: #e0e6f1;
-    }
-
-    /* ===== Scroll Guide ===== */
-    .scroll-container {
-      background: #1f2a40;
-      border: 1px solid #2c3e50;
-      border-radius: 8px;
-      padding: 20px;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-
-    .scroll-container h4 { 
-      margin-top: 15px;
-      color: #00aaff;
-    }
-
-    .scroll-container p, .scroll-container li {
-      color: #cfd8e3;
-    }
-
-    .scroll-container ul {
-      padding-left: 20px;
-      margin-top: 10px;
-    }
-
-    /* ===== Table ===== */
-    .table-container {
-      margin-top: 20px;
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #1f2a40;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-
-    th, td {
-      padding: 12px 15px;
-      text-align: left;
-      border-bottom: 1px solid #2c3e50;
-    }
-
-    th {
-      background: #111b2e;
-      color: #00aaff;
+      transition: background 0.3s, transform 0.2s;
       font-weight: 600;
     }
 
-    tr:hover { background: #2c3e50; }
-
-    td.en-cartera { background: #0f5132; color: #d1f7dc; font-weight: bold; }
-    td.vendida { background: #842029; color: #f8d7da; font-weight: bold; }
-
-    /* Responsive table → tarjetas en móvil */
-    @media (max-width: 640px) {
-      table, thead, tbody, th, td, tr { display: block; }
-      thead { display: none; }
-      tr {
-        margin-bottom: 15px;
-        background: #1f2a40;
-        border-radius: 8px;
-        padding: 10px;
-        box-shadow: 0 1px 5px rgba(0,0,0,0.3);
-      }
-      td {
-        border: none;
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 5px;
-      }
-      td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: #00aaff;
-      }
-    }
-
-    /* ===== Buttons ===== */
-    .button {
-      display: inline-block;
-      background: #2563eb;
-      color: white;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-weight: 500;
-      transition: background 0.3s, transform 0.2s;
-    }
-
-    .button:hover { 
-      background: #1d4ed8; 
+    .tool-container button:hover {
+      background: #1d4ed8;
       transform: translateY(-2px);
+    }
+
+    /* ===== Resultados ===== */
+    .results {
+      background: #111b2e;
+      border-radius: 8px;
+      padding: 15px;
+      color: #00d1b2;
+      font-weight: 500;
+      min-height: 50px;
     }
 
     /* ===== Footer ===== */
     footer {
       background: #111b2e;
-      color: #cfd8e3;
+      padding: 15px 20px;
       text-align: center;
-      padding: 20px;
-      margin-top: 40px;
+      color: #cfd8e3;
+      border-top: 1px solid #2c3e50;
+      flex-shrink: 0;
     }
 
-    footer a {
-      color: #00aaff;
-    }
-
-    footer a:hover { text-decoration: underline; }
-
-    .social {
-      margin-bottom: 10px;
+    /* ===== Responsivo ===== */
+    @media(max-width:768px){
+      .quote { font-size: 1.2rem; margin: 30px 10px; }
+      .tool-container { padding: 20px; }
     }
   </style>
 </head>
 <body>
   <header>
     <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Logo Investor Cesars">
-    <div class="menu-toggle"><i class="fas fa-bars"></i></div>
-    <nav>
-      <a href="#caidas">Análisis</a>
-      <a href="#user-guide">Guía de usuario</a>
-      <a href="#todas-las-acciones">Todas las Acciones</a>
-    </nav>
   </header>
 
   <div class="quote">
-    <p>“Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada”.</p>
-    <p>- Warren Buffett</p>
+    “Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada”.
+    <small>- Warren Buffett</small>
   </div>
 
-  <div class="container">
-    <section id="user-guide">
-      <h1>Guía de Usuario</h1>
-      <div class="scroll-container">
-        <p>Compartimos caídas de acciones para que puedas identificar cuándo son oportunidades y cuándo no lo son.</p>
-        <h4>Importante</h4>
-        <p>Usa nuestra información con tu propio criterio. Como dice Warren Buffett, es clave pensar por uno mismo.</p>
-        <h4>¿Qué publicamos?</h4>
-        <ul>
-          <li>Acciones con caídas significativas.</li>
-          <li>Más del 30% en general o 15% en un solo día.</li>
-          <li>Casos aislados, no solo crisis globales.</li>
-        </ul>
+  <main>
+    <div class="tool-container">
+      <h2>Herramienta Avanzada</h2>
+      
+      <!-- Entradas del algoritmo complejo -->
+      <input type="number" id="input1" placeholder="Ingresa primer valor">
+      <input type="number" id="input2" placeholder="Ingresa segundo valor">
+      <button id="run-tool">Calcular</button>
+      
+      <!-- Resultado -->
+      <div class="results" id="results">
+        Aquí aparecerán los resultados.
       </div>
-    </section>
-
-    <section id="todas-las-acciones">
-      <h2>Todas las Acciones</h2>
-      <p>El precio actual estará actualizado los lunes. Última actualización: 10-02-2025 al cierre del mercado.</p>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Acción</th>
-              <th>Fecha</th>
-              <th>% Caída</th>
-              <th>Precio actual</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td data-label="Acción">Electronic Arts</td>
-              <td data-label="Fecha">23/01/2025</td>
-              <td data-label="% Caída" class="vendida">-18% $2417MXN</td>
-              <td data-label="Precio actual">$2690 MXN</td>
-            </tr>
-            <!-- Más filas aquí -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </div>
+    </div>
+  </main>
 
   <footer>
-    <div class="social">
-      <a href="https://www.facebook.com/InvestorCesar" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
-    </div>
-    <p>Contacto: ✉️ mabo050796@gmail.com</p>
-    <p>&copy; 2024-2025 Investor Cesar's.</p>
+    Contacto: ✉️ mabo050796@gmail.com &copy; 2024-2025 Investor Cesar's.
   </footer>
 
   <script>
-    const toggle = document.querySelector(".menu-toggle");
-    const nav = document.querySelector("nav");
+    // Ejemplo de algoritmo complejo (dummy para prototipo)
+    document.getElementById('run-tool').addEventListener('click', () => {
+      const a = parseFloat(document.getElementById('input1').value);
+      const b = parseFloat(document.getElementById('input2').value);
+      const results = document.getElementById('results');
 
-    toggle.addEventListener("click", () => {
-      nav.classList.toggle("active");
+      if(isNaN(a) || isNaN(b)){
+        results.textContent = "Por favor ingresa valores válidos.";
+        return;
+      }
+
+      // Algoritmo ejemplo: combinación de estadísticas y ponderaciones
+      const output = Math.sqrt(a**2 + b**2) * Math.log(a + b + 1) * Math.sin(a/10 + b/10);
+      results.textContent = "Resultado del algoritmo avanzado: " + output.toFixed(4);
     });
   </script>
 </body>
