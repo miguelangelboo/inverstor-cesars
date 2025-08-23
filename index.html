@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Investor Cesars - Caídas de Acciones</title>
+  <title>Investor Cesars - Panel de Caídas de Acciones</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     /* ===== Reset ===== */
@@ -15,8 +15,8 @@
 
     body {
       font-family: "Inter", Arial, sans-serif;
-      background-color: #f9fafb;
-      color: #1f2937;
+      background-color: #121926; /* Fondo estilo dashboard */
+      color: #e0e6f1; /* Texto claro */
       line-height: 1.6;
     }
 
@@ -24,12 +24,12 @@
 
     /* ===== Header ===== */
     header {
-      background: white;
+      background: #1f2a40;
       padding: 15px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 1px solid #2c3e50;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -47,12 +47,15 @@
 
     nav a {
       font-weight: 500;
-      color: #374151;
-      transition: color 0.3s;
+      color: #cfd8e3;
+      padding: 6px 12px;
+      border-radius: 5px;
+      transition: background 0.3s, color 0.3s;
     }
 
     nav a:hover {
-      color: #2563eb;
+      background: #2563eb;
+      color: white;
     }
 
     /* ===== Mobile Nav ===== */
@@ -60,18 +63,19 @@
       display: none;
       font-size: 22px;
       cursor: pointer;
+      color: #cfd8e3;
     }
 
     @media (max-width: 768px) {
       nav {
         display: none;
         flex-direction: column;
-        background: white;
+        background: #1f2a40;
         position: absolute;
         top: 70px;
-        right: 0;
+        right: 20px;
         width: 200px;
-        border: 1px solid #e5e7eb;
+        border: 1px solid #2c3e50;
         border-radius: 8px;
         padding: 15px;
       }
@@ -83,18 +87,19 @@
 
     /* ===== Hero Quote ===== */
     .quote {
-      background: #f3f4f6;
+      background: #1f2a40;
       padding: 30px 15px;
       text-align: center;
       font-style: italic;
       font-size: 1.2rem;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 1px solid #2c3e50;
     }
 
     .quote p:last-child {
       margin-top: 10px;
       font-weight: bold;
       font-style: normal;
+      color: #00d1b2; /* Acento empresarial verde */
     }
 
     /* ===== Container ===== */
@@ -106,20 +111,32 @@
 
     h1, h2 {
       margin-bottom: 15px;
-      color: #111827;
+      color: #e0e6f1;
     }
 
     /* ===== Scroll Guide ===== */
     .scroll-container {
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
+      background: #1f2a40;
+      border: 1px solid #2c3e50;
       border-radius: 8px;
-      padding: 15px;
+      padding: 20px;
       max-height: 300px;
       overflow-y: auto;
     }
 
-    .scroll-container h4 { margin-top: 15px; }
+    .scroll-container h4 { 
+      margin-top: 15px;
+      color: #00aaff;
+    }
+
+    .scroll-container p, .scroll-container li {
+      color: #cfd8e3;
+    }
+
+    .scroll-container ul {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
 
     /* ===== Table ===== */
     .table-container {
@@ -130,25 +147,28 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      background: white;
+      background: #1f2a40;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
 
     th, td {
       padding: 12px 15px;
       text-align: left;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 1px solid #2c3e50;
     }
 
     th {
-      background: #111827;
-      color: white;
+      background: #111b2e;
+      color: #00aaff;
       font-weight: 600;
     }
 
-    tr:hover { background: #f3f4f6; }
+    tr:hover { background: #2c3e50; }
+
+    td.en-cartera { background: #0f5132; color: #d1f7dc; font-weight: bold; }
+    td.vendida { background: #842029; color: #f8d7da; font-weight: bold; }
 
     /* Responsive table → tarjetas en móvil */
     @media (max-width: 640px) {
@@ -156,10 +176,10 @@
       thead { display: none; }
       tr {
         margin-bottom: 15px;
-        background: white;
+        background: #1f2a40;
         border-radius: 8px;
         padding: 10px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        box-shadow: 0 1px 5px rgba(0,0,0,0.3);
       }
       td {
         border: none;
@@ -170,7 +190,7 @@
       td::before {
         content: attr(data-label);
         font-weight: bold;
-        color: #374151;
+        color: #00aaff;
       }
     }
 
@@ -182,22 +202,25 @@
       padding: 10px 18px;
       border-radius: 8px;
       font-weight: 500;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.2s;
     }
 
-    .button:hover { background: #1d4ed8; }
+    .button:hover { 
+      background: #1d4ed8; 
+      transform: translateY(-2px);
+    }
 
     /* ===== Footer ===== */
     footer {
-      background: #111827;
-      color: #d1d5db;
+      background: #111b2e;
+      color: #cfd8e3;
       text-align: center;
       padding: 20px;
       margin-top: 40px;
     }
 
     footer a {
-      color: #3b82f6;
+      color: #00aaff;
     }
 
     footer a:hover { text-decoration: underline; }
@@ -241,7 +264,7 @@
 
     <section id="todas-las-acciones">
       <h2>Todas las Acciones</h2>
-      <p>El precio actual estará actualizado los lunes. <br> Última actualización: 10-02-2025 al cierre del mercado.</p>
+      <p>El precio actual estará actualizado los lunes. Última actualización: 10-02-2025 al cierre del mercado.</p>
       <div class="table-container">
         <table>
           <thead>
@@ -256,7 +279,7 @@
             <tr>
               <td data-label="Acción">Electronic Arts</td>
               <td data-label="Fecha">23/01/2025</td>
-              <td data-label="% Caída">-18% $2417MXN</td>
+              <td data-label="% Caída" class="vendida">-18% $2417MXN</td>
               <td data-label="Precio actual">$2690 MXN</td>
             </tr>
             <!-- Más filas aquí -->
@@ -284,4 +307,5 @@
   </script>
 </body>
 </html>
+
 
