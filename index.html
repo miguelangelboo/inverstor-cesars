@@ -6,7 +6,6 @@
     <title>Investor Cesar's - Scoring Avanzado</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* Estilos generales */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -15,20 +14,25 @@
             color: #e0e0e0;
         }
 
-        /* Encabezado */
+        /* Header con logo */
         header {
-            background-image: url('https://example.com/encabezado.jpg');
-            background-size: cover;
-            background-position: center;
-            padding: 60px 20px;
             text-align: center;
-            color: white;
+            background-color: #2a2a3c;
+            padding: 20px;
         }
 
-        header h1 {
-            font-size: 2.5em;
-            margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        header img {
+            max-width: 200px;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Frase destacada */
+        .quote {
+            text-align: center;
+            margin: 20px;
+            font-size: 1.5em;
+            color: #00ffb3;
         }
 
         /* Contenedor principal */
@@ -73,7 +77,6 @@
             background-color: #00e699;
         }
 
-        /* Resultados */
         .result {
             margin-top: 20px;
             padding: 15px;
@@ -91,7 +94,6 @@
             color: #ff4d4d;
         }
 
-        /* Pie de página */
         footer {
             background-color: #212529;
             color: #ffffff;
@@ -112,10 +114,10 @@
             text-decoration: underline;
         }
 
-        /* Diseño responsivo */
+        /* Responsividad */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 2em;
+            .quote {
+                font-size: 1.2em;
             }
 
             .container {
@@ -128,8 +130,12 @@
 <body>
 
 <header>
-    <h1>“Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada” - Warren Buffett</h1>
+    <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Logo Financiero">
 </header>
+
+<div class="quote">
+    “Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada” - Warren Buffett
+</div>
 
 <div class="container">
     <h2>Herramienta de Scoring de Acciones</h2>
@@ -177,25 +183,19 @@ function calculateScore() {
 
     const results = {};
 
-    // Criterio 1: caída
     const dropPercent = ((previousPrice - currentPrice) / previousPrice) * 100;
     results.drop = dropPercent > 20 ? "Cumple" : "No cumple";
 
-    // Criterio 2: tamaño
     results.size = marketCap < 10_000_000_000 ? "Cumple" : "No cumple";
 
-    // Criterio 3: razón de caída
     const solvableProblems = ["problema interno solucionable", "restructuración", "error temporal"];
     results.reason = solvableProblems.includes(reason) ? "Cumple" : "No cumple";
 
-    // Criterio 4: fundamentales
     results.fundamentals = fundamentalsWillImprove ? "Cumple" : "No cumple";
 
-    // Resultado final
     const allPass = Object.values(results).every(r => r === "Cumple");
     results.final = allPass ? "Oportunidad potencial ✅" : "No cumple ❌";
 
-    // Mostrar resultados
     const resultDiv = document.getElementById('result');
     resultDiv.style.display = "block";
     resultDiv.innerHTML = `
