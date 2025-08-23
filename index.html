@@ -1,604 +1,287 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investor Cesars - Caídas de Acciones</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investor Cesars- Caídas de Acciones</title>
-    <style>
-        /* Estilo general */
-        body {
-            background-color: #f8f9fa; /* Fondo claro */
-            color: #343a40; /* Gris oscuro */
-            font-family: 'Courier New', Courier, monospace; /* Fuente monoespaciada */
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    /* ===== Reset ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        header {
-            text-align: center;
-            padding: 0px 10px;
-            background-color: white; /* Negro */
-            color: #ffffff; /* Blanco */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-           
-        }
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      background-color: #f9fafb;
+      color: #1f2937;
+      line-height: 1.6;
+    }
 
-        .fb-icon {
-  color: #1877f2;
-  font-size: 24px;
-  text-decoration: none;
-  margin: 0px;
-}
+    a { text-decoration: none; color: inherit; }
 
-.fb-icon:hover {
-  color: #145dbf;
-}
+    /* ===== Header ===== */
+    header {
+      background: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
+    header img {
+      height: 50px;
+    }
 
-        header img {
-            border-radius: 0%; /* Imagen circular */
-            max-width: 100%; /* Ajusta al ancho del contenedor */
-            height: auto; /* Mantiene la proporción */
-            max-height: 120px; /* Opcional: Limita la altura máxima */
-            margin-bottom: 10px;
-        }
+    /* ===== Nav ===== */
+    nav {
+      display: flex;
+      gap: 20px;
+    }
 
-        nav {
-            background-color: #343a40; /* Gris oscuro */
-            padding: 10px 0;
-            text-align: center;
-        }
+    nav a {
+      font-weight: 500;
+      color: #374151;
+      transition: color 0.3s;
+    }
 
-        nav a {
-            color: #ffffff; /* Blanco */
-            text-decoration: none;
-            padding: 10px;
-            font-size: 18px;
-            display: inline-block;
-            margin: 0 0px;
-        }
+    nav a:hover {
+      color: #2563eb;
+    }
 
-        nav a:hover {
-            background-color: #495057; /* Gris intermedio */
-        }
+    /* ===== Mobile Nav ===== */
+    .menu-toggle {
+      display: none;
+      font-size: 22px;
+      cursor: pointer;
+    }
 
-        /* Sección principal */
-        .container {
-            padding: 20px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        background: white;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 200px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 15px;
+      }
 
-        .quote {
-            background-color: #e9ecef; /* Gris claro */
-            padding: 5px;
-            border-radius: 0px;
-            line-height: 1; /* Interlineado sencillo */
-            margin: 0px 0;
-            font-size: 1.2em;
-            font-style: italic;
-            color: black; /* Gris intermedio */
-        }
+      nav.active { display: flex; }
 
-        .quote p {
-            margin: 0;
-            text-align: center; 
-        }
+      .menu-toggle { display: block; }
+    }
 
-        .quote .author {
-            text-align: center;
-            font-weight: bold;
-            color: #343a40; 
-            text-align: center; 
-        }
+    /* ===== Hero Quote ===== */
+    .quote {
+      background: #f3f4f6;
+      padding: 30px 15px;
+      text-align: center;
+      font-style: italic;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
 
-        footer {
-    background-color: #212529; /* Fondo oscuro */
-    color: #ffffff; /* Texto en blanco */
-    text-align: center; /* Centrar el texto */
-    padding: 20px; /* Espaciado interno */
-    line-height: 1.5; /* Mejora el espaciado entre líneas */
-    font-size: 14px; /* Ajusta el tamaño del texto */
-    border-top: 1px solid #343a40; /* Agrega una línea superior sutil */
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Agrega un efecto de sombra para separar del contenido */
-        }
-            
-            
-            
-            
-    
-            
-            
-            
-        
+    .quote p:last-child {
+      margin-top: 10px;
+      font-weight: bold;
+      font-style: normal;
+    }
 
-        footer a {
-            color: #ffffff; /* Blanco */
-            text-decoration: none;
-        }
+    /* ===== Container ===== */
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
 
-        footer a:hover {
-            text-decoration: underline;
-        }
+    h1, h2 {
+      margin-bottom: 15px;
+      color: #111827;
+    }
 
-        /* Estilo de la tabla */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    /* ===== Scroll Guide ===== */
+    .scroll-container {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 15px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
 
-        table, th, td {
-            border: 1px solid #adb5bd; /* Gris claro */
-        }
+    .scroll-container h4 { margin-top: 15px; }
 
-        th, td {
-            padding: 8px;
-            text-align: left;
-            color: #495057; /* Gris intermedio */
-        }
+    /* ===== Table ===== */
+    .table-container {
+      margin-top: 20px;
+      overflow-x: auto;
+    }
 
-        th {
-            background-color: #343a40; /* Gris oscuro */
-            color: #ffffff; /* Blanco */
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
 
-        /* Contenedor de la tabla con desbordamiento horizontal */
-        .table-container {
-            overflow-x: auto; /* Permite el deslizamiento horizontal */
-            overflow-y: auto; /* Permite el deslizamiento vertical */
-            -webkit-overflow-scrolling: touch;
-            margin-top: 20px;
-            max-height: 300px; /* Opcional: Define una altura máxima para habilitar el scroll vertical */
-        }
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
 
-        /* Estilo de los botones */
-        .button {
-            background-color: #007bff; /* Azul marino */
-            color: #ffffff; /* Blanco */
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px 0;
-            border-radius: 4px;
-        }
+    th {
+      background: #111827;
+      color: white;
+      font-weight: 600;
+    }
 
-        .button:hover {
-            background-color: #0056b3; /* Azul más oscuro */
-        }
+    tr:hover { background: #f3f4f6; }
 
-        /* Estilo de la tarjeta de análisis */
-        .card {
-            background-color: #e9ecef; /* Gris claro */
-            border: 1px solid #adb5bd; /* Gris claro */
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
+    /* Responsive table → tarjetas en móvil */
+    @media (max-width: 640px) {
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      tr {
+        margin-bottom: 15px;
+        background: white;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      }
+      td {
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 5px;
+      }
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #374151;
+      }
+    }
 
-        .card h2 {
-            font-size: 1.5em;
-            color: #343a40; /* Gris oscuro */
-        }
+    /* ===== Buttons ===== */
+    .button {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
 
-        .card p {
-            font-size: 1.1em;
-        }
+    .button:hover { background: #1d4ed8; }
 
-        .card .button {
-            display: block;
-            margin-top: 20px;
-        }
+    /* ===== Footer ===== */
+    footer {
+      background: #111827;
+      color: #d1d5db;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
 
-        .card .details {
-            font-size: 0.9em;
-            margin-top: 10px;
-        }
+    footer a {
+      color: #3b82f6;
+    }
 
-        .card .details span {
-            display: block;
-            margin-bottom: 5px;
-        }
+    footer a:hover { text-decoration: underline; }
 
-        
-        .expanded-content {
-            display: none;
-            margin-top: 10px;
-            font-size: 1em;
-            color: #343a40; /* Gris oscuro */
-        }
-
-        /* Mostrar contenido expandido */
-        .card.expanded .expanded-content {
-            display: block;
-        }
-  
-
-#toggle-button {
-    margin-left: 10px;
-    background-color: #2c3e50;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    font-size: 12px;
-    cursor: pointer;
-    border-radius: 3px;
-}
-
-#toggle-button:hover {
-    background-color: #34495e;
-}
-            
-        /* Estilo para el título */
-#user-guide h2 {
-    color: black; /* Verde retro */
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    text-align: left; 
-}
-
-/* Contenedor de scroll */
-.scroll-container {
-    background-color: #e9ecef;
-    color: black; /* Verde retro */
-    font-family: 'Courier New', Courier, monospace;
-    border: 1px solid #adb5bd; /* Borde retro */
-    border-radius: 5px;
-    padding: 10px;
-    max-height: 350px; /* Altura limitada */
-    overflow-y: scroll; /* Habilita scroll vertical */
-    
-    scrollbar-width: thin; /* Scroll delgado */
-    line-height: 1; /* Interlineado sencillo */
-   
-          
-}
-
-/* Personalización del scrollbar (para navegadores compatibles) */
-.scroll-container::-webkit-scrollbar {
-    width: 8px;
-    background-color: #333; /* Fondo del scrollbar */
-}
-
-.scroll-container::-webkit-scrollbar-thumb {
-    background-color: #00ff00; /* Color del scrollbar */
-    border-radius: 5px;
-}
-
-/* Espaciado adicional para el texto */
-.scroll-container p {
-    line-height: 1;
-    margin: 0;
-    white-space: pre-line; /* Mantiene saltos de línea *
-}
-
-         table {
-            width: 80%;
-            margin: auto;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-        th {
-            background-color: #333;
-            color: white;
-        }
-        .en-cartera {
-            background-color: #d4edda;
-            color: #155724;
-            font-weight: bold;
-        }
-        .vendida {
-            background-color: #f8d7da;
-            color: #721c24;
-            font-weight: bold;
-        }
-        .container {
-            padding: 20px;
-        }
-
-
-        
-    </style>
-    <link rel="icon" href="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/android-icon-144x144%20(1).png" type="image/png">
+    .social {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        
-<img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Logo Financiero">
-    </header>
-
+  <header>
+    <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Logo Investor Cesars">
+    <div class="menu-toggle"><i class="fas fa-bars"></i></div>
     <nav>
-        <a href="#caidas">Análisis </a>
-        <a href="#user-guide">Guía de usuario</a>
-        <a href="#todas-las-acciones">Todas las Acciones</a>
+      <a href="#caidas">Análisis</a>
+      <a href="#user-guide">Guía de usuario</a>
+      <a href="#todas-las-acciones">Todas las Acciones</a>
     </nav>
+  </header>
 
-    <div class="quote">
-        <p>“Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada”.</p>
-        <p>- Warren Buffett</p>
+  <div class="quote">
+    <p>“Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada”.</p>
+    <p>- Warren Buffett</p>
+  </div>
+
+  <div class="container">
+    <section id="user-guide">
+      <h1>Guía de Usuario</h1>
+      <div class="scroll-container">
+        <p>Compartimos caídas de acciones para que puedas identificar cuándo son oportunidades y cuándo no lo son.</p>
+        <h4>Importante</h4>
+        <p>Usa nuestra información con tu propio criterio. Como dice Warren Buffett, es clave pensar por uno mismo.</p>
+        <h4>¿Qué publicamos?</h4>
+        <ul>
+          <li>Acciones con caídas significativas.</li>
+          <li>Más del 30% en general o 15% en un solo día.</li>
+          <li>Casos aislados, no solo crisis globales.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="todas-las-acciones">
+      <h2>Todas las Acciones</h2>
+      <p>El precio actual estará actualizado los lunes. <br> Última actualización: 10-02-2025 al cierre del mercado.</p>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Acción</th>
+              <th>Fecha</th>
+              <th>% Caída</th>
+              <th>Precio actual</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Acción">Electronic Arts</td>
+              <td data-label="Fecha">23/01/2025</td>
+              <td data-label="% Caída">-18% $2417MXN</td>
+              <td data-label="Precio actual">$2690 MXN</td>
+            </tr>
+            <!-- Más filas aquí -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="social">
+      <a href="https://www.facebook.com/InvestorCesar" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
     </div>
+    <p>Contacto: ✉️ mabo050796@gmail.com</p>
+    <p>&copy; 2024-2025 Investor Cesar's.</p>
+  </footer>
 
-  
+  <script>
+    const toggle = document.querySelector(".menu-toggle");
+    const nav = document.querySelector("nav");
 
- 
-    <div class="container">
-
-        <!-- Código en desarrollo: oculto por ahora -->
-    <!--
-        <section id="caidas">
-            <h2>Análisis </h2>
-            <p>Se visualiza las publicaciones más recientes primero.</p>
-            <div class="card">
-                <h3>Acción ZZZ - Análisis</h3>
-                <p><strong>Fecha de publicación:</strong> 00/00/0000</p>
-                <div class="details">
-                    <span><strong>Razones de la caída:</strong> Análisis del mercado, crisis sectorial.</span>
-                    <span><strong>Datos financieros importantes:</strong> P/E ratio: 15, Dividendos: 4% anual.</span>
-                </div>
-                <div class="expanded-content">
-                    <p><strong>Más detalles:</strong> La acción ha sufrido una caída debido a varios factores externos, incluyendo una recesión económica global y problemas internos dentro de la empresa.</p>
-                </div>
-                <a href="javascript:void(0);" class="button" onclick="toggleCard(this)">Leer +-</a>
-            </div>
-        </section>
-  -->
-        <section id="user-guide">
-    <h2>Guía de Usuario</h2>
-    <div class="scroll-container">
-        <p>Compartimos caídas de acciones para que puedas identificar cuándo son oportunidades y cuándo no lo son. Buscamos ser una comunidad que invierte con éxito, tomando decisiones informadas y aprovechando oportunidades.</p>
-
-    <h4>Importante</h4>
-<p>Usa nuestra información con tu propio criterio. Como dice Warren Buffett, es clave pensar por uno mismo.</p>
-
-<h4>¿Qué publicamos?</h4>
-<ul>
-    <li>Acciones con caídas significativas.</li>
-    <li>Más del 30% en general o 15% en un solo día.</li>
-    <li>Casos aislados, no solo crisis globales.</li>
-</ul>
-
-<h4>Nuestro enfoque</h4>
-<p>Las caídas siempre ocurren, incluso en mercados alcistas. No asumimos que son oportunidades automáticas, sino señales para analizar a fondo.</p>
-
-<h4>La importancia del precio</h4>
-<p>Comprar a buen precio mejora la rentabilidad. Explicamos esto con un ejemplo <a href="https://www.facebook.com/share/18WefSGfV6/" target="_blank">aquí</a>.</p>
-
-<h4>¿Por qué caen las acciones?</h4>
-<p>Las acciones pueden caer por muchas razones. Entre los principales factores están:</p>
-<ul>
-    <li><strong>Pánico e irracionalidad</strong> – Inversionistas vendiendo por miedo.</li>
-    <li><strong>Resultados financieros débiles</strong> – Empresas que no cumplen expectativas.</li>
-    <li><strong>Crisis económicas o tasas de interés altas</strong> – Factores que afectan a todo el mercado.</li>
-    <li><strong>Cambios en la industria</strong> – Innovaciones que vuelven obsoletos ciertos negocios.</li>
-    <li><strong>Factores externos</strong> – Guerras, regulaciones o eventos globales.</li>
-</ul>
-<p>Ejemplos históricos incluyen:</p>
-<ul>
-    <li>Netflix y Meta (caídas recientes).</li>
-    <li>Crisis bursátil de 1962 (relatada en el libro <em>Aventuras empresariales</em>).</li>
-    <li>Pandemia de 2020 y la crisis de las punto com.</li>
-</ul>
-
-<h4>No es la única estrategia, pero sí valiosa</h4>
-<ul>
-    <li>Evita el FOMO (miedo a perderse algo).</li>
-    <li>Reduce el riesgo de comprar caro.</li>
-</ul>
-
-<h4>En palabras de Warren Buffett</h4>
-<blockquote>
-    “Ten miedo cuando los demás sean codiciosos y sé codicioso cuando los demás tengan miedo.”<br>
-    <small>(The New York Times, 2008)</small>
-</blockquote>
-
-<h4>Lo que viene</h4>
-<ul>
-    <li>Análisis detallados con datos financieros.</li>
-    <li>Herramienta para valorar el S&P 500 y detectar sobrevaloración.</li>
-    <li>Cambios mínimos en nuestra estrategia, pero notificaremos ajustes clave.</li>
-</ul>
-
-    </div>
-</section>
-
-         
-
-        <section id="todas-las-acciones">
-            <h2>Todas las Acciones</h2>
-            <p>El precio actual estará actualizado los lunes. Actualizado 10-02-2025 al cierre del mercado.</p>
-            
-
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Acción</th>
-                            <th>Fecha</th>
-                            <th>% Caída</th>
-                            <th>Precio actual</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                       
-                          <tr>
-                             <td>Electronic Arts</td>
-                            <td>23/01/2025</td>
-                            <td>-18% $2417MXN</td>
-                            <td>$2690 MXN</td>
-                        </tr>
-                        <tr>
-                             <td>Constellation Brands</td>
-                            <td>10/01/2025</td>
-                            <td>-24% $3775 MXN</td>
-                            <td>$3412 MXN</td>
-                        </tr>
-                        <tr>
-                             <td>AMD</td>
-                            <td>04/01/2025</td>
-                            <td>-13% $2584 MXN</td>
-                            <td>$2277 MXN</td>
-                        </tr>
-                        <tr>
-                             <td>Coinbase</td>
-                            <td>02/01/2025</td>
-                            <td>-15% $5250 MXN</td>
-                            <td>$5790 MXN</td>
-                        </tr>
-                         <tr>
-                             <td>SoFi</td>
-                            <td>02/01/2025</td>
-                            <td>-10% $291 MXN</td>
-                            <td>$311 MXN</td>
-                        </tr>
-                        <tr>
-                             <td>CVS Health</td>
-                            <td>28/12/2024</td>
-                            <td>-32% $902 MXN</td>
-                            <td>$1104 MXN</td>
-                        </tr>
-                        <tr>
-                             <td>PDD</td>
-                            <td>27/12/2024</td>
-                            <td>-18% $1997 MXN</td>
-                            <td>$2390 MXN</td>
-                        </tr>
-                        <tr>
-                             <td>Micron Technology</td>
-                            <td>26/12/2024</td>
-                            <td>-29% $1825 MXN</td>
-                            <td>$1977 MXN</td>
-                        </tr>
-                         <tr>
-                             <td>Starbucks</td>
-                            <td>22/12/2024</td>
-                            <td>-16% $1751 MXN</td>
-                            <td>$2294 MXN</td>
-                        </tr>
-                        <tr>
-                             <td>Novo Nordisk</td>
-                            <td>20/12/2024</td>
-                            <td>-23% $1690 MXN</td>
-                            <td>$1730 MXN</td>
-                        </tr>
-                        <tr>
-                             <td>Hims & Hers Health</td>
-                            <td>19/12/2024</td>
-                            <td>-15.44% $519 MXN</td>
-                            <td>$920 MXN</td>
-                        </tr>
-                        <tr>
-                             <td>Mercado Libre</td>
-                            <td>19/12/2024</td>
-                            <td>-21% $33 878 MXN</td>
-                            <td>$42114 MXN</td>
-                        </tr>
-                         <tr>
-                             <td>Under Armour</td>
-                            <td>16/12/2024</td>
-                            <td>-19.05% $170 MXN</td>
-                            <td>$150 MXN</td>
-                        </tr>
-                            <td>Adobe</td>
-                            <td>13/12/2024</td>
-                            <td>-15.88% $9303 MXN</td>
-                            <td>$9348 MXN</td>
-                        </tr>
-                         <tr>
-                            <td>Uber</td>
-                            <td>05/12/2024</td>
-                            <td>-9.81% $1322 MXN</td>
-                            <td>$1612 MXN</td>
-                        </tr>
-                         <tr>
-                            <td>Grupo Elektra</td>
-                            <td>02/12/2024</td>
-                            <td>-69.84% $285 MXN</td>
-                            <td>$341 MXN</td>
-                        </tr>
-                         <tr>
-                            <td>Nu</td>
-                            <td>29/11/2024</td>
-                            <td>-19.99% $260 MXN</td>
-                            <td>$287 MXN</td>
-                         </tr>
-                        <tr>
-                            <td>Cassava Sciences</td>
-                            <td>26/11/2024</td>
-                            <td>-84.78% $4.30 USD</td>
-                            <td>$2.32 USD</td>
-                        </tr>
-                        <tr>
-                            <td>MicroStrategy</td>
-                            <td>22/11/2024</td>
-                            <td>-18.28% $8095 MXN</td>
-                            <td>$6899 MXN</td>
-                        </tr>
-                        <tr>
-                            <td>Celsius</td>
-                            <td>21/11/2024</td>
-                            <td>-59.04% $548.21 MXN</td>
-                            <td>$442 MXN</td>
-                        </tr>
-                        <tr>
-                            <td>Target</td>
-                            <td>21/11/2024</td>
-                            <td>-21.41% $121.72 USD</td>
-                            <td>$131 USD</td>
-                        </tr>
-                        <tr>
-                            <td>Moderna</td>
-                            <td>21/11/2024</td>
-                            <td>-67.71% $752.97 MXN</td>
-                            <td>$660 MXN</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </div>
-
-    <footer>
-              <a href="https://www.facebook.com/InvestorCesar" target="_blank" class="fb-icon">
-  <i class="fab fa-facebook-f"></i>
-</a>
-         <p>Contacto: enviar un correo ✉️ a mabo050796@gmail.com</p>
-    
-
-        <p>&copy; 2024-2025 Investor Cesar's.</p>
-    </footer>
-
-    <script>
-        function toggleCard(button) {
-            var card = button.closest('.card');
-            card.classList.toggle('expanded');
-        }
-        document.getElementById('toggle-button').addEventListener('click', function () {
-    const moreText = document.getElementById('more-text');
-    const button = this;
-
-    if (moreText.style.display === 'none') {
-        moreText.style.display = 'inline';
-        button.textContent = 'Leer menos';
-    } else {
-        moreText.style.display = 'none';
-        button.textContent = 'Leer más';
-    }
-});
-    </script>
+    toggle.addEventListener("click", () => {
+      nav.classList.toggle("active");
+    });
+  </script>
 </body>
 </html>
+
