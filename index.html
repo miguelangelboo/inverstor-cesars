@@ -67,6 +67,7 @@
         border-radius: 5px;
         cursor: pointer;
         transition: 0.3s;
+        width: 100%;
     }
 
     button:hover {
@@ -82,9 +83,37 @@
         line-height: 1.5;
     }
 
-    .result span {
-        color: #00ffb3;
+    .result p span {
         font-weight: bold;
+    }
+
+    .cumple {
+        color: #00ffb3;
+    }
+
+    .no-cumple {
+        color: #ff4d4d;
+    }
+
+    footer {
+        background-color: #212529;
+        color: #ffffff;
+        text-align: center;
+        padding: 20px;
+        line-height: 1.5;
+        font-size: 14px;
+        border-top: 1px solid #343a40;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        margin-top: 30px;
+    }
+
+    footer a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
     }
 
     @media (max-width: 600px) {
@@ -132,6 +161,11 @@
     <div id="result" class="result" style="display:none;"></div>
 </div>
 
+<footer>
+    <p>Contacto: enviar un correo ✉️ a mabo050796@gmail.com</p>
+    <p>&copy; 2024-2025 Investor Cesar's.</p>
+</footer>
+
 <script>
 function calculateScore() {
     const previousPrice = parseFloat(document.getElementById('previousPrice').value);
@@ -164,10 +198,10 @@ function calculateScore() {
     const resultDiv = document.getElementById('result');
     resultDiv.style.display = "block";
     resultDiv.innerHTML = `
-        <p><span>Caída > 20%:</span> ${results.drop} (${dropPercent.toFixed(2)}%)</p>
-        <p><span>Small Cap (<10B USD):</span> ${results.size} (${marketCap.toLocaleString()})</p>
-        <p><span>Razón de caída solucionable:</span> ${results.reason}</p>
-        <p><span>Fundamentales mejorarán:</span> ${results.fundamentals}</p>
+        <p><span>Caída > 20%:</span> <span class="${results.drop === "Cumple" ? "cumple" : "no-cumple"}">${results.drop} (${dropPercent.toFixed(2)}%)</span></p>
+        <p><span>Small Cap (<10B USD):</span> <span class="${results.size === "Cumple" ? "cumple" : "no-cumple"}">${results.size} (${marketCap.toLocaleString()})</span></p>
+        <p><span>Razón de caída solucionable:</span> <span class="${results.reason === "Cumple" ? "cumple" : "no-cumple"}">${results.reason}</span></p>
+        <p><span>Fundamentales mejorarán:</span> <span class="${results.fundamentals === "Cumple" ? "cumple" : "no-cumple"}">${results.fundamentals}</span></p>
         <p><strong>${results.final}</strong></p>
     `;
 }
