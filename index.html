@@ -1,176 +1,178 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Investor Cesars - Herramienta Avanzada</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    /* ===== Reset y tipografía ===== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Cesar's - Scoring Avanzado</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    /* Estilo general */
     body {
-      font-family: "Inter", Arial, sans-serif;
-      background-color: #121926; /* Dashboard oscuro */
-      color: #e0e6f1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #1f1f2e;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 0;
     }
 
-    a { text-decoration: none; color: inherit; }
-
-    /* ===== Header ===== */
     header {
-      background: #1f2a40;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid #2c3e50;
-    }
-    header img { height: 50px; }
-
-    /* ===== Frase central ===== */
-    .quote {
-      flex: 0 0 auto;
-      text-align: center;
-      margin: 40px 20px;
-      font-size: 1.5rem;
-      font-style: italic;
-      color: #00d1b2; /* Verde de acento */
-    }
-    .quote small { display: block; margin-top: 10px; font-style: normal; font-weight: bold; color: #00aaff; }
-
-    /* ===== Contenedor principal ===== */
-    main {
-      flex: 1 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(90deg, #4e54c8, #8f94fb);
+        color: white;
     }
 
-    .tool-container {
-      background: #1f2a40;
-      border: 1px solid #2c3e50;
-      border-radius: 10px;
-      padding: 30px;
-      width: 100%;
-      max-width: 900px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    header h1 {
+        margin: 0;
+        font-size: 1.8em;
+        letter-spacing: 1px;
     }
 
-    .tool-container h2 {
-      color: #00aaff;
-      text-align: center;
-      margin-bottom: 20px;
+    .container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #2a2a3c;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
     }
 
-    /* ===== Inputs y botones ===== */
-    .tool-container input, .tool-container select, .tool-container button {
-      padding: 12px 15px;
-      border-radius: 6px;
-      border: none;
-      font-size: 1rem;
+    h2 {
+        text-align: center;
+        color: #00ffb3;
     }
 
-    .tool-container input, .tool-container select {
-      background: #121926;
-      color: #e0e6f1;
-      border: 1px solid #2c3e50;
+    label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-weight: bold;
     }
 
-    .tool-container button {
-      background: #2563eb;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
-      font-weight: 600;
+    input, select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        margin-bottom: 10px;
+        font-size: 1em;
     }
 
-    .tool-container button:hover {
-      background: #1d4ed8;
-      transform: translateY(-2px);
+    button {
+        background-color: #00ffb3;
+        color: #1f1f2e;
+        border: none;
+        padding: 12px 20px;
+        font-size: 1em;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
     }
 
-    /* ===== Resultados ===== */
-    .results {
-      background: #111b2e;
-      border-radius: 8px;
-      padding: 15px;
-      color: #00d1b2;
-      font-weight: 500;
-      min-height: 50px;
+    button:hover {
+        background-color: #00e699;
     }
 
-    /* ===== Footer ===== */
-    footer {
-      background: #111b2e;
-      padding: 15px 20px;
-      text-align: center;
-      color: #cfd8e3;
-      border-top: 1px solid #2c3e50;
-      flex-shrink: 0;
+    .result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #343454;
+        font-size: 1.1em;
+        line-height: 1.5;
     }
 
-    /* ===== Responsivo ===== */
-    @media(max-width:768px){
-      .quote { font-size: 1.2rem; margin: 30px 10px; }
-      .tool-container { padding: 20px; }
+    .result span {
+        color: #00ffb3;
+        font-weight: bold;
     }
-  </style>
+
+    @media (max-width: 600px) {
+        .container {
+            margin: 15px;
+            padding: 15px;
+        }
+    }
+</style>
 </head>
 <body>
-  <header>
-    <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Logo Investor Cesars">
-  </header>
 
-  <div class="quote">
-    “Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada”.
-    <small>- Warren Buffett</small>
-  </div>
+<header>
+    <h1>“Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada” - Warren Buffett</h1>
+</header>
 
-  <main>
-    <div class="tool-container">
-      <h2>Herramienta Avanzada</h2>
-      
-      <!-- Entradas del algoritmo complejo -->
-      <input type="number" id="input1" placeholder="Ingresa primer valor">
-      <input type="number" id="input2" placeholder="Ingresa segundo valor">
-      <button id="run-tool">Calcular</button>
-      
-      <!-- Resultado -->
-      <div class="results" id="results">
-        Aquí aparecerán los resultados.
-      </div>
-    </div>
-  </main>
+<div class="container">
+    <h2>Herramienta de Scoring de Acciones</h2>
+    
+    <label for="previousPrice">Precio anterior (USD o MXN):</label>
+    <input type="number" id="previousPrice" placeholder="Ej. 100">
 
-  <footer>
-    Contacto: ✉️ mabo050796@gmail.com &copy; 2024-2025 Investor Cesar's.
-  </footer>
+    <label for="currentPrice">Precio actual (USD o MXN):</label>
+    <input type="number" id="currentPrice" placeholder="Ej. 75">
 
-  <script>
-    // Ejemplo de algoritmo complejo (dummy para prototipo)
-    document.getElementById('run-tool').addEventListener('click', () => {
-      const a = parseFloat(document.getElementById('input1').value);
-      const b = parseFloat(document.getElementById('input2').value);
-      const results = document.getElementById('results');
+    <label for="marketCap">Capitalización de mercado (en USD):</label>
+    <input type="number" id="marketCap" placeholder="Ej. 5000000000">
 
-      if(isNaN(a) || isNaN(b)){
-        results.textContent = "Por favor ingresa valores válidos.";
-        return;
-      }
+    <label for="reason">Razón de la caída:</label>
+    <select id="reason">
+        <option value="problema interno solucionable">Problema interno solucionable</option>
+        <option value="restructuración">Reestructuración</option>
+        <option value="error temporal">Error temporal</option>
+        <option value="problema no solucionable">Problema no solucionable</option>
+    </select>
 
-      // Algoritmo ejemplo: combinación de estadísticas y ponderaciones
-      const output = Math.sqrt(a**2 + b**2) * Math.log(a + b + 1) * Math.sin(a/10 + b/10);
-      results.textContent = "Resultado del algoritmo avanzado: " + output.toFixed(4);
-    });
-  </script>
+    <label for="fundamentals">¿Fundamentales mejorarán con el tiempo?</label>
+    <select id="fundamentals">
+        <option value="true">Sí</option>
+        <option value="false">No</option>
+    </select>
+
+    <button onclick="calculateScore()">Evaluar acción</button>
+
+    <div id="result" class="result" style="display:none;"></div>
+</div>
+
+<script>
+function calculateScore() {
+    const previousPrice = parseFloat(document.getElementById('previousPrice').value);
+    const currentPrice = parseFloat(document.getElementById('currentPrice').value);
+    const marketCap = parseFloat(document.getElementById('marketCap').value);
+    const reason = document.getElementById('reason').value;
+    const fundamentalsWillImprove = document.getElementById('fundamentals').value === "true";
+
+    const results = {};
+
+    // Criterio 1: caída
+    const dropPercent = ((previousPrice - currentPrice) / previousPrice) * 100;
+    results.drop = dropPercent > 20 ? "Cumple" : "No cumple";
+
+    // Criterio 2: tamaño
+    results.size = marketCap < 10_000_000_000 ? "Cumple" : "No cumple";
+
+    // Criterio 3: razón de caída
+    const solvableProblems = ["problema interno solucionable", "restructuración", "error temporal"];
+    results.reason = solvableProblems.includes(reason) ? "Cumple" : "No cumple";
+
+    // Criterio 4: fundamentales
+    results.fundamentals = fundamentalsWillImprove ? "Cumple" : "No cumple";
+
+    // Resultado final
+    const allPass = Object.values(results).every(r => r === "Cumple");
+    results.final = allPass ? "Oportunidad potencial ✅" : "No cumple ❌";
+
+    // Mostrar resultados
+    const resultDiv = document.getElementById('result');
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = `
+        <p><span>Caída > 20%:</span> ${results.drop} (${dropPercent.toFixed(2)}%)</p>
+        <p><span>Small Cap (<10B USD):</span> ${results.size} (${marketCap.toLocaleString()})</p>
+        <p><span>Razón de caída solucionable:</span> ${results.reason}</p>
+        <p><span>Fundamentales mejorarán:</span> ${results.fundamentals}</p>
+        <p><strong>${results.final}</strong></p>
+    `;
+}
+</script>
+
 </body>
 </html>
-
 
