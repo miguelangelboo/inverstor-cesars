@@ -6,23 +6,26 @@
     <title>Investor Cesar's - Scoring Avanzado</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        /* Estilo general */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #1f1f2e;
-            color: #e0e0e0;
+            background-color: #181a1f;
+            color: #e6e6e6;
+            line-height: 1.6;
         }
 
-        /* Header con logo */
+        /* Header */
         header {
             text-align: center;
-            background-color: #2a2a3c;
-            padding: 20px;
+            background: linear-gradient(135deg, #1f1f2e, #2c2f3f);
+            padding: 25px 20px;
+            border-bottom: 1px solid #2e3344;
         }
 
         header img {
-            max-width: 200px;
+            max-width: 180px;
             width: 100%;
             height: auto;
         }
@@ -30,83 +33,105 @@
         /* Frase destacada */
         .quote {
             text-align: center;
-            margin: 20px;
-            font-size: 1.5em;
-            color: #00ffb3;
+            margin: 25px auto;
+            font-size: 1.4em;
+            color: #00d9a5;
+            font-style: italic;
+            max-width: 900px;
+            padding: 0 15px;
         }
 
         /* Contenedor principal */
         .container {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: #2a2a3c;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            max-width: 800px;
+            margin: 35px auto;
+            padding: 30px;
+            background-color: #22242f;
+            border-radius: 12px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
         }
 
         h2 {
             text-align: center;
-            color: #00ffb3;
+            color: #00d9a5;
+            margin-bottom: 25px;
+            font-weight: 600;
+            font-size: 1.6em;
         }
 
         label {
             display: block;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-top: 18px;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #cfcfcf;
         }
 
         input, select, button {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: none;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            border: 1px solid #3a3d4d;
             font-size: 1em;
+            background-color: #2a2d3c;
+            color: #f0f0f0;
+            transition: all 0.25s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #00d9a5;
+            outline: none;
+            background-color: #2f3344;
         }
 
         button {
-            background-color: #00ffb3;
-            color: #1f1f2e;
+            background-color: #00d9a5;
+            color: #181a1f;
+            font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
+            border: none;
+            transition: background 0.3s, transform 0.2s;
         }
 
         button:hover {
-            background-color: #00e699;
+            background-color: #00b88b;
+            transform: translateY(-2px);
         }
 
         .result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #343454;
-            font-size: 1.1em;
-            line-height: 1.5;
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 10px;
+            background-color: #292c3d;
+            font-size: 1.05em;
+            line-height: 1.6;
+            border-left: 4px solid #00d9a5;
+            animation: fadeIn 0.4s ease-in-out;
         }
 
         .cumple {
-            color: #00ffb3;
+            color: #00e6b0;
+            font-weight: 600;
         }
 
         .no-cumple {
-            color: #ff4d4d;
+            color: #ff5c5c;
+            font-weight: 600;
         }
 
         footer {
-            background-color: #212529;
-            color: #ffffff;
+            background-color: #1a1c24;
+            color: #bdbdbd;
             text-align: center;
-            padding: 20px;
+            padding: 25px 15px;
             font-size: 14px;
-            border-top: 1px solid #343a40;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-            margin-top: 30px;
+            border-top: 1px solid #2d2f3a;
+            margin-top: 40px;
         }
 
         footer a {
-            color: #ffffff;
+            color: #00d9a5;
             text-decoration: none;
         }
 
@@ -114,15 +139,22 @@
             text-decoration: underline;
         }
 
+        /* Animaciones */
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
         /* Responsividad */
         @media (max-width: 768px) {
             .quote {
                 font-size: 1.2em;
+                padding: 0 10px;
             }
 
             .container {
-                margin: 15px;
-                padding: 15px;
+                margin: 20px;
+                padding: 20px;
             }
         }
     </style>
@@ -169,7 +201,7 @@
 </div>
 
 <footer>
-    <p>Contacto: enviar un correo ✉️ a mabo050796@gmail.com</p>
+    <p>Contacto: enviar un correo ✉️ a <a href="mailto:mabo050796@gmail.com">mabo050796@gmail.com</a></p>
     <p>&copy; 2024-2025 Investor Cesar's.</p>
 </footer>
 
@@ -200,7 +232,7 @@ function calculateScore() {
     resultDiv.style.display = "block";
     resultDiv.innerHTML = `
         <p><span>Caída > 20%:</span> <span class="${results.drop === "Cumple" ? "cumple" : "no-cumple"}">${results.drop} (${dropPercent.toFixed(2)}%)</span></p>
-        <p><span>Small Cap (<10B USD):</span> <span class="${results.size === "Cumple" ? "cumple" : "no-cumple"}">${results.size} (${marketCap.toLocaleString()})</span></p>
+        <p><span>Small Cap (&lt;10B USD):</span> <span class="${results.size === "Cumple" ? "cumple" : "no-cumple"}">${results.size} (${marketCap.toLocaleString()})</span></p>
         <p><span>Razón de caída solucionable:</span> <span class="${results.reason === "Cumple" ? "cumple" : "no-cumple"}">${results.reason}</span></p>
         <p><span>Fundamentales mejorarán:</span> <span class="${results.fundamentals === "Cumple" ? "cumple" : "no-cumple"}">${results.fundamentals}</span></p>
         <p><strong>${results.final}</strong></p>
@@ -210,5 +242,4 @@ function calculateScore() {
 
 </body>
 </html>
-
 
