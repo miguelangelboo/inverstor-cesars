@@ -1,245 +1,238 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investor Cesar's - Scoring Avanzado</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        /* Estilo general */
-        body {
-            font-family: 'Segoe UI', Roboto, Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #181a1f;
-            color: #e6e6e6;
-            line-height: 1.6;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investor Cesar's - Scoring Avanzado</title>
+  <style>
+    /* General estilo terminal */
+    body {
+      font-family: "Consolas", "Courier New", monospace;
+      margin: 0;
+      padding: 0;
+      background-color: #0e0f16;
+      color: #e6e6e6;
+    }
 
-        /* Header */
-        header {
-            text-align: center;
-            background: linear-gradient(135deg, #1f1f2e, #2c2f3f);
-            padding: 25px 20px;
-            border-bottom: 1px solid #2e3344;
-        }
+    /* Header */
+    header {
+      text-align: center;
+      background-color: #12131c;
+      padding: 15px;
+      border-bottom: 1px solid #22232f;
+    }
 
-        header img {
-            max-width: 180px;
-            width: 100%;
-            height: auto;
-        }
+    header img {
+      max-width: 160px;
+      height: auto;
+    }
 
-        /* Frase destacada */
-        .quote {
-            text-align: center;
-            margin: 25px auto;
-            font-size: 1.4em;
-            color: #00d9a5;
-            font-style: italic;
-            max-width: 900px;
-            padding: 0 15px;
-        }
+    /* Quote estilo terminal */
+    .quote {
+      text-align: center;
+      font-size: 1.1em;
+      color: #f0f0f0;
+      margin: 20px auto;
+      padding: 10px;
+      max-width: 1000px;
+      border-bottom: 1px solid #2c2c38;
+    }
 
-        /* Contenedor principal */
-        .container {
-            max-width: 800px;
-            margin: 35px auto;
-            padding: 30px;
-            background-color: #22242f;
-            border-radius: 12px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
-        }
+    /* Contenedor principal */
+    .container {
+      max-width: 900px;
+      margin: 25px auto;
+      padding: 20px;
+      background-color: #12131c;
+      border: 1px solid #2c2c38;
+      border-radius: 6px;
+    }
 
-        h2 {
-            text-align: center;
-            color: #00d9a5;
-            margin-bottom: 25px;
-            font-weight: 600;
-            font-size: 1.6em;
-        }
+    h2 {
+      text-align: left;
+      color: #d1d1d1;
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #2c2c38;
+      padding-bottom: 8px;
+    }
 
-        label {
-            display: block;
-            margin-top: 18px;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: #cfcfcf;
-        }
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 0.9em;
+      color: #c5c5c5;
+    }
 
-        input, select, button {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border-radius: 6px;
-            border: 1px solid #3a3d4d;
-            font-size: 1em;
-            background-color: #2a2d3c;
-            color: #f0f0f0;
-            transition: all 0.25s ease;
-        }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 3px;
+      border: 1px solid #2c2c38;
+      font-size: 0.95em;
+      background-color: #0e0f16;
+      color: #e6e6e6;
+      outline: none;
+    }
 
-        input:focus, select:focus {
-            border-color: #00d9a5;
-            outline: none;
-            background-color: #2f3344;
-        }
+    input:focus, select:focus {
+      border-color: #666;
+    }
 
-        button {
-            background-color: #00d9a5;
-            color: #181a1f;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: background 0.3s, transform 0.2s;
-        }
+    button {
+      background-color: #1f232e;
+      color: #ffffff;
+      font-weight: bold;
+      cursor: pointer;
+      border: 1px solid #444;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: background 0.3s;
+    }
 
-        button:hover {
-            background-color: #00b88b;
-            transform: translateY(-2px);
-        }
+    button:hover {
+      background-color: #2c3140;
+    }
 
-        .result {
-            margin-top: 25px;
-            padding: 18px;
-            border-radius: 10px;
-            background-color: #292c3d;
-            font-size: 1.05em;
-            line-height: 1.6;
-            border-left: 4px solid #00d9a5;
-            animation: fadeIn 0.4s ease-in-out;
-        }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 4px;
+      background-color: #0e0f16;
+      font-size: 0.95em;
+      line-height: 1.5;
+      border: 1px solid #2c2c38;
+      font-family: "Consolas", monospace;
+    }
 
-        .cumple {
-            color: #00e6b0;
-            font-weight: 600;
-        }
+    /* Colores estilo terminal */
+    .cumple {
+      color: #00ff66; /* verde intenso tipo Bloomberg */
+      font-weight: bold;
+    }
 
-        .no-cumple {
-            color: #ff5c5c;
-            font-weight: 600;
-        }
+    .no-cumple {
+      color: #ff3333; /* rojo intenso */
+      font-weight: bold;
+    }
 
-        footer {
-            background-color: #1a1c24;
-            color: #bdbdbd;
-            text-align: center;
-            padding: 25px 15px;
-            font-size: 14px;
-            border-top: 1px solid #2d2f3a;
-            margin-top: 40px;
-        }
+    footer {
+      background-color: #12131c;
+      color: #888;
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+      border-top: 1px solid #2c2c38;
+      margin-top: 40px;
+    }
 
-        footer a {
-            color: #00d9a5;
-            text-decoration: none;
-        }
+    footer a {
+      color: #00ff66;
+      text-decoration: none;
+    }
 
-        footer a:hover {
-            text-decoration: underline;
-        }
+    footer a:hover {
+      text-decoration: underline;
+    }
 
-        /* Animaciones */
-        @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(10px);}
-            to {opacity: 1; transform: translateY(0);}
-        }
-
-        /* Responsividad */
-        @media (max-width: 768px) {
-            .quote {
-                font-size: 1.2em;
-                padding: 0 10px;
-            }
-
-            .container {
-                margin: 20px;
-                padding: 20px;
-            }
-        }
-    </style>
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .container {
+        margin: 15px;
+        padding: 15px;
+      }
+      .quote {
+        font-size: 1em;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <header>
-    <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Logo Financiero">
+  <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Logo Financiero">
 </header>
 
 <div class="quote">
-    “Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada” - Warren Buffett
+  “Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada” - Warren Buffett
 </div>
 
 <div class="container">
-    <h2>Herramienta de Scoring de Acciones</h2>
-    
-    <label for="previousPrice">Precio anterior (USD o MXN):</label>
-    <input type="number" id="previousPrice" placeholder="Ej. 100">
+  <h2>Herramienta de Scoring de Acciones</h2>
+  
+  <label for="previousPrice">Precio anterior (USD o MXN):</label>
+  <input type="number" id="previousPrice" placeholder="Ej. 100">
 
-    <label for="currentPrice">Precio actual (USD o MXN):</label>
-    <input type="number" id="currentPrice" placeholder="Ej. 75">
+  <label for="currentPrice">Precio actual (USD o MXN):</label>
+  <input type="number" id="currentPrice" placeholder="Ej. 75">
 
-    <label for="marketCap">Capitalización de mercado (en USD):</label>
-    <input type="number" id="marketCap" placeholder="Ej. 5000000000">
+  <label for="marketCap">Capitalización de mercado (en USD):</label>
+  <input type="number" id="marketCap" placeholder="Ej. 5000000000">
 
-    <label for="reason">Razón de la caída:</label>
-    <select id="reason">
-        <option value="problema interno solucionable">Problema interno solucionable</option>
-        <option value="restructuración">Reestructuración</option>
-        <option value="error temporal">Error temporal</option>
-        <option value="problema no solucionable">Problema no solucionable</option>
-    </select>
+  <label for="reason">Razón de la caída:</label>
+  <select id="reason">
+      <option value="problema interno solucionable">Problema interno solucionable</option>
+      <option value="restructuración">Reestructuración</option>
+      <option value="error temporal">Error temporal</option>
+      <option value="problema no solucionable">Problema no solucionable</option>
+  </select>
 
-    <label for="fundamentals">¿Fundamentales mejorarán con el tiempo?</label>
-    <select id="fundamentals">
-        <option value="true">Sí</option>
-        <option value="false">No</option>
-    </select>
+  <label for="fundamentals">¿Fundamentales mejorarán con el tiempo?</label>
+  <select id="fundamentals">
+      <option value="true">Sí</option>
+      <option value="false">No</option>
+  </select>
 
-    <button onclick="calculateScore()">Evaluar acción</button>
+  <button onclick="calculateScore()">Evaluar acción</button>
 
-    <div id="result" class="result" style="display:none;"></div>
+  <div id="result" class="result" style="display:none;"></div>
 </div>
 
 <footer>
-    <p>Contacto: enviar un correo ✉️ a <a href="mailto:mabo050796@gmail.com">mabo050796@gmail.com</a></p>
-    <p>&copy; 2024-2025 Investor Cesar's.</p>
+  <p>Contacto: enviar un correo ✉️ a <a href="mailto:mabo050796@gmail.com">mabo050796@gmail.com</a></p>
+  <p>&copy; 2024-2025 Investor Cesar's.</p>
 </footer>
 
 <script>
 function calculateScore() {
-    const previousPrice = parseFloat(document.getElementById('previousPrice').value);
-    const currentPrice = parseFloat(document.getElementById('currentPrice').value);
-    const marketCap = parseFloat(document.getElementById('marketCap').value);
-    const reason = document.getElementById('reason').value;
-    const fundamentalsWillImprove = document.getElementById('fundamentals').value === "true";
+  const previousPrice = parseFloat(document.getElementById('previousPrice').value);
+  const currentPrice = parseFloat(document.getElementById('currentPrice').value);
+  const marketCap = parseFloat(document.getElementById('marketCap').value);
+  const reason = document.getElementById('reason').value;
+  const fundamentalsWillImprove = document.getElementById('fundamentals').value === "true";
 
-    const results = {};
+  const results = {};
 
-    const dropPercent = ((previousPrice - currentPrice) / previousPrice) * 100;
-    results.drop = dropPercent > 20 ? "Cumple" : "No cumple";
+  const dropPercent = ((previousPrice - currentPrice) / previousPrice) * 100;
+  results.drop = dropPercent > 20 ? "Cumple" : "No cumple";
 
-    results.size = marketCap < 10_000_000_000 ? "Cumple" : "No cumple";
+  results.size = marketCap < 10_000_000_000 ? "Cumple" : "No cumple";
 
-    const solvableProblems = ["problema interno solucionable", "restructuración", "error temporal"];
-    results.reason = solvableProblems.includes(reason) ? "Cumple" : "No cumple";
+  const solvableProblems = ["problema interno solucionable", "restructuración", "error temporal"];
+  results.reason = solvableProblems.includes(reason) ? "Cumple" : "No cumple";
 
-    results.fundamentals = fundamentalsWillImprove ? "Cumple" : "No cumple";
+  results.fundamentals = fundamentalsWillImprove ? "Cumple" : "No cumple";
 
-    const allPass = Object.values(results).every(r => r === "Cumple");
-    results.final = allPass ? "Oportunidad potencial ✅" : "No cumple ❌";
+  const allPass = Object.values(results).every(r => r === "Cumple");
+  results.final = allPass ? "Oportunidad potencial ✅" : "No cumple ❌";
 
-    const resultDiv = document.getElementById('result');
-    resultDiv.style.display = "block";
-    resultDiv.innerHTML = `
-        <p><span>Caída > 20%:</span> <span class="${results.drop === "Cumple" ? "cumple" : "no-cumple"}">${results.drop} (${dropPercent.toFixed(2)}%)</span></p>
-        <p><span>Small Cap (&lt;10B USD):</span> <span class="${results.size === "Cumple" ? "cumple" : "no-cumple"}">${results.size} (${marketCap.toLocaleString()})</span></p>
-        <p><span>Razón de caída solucionable:</span> <span class="${results.reason === "Cumple" ? "cumple" : "no-cumple"}">${results.reason}</span></p>
-        <p><span>Fundamentales mejorarán:</span> <span class="${results.fundamentals === "Cumple" ? "cumple" : "no-cumple"}">${results.fundamentals}</span></p>
-        <p><strong>${results.final}</strong></p>
-    `;
+  const resultDiv = document.getElementById('result');
+  resultDiv.style.display = "block";
+  resultDiv.innerHTML = `
+      <p>Caída &gt; 20%: <span class="${results.drop === "Cumple" ? "cumple" : "no-cumple"}">${results.drop} (${dropPercent.toFixed(2)}%)</span></p>
+      <p>Small Cap (&lt;10B USD): <span class="${results.size === "Cumple" ? "cumple" : "no-cumple"}">${results.size} (${marketCap.toLocaleString()})</span></p>
+      <p>Razón de caída solucionable: <span class="${results.reason === "Cumple" ? "cumple" : "no-cumple"}">${results.reason}</span></p>
+      <p>Fundamentales mejorarán: <span class="${results.fundamentals === "Cumple" ? "cumple" : "no-cumple"}">${results.fundamentals}</span></p>
+      <p><strong>${results.final}</strong></p>
+  `;
 }
 </script>
 
 </body>
 </html>
+
 
