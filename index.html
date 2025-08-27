@@ -6,169 +6,154 @@
 <title>Investor Cesar's — Scoring Avanzado</title>
 
 <style>
-  :root{
-    --bg-main:#0d1117;
-    --bg-card:#161b22;
-    --bg-input:#1f242d;
-    --text:#e6e6e6;
-    --muted:#9ca3af;
-    --green:#00ff6a;
-    --red:#ff4d4d;
-    --amber:#ffcc00;
-    --border:#2d333b;
-    --radius:12px;
-    --radius-sm:8px;
-    --shadow:0 10px 20px rgba(0,0,0,.5);
-    --t:all .25s ease;
-  }
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{
-    font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    background:var(--bg-main);
-    color:var(--text);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-    padding:16px;
-  }
-  img{max-width:100%;display:block;height:auto;}
-
-  header{
-    background:var(--bg-card);
-    border-bottom:1px solid var(--border);
-    padding:16px;
-    text-align:center;
-    border-radius:var(--radius);
-    margin-bottom:16px;
-  }
-  header img{max-width:160px;}
-
-  .quote{
-    text-align:center;
-    color:var(--green);
-    font-style:italic;
-    padding:16px 20px;
-    border-bottom:1px solid var(--border);
-  }
-
-  .wrap{
-    max-width:1100px;
-    margin:24px auto;
-    padding:0 16px;
-  }
-
-  .card{
-    background:var(--bg-card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:20px;
-    box-shadow:var(--shadow);
-  }
-
-  .title{
-    font-size:1.25rem;
-    font-weight:650;
-    color:var(--green);
-    margin-bottom:12px;
-  }
-
-  label{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    color:var(--muted);
-    font-weight:550;
-    margin-bottom:6px;
-    font-size:.95rem;
-  }
-  .hint{
-    font-size:.85rem;
-    color:var(--muted);
-    margin:-2px 0 10px;
-  }
-
-  input, select, button{
-    width:100%;
-    background:var(--bg-input);
-    border:1px solid var(--border);
-    color:var(--text);
-    padding:12px 14px;
-    border-radius:var(--radius-sm);
-    font-size:1rem;
-    transition:var(--t);
-  }
-  input:focus, select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(0,255,106,.2);}
-  button{
-    background:var(--green);
-    border:none;
-    font-weight:650;
-    letter-spacing:.2px;
-    cursor:pointer;
-  }
-  button:hover{background:#00e65b;transform:translateY(-1px);}
-  button:disabled{opacity:.6;cursor:not-allowed;transform:none;}
-
-  .result{
-    margin-top:16px;
-    padding:16px;
-    background:var(--bg-input);
-    border-radius:var(--radius-sm);
-    border:1px solid var(--border);
-  }
-
-  .row{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:8px 0;border-bottom:1px dashed var(--border);
-    gap:12px;
-  }
-  .row:last-child{border-bottom:none}
-  .kpi{
-    font-variant-numeric: tabular-nums;
-    font-weight:700;
-  }
-
-  .score{
-    display:flex;align-items:center;gap:12px;margin-top:14px;
-    padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);
-    background:#111827;
-  }
-  .badge{
-    min-width:72px;text-align:center;padding:6px 10px;border-radius:999px;
-    font-weight:700;color:#000;
-  }
-  .high{background:var(--green);}
-  .medium{background:var(--amber);}
-  .low{background:var(--red);}
-
-  .meter{
-    flex:1;
-    height:12px;
-    border-radius:99px;
-    background:#0f172a;
-    border:1px solid var(--border);
-    overflow:hidden;
-  }
-  .meter > div{
-    height:100%;
-    width:0%;
-    transition:width .5s ease;
-  }
-
-  footer{
-    margin:24px auto 40px;
-    max-width:1100px;
-    padding:0 16px;
-    color:var(--muted);
-    text-align:center;
-  }
-  footer .foot{
-    background:var(--bg-card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:16px;
-  }
+:root{
+  --bg-main:#0d1117;
+  --bg-card:#161b22;
+  --bg-input:#1f242d;
+  --text:#e6e6e6;
+  --muted:#9ca3af;
+  --green:#00ff6a;
+  --red:#ff4d4d;
+  --amber:#ffcc00;
+  --border:#2d333b;
+  --radius:12px;
+  --radius-sm:8px;
+  --shadow:0 10px 20px rgba(0,0,0,.5);
+  --t:all .25s ease;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background:var(--bg-main);
+  color:var(--text);
+  line-height:1.6;
+  padding:16px;
+}
+img{max-width:100%;display:block;height:auto;}
+header{
+  background:var(--bg-card);
+  border-bottom:1px solid var(--border);
+  padding:16px;
+  text-align:center;
+  border-radius:var(--radius);
+  margin-bottom:16px;
+}
+header img{max-width:160px;}
+.quote{
+  text-align:center;
+  color:var(--green);
+  font-style:italic;
+  padding:16px 20px;
+  border-bottom:1px solid var(--border);
+}
+.wrap{
+  max-width:1100px;
+  margin:24px auto;
+  padding:0 16px;
+}
+.card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+.title{
+  font-size:1.25rem;
+  font-weight:650;
+  color:var(--green);
+  margin-bottom:12px;
+}
+label{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  color:var(--muted);
+  font-weight:550;
+  margin-bottom:6px;
+  font-size:.95rem;
+}
+.hint{
+  font-size:.85rem;
+  color:var(--muted);
+  margin:-2px 0 10px;
+}
+input, select, button{
+  width:100%;
+  background:var(--bg-input);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:12px 14px;
+  border-radius:var(--radius-sm);
+  font-size:1rem;
+  transition:var(--t);
+}
+input:focus, select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(0,255,106,.2);}
+button{
+  background:var(--green);
+  border:none;
+  font-weight:650;
+  letter-spacing:.2px;
+  cursor:pointer;
+}
+button:hover{background:#00e65b;transform:translateY(-1px);}
+button:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.result{
+  margin-top:16px;
+  padding:16px;
+  background:var(--bg-input);
+  border-radius:var(--radius-sm);
+  border:1px solid var(--border);
+}
+.row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0;border-bottom:1px dashed var(--border);
+  gap:12px;
+}
+.row:last-child{border-bottom:none}
+.kpi{
+  font-variant-numeric: tabular-nums;
+  font-weight:700;
+}
+.score{
+  display:flex;align-items:center;gap:12px;margin-top:14px;
+  padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:#111827;
+}
+.badge{
+  min-width:72px;text-align:center;padding:6px 10px;border-radius:999px;
+  font-weight:700;color:#000;
+}
+.high{background:var(--green);}
+.medium{background:var(--amber);}
+.low{background:var(--red);}
+.meter{
+  flex:1;
+  height:12px;
+  border-radius:99px;
+  background:#0f172a;
+  border:1px solid var(--border);
+  overflow:hidden;
+}
+.meter > div{
+  height:100%;
+  width:0%;
+  transition:width .5s ease;
+}
+footer{
+  margin:24px auto 40px;
+  max-width:1100px;
+  padding:0 16px;
+  color:var(--muted);
+  text-align:center;
+}
+footer .foot{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px;
+}
 </style>
 </head>
 <body>
@@ -185,11 +170,14 @@
   <section class="card">
     <h2 class="title">Herramienta de Scoring de Acciones</h2>
 
-    <label for="previousPrice">Precio anterior</label>
-    <input id="previousPrice" type="number" placeholder="Ej. 100">
+    <label for="dropPercent">Caída reciente (%)</label>
+    <input id="dropPercent" type="number" placeholder="Ej. 25">
 
-    <label for="currentPrice">Precio actual</label>
-    <input id="currentPrice" type="number" placeholder="Ej. 75">
+    <label for="problemSolved">¿La caída es por un problema solucionable?</label>
+    <select id="problemSolved">
+      <option value="true">Sí</option>
+      <option value="false">No</option>
+    </select>
 
     <label for="fundamentals">¿Fundamentales mejorarán?</label>
     <select id="fundamentals">
@@ -205,8 +193,8 @@
         <div class="kpi" id="dropLine">—</div>
       </div>
       <div class="row">
-        <div>Puntos por Caída</div>
-        <div class="kpi" id="dropPts">—</div>
+        <div>Problema solucionable</div>
+        <div class="kpi" id="problemPts">—</div>
       </div>
       <div class="row">
         <div>Fundamentales</div>
@@ -232,50 +220,54 @@
 
 <script>
 const btn = document.getElementById('btn');
-const result = document.getElementById('result');
 const dropLine = document.getElementById('dropLine');
-const dropPts = document.getElementById('dropPts');
+const problemPts = document.getElementById('problemPts');
 const fundPts = document.getElementById('fundPts');
 const totalPts = document.getElementById('totalPts');
 const grade = document.getElementById('grade');
 const meterBar = document.getElementById('meterBar');
 
 btn.addEventListener('click', ()=>{
-  const previous = parseFloat(document.getElementById('previousPrice').value);
-  const current = parseFloat(document.getElementById('currentPrice').value);
-  const fund = document.getElementById('fundamentals').value === 'true';
+  const drop = parseFloat(document.getElementById('dropPercent').value);
+  const problem = document.getElementById('problemSolved').value==='true';
+  const fund = document.getElementById('fundamentals').value==='true';
 
-  if(isNaN(previous) || isNaN(current)){alert('Ingresa valores válidos'); return;}
+  if(isNaN(drop)){alert('Ingresa un valor válido'); return;}
 
-  const dropPercent = ((previous - current)/previous)*100;
-  dropLine.textContent = dropPercent.toFixed(2) + '%';
+  dropLine.textContent = drop.toFixed(2)+'%';
 
+  // Puntos caída
   let dropScore=0;
-  if(dropPercent>=30) dropScore=60;
-  else if(dropPercent>=20) dropScore=50;
-  else if(dropPercent>=10) dropScore=35;
-  else if(dropPercent>=5) dropScore=20;
+  if(drop>=30) dropScore=60;
+  else if(drop>=20) dropScore=50;
+  else if(drop>=10) dropScore=35;
+  else if(drop>=5) dropScore=20;
   else dropScore=0;
-  dropPts.textContent=dropScore;
 
-  let fundScore = fund ? 40:0;
-  fundPts.textContent=fundScore;
+  // Puntos problema solucionable
+  let problemScore = problem?20:-20;
 
-  const totalScore = dropScore + fundScore;
-  totalPts.textContent=totalScore;
+  // Puntos fundamentales
+  let fundScore = fund?40:0;
 
-  let gClass='low';
-  let gText='BAJO';
+  problemPts.textContent = problemScore;
+  fundPts.textContent = fundScore;
+
+  const totalScore = dropScore + problemScore + fundScore;
+  totalPts.textContent = totalScore;
+
+  // Badge y barra
+  let gClass='low', gText='BAJO';
   if(totalScore>=80){gClass='high'; gText='ALTO';}
   else if(totalScore>=50){gClass='medium'; gText='MEDIO';}
   grade.textContent=gText;
   grade.className='badge '+gClass;
-
-  meterBar.style.width = totalScore + '%';
+  meterBar.style.width=totalScore+'%';
   meterBar.style.background = gClass==='high'?'#00ff6a':gClass==='medium'?'#ffcc00':'#ff4d4d';
 
-  result.style.display='block';
+  document.getElementById('result').style.display='block';
 });
 </script>
 </body>
 </html>
+
