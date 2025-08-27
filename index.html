@@ -1,307 +1,413 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Investor Cesar's - Scoring Avanzado</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Investor Cesar's — Scoring Avanzado</title>
+
+  <!-- Estilo: Software financiero (dark, UI/UX responsivo y accesible) -->
   <style>
-    /* ====================
-       VARIABLES
-    ==================== */
-    :root {
-      --bg-main: #0d1117;
-      --bg-card: #161b22;
-      --bg-input: #1f242d;
-      --text-main: #e6e6e6;
-      --text-muted: #9ca3af;
-      --accent-green: #22c55e;
-      --accent-red: #ef4444;
-      --accent-blue: #2563eb;
-      --border-color: #2d333b;
-      --radius: 8px;
-      --transition: all 0.25s ease-in-out;
+    :root{
+      --bg-main:#0d1117;
+      --bg-card:#161b22;
+      --bg-input:#1f242d;
+      --text:#e6e6e6;
+      --muted:#9ca3af;
+      --blue:#2563eb;
+      --blue-2:#1e40af;
+      --green:#22c55e;
+      --red:#ef4444;
+      --amber:#f59e0b;
+      --border:#2d333b;
+      --radius:12px;
+      --radius-sm:8px;
+      --shadow:0 10px 30px rgba(0,0,0,.45);
+      --t:all .25s ease;
     }
 
-    /* ====================
-       RESETEO Y GENERAL
-    ==================== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background:var(--bg-main);
+      color:var(--text);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    img{max-width:100%;height:auto;display:block}
+
+    header{
+      background:var(--bg-card);
+      border-bottom:1px solid var(--border);
+      padding:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    header img{max-width:160px}
+
+    .quote{
+      text-align:center;
+      color:var(--blue);
+      font-style:italic;
+      padding:16px 20px;
+      border-bottom:1px solid var(--border);
     }
 
-    body {
-      font-family: "Inter", "Segoe UI", sans-serif;
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+    .wrap{
+      max-width:1100px;
+      margin:24px auto;
+      padding:0 16px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:16px;
     }
 
-    img {
-      max-width: 100%;
-      height: auto;
+    .card{
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:var(--shadow);
     }
 
-    /* ====================
-       HEADER
-    ==================== */
-    header {
-      background-color: var(--bg-card);
-      border-bottom: 1px solid var(--border-color);
-      text-align: center;
-      padding: 1.2rem;
+    .title{
+      font-size:1.25rem;
+      font-weight:650;
+      color:var(--blue);
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
     }
 
-    header img {
-      max-width: 160px;
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    @media (max-width: 720px){
+      .grid{grid-template-columns:1fr}
     }
 
-    /* ====================
-       FRASE
-    ==================== */
-    .quote {
-      text-align: center;
-      margin: 1.5rem auto;
-      font-size: 1.1rem;
-      color: var(--accent-blue);
-      max-width: 900px;
-      padding: 0 1rem;
-      font-style: italic;
+    label{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      color:var(--muted);
+      font-weight:550;
+      margin-bottom:6px;
+      font-size:.95rem;
+    }
+    .hint{
+      font-size:.85rem;
+      color:var(--muted);
+      margin:-2px 0 10px;
     }
 
-    /* ====================
-       CONTENEDOR PRINCIPAL
-    ==================== */
-    .container {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background-color: var(--bg-card);
-      border-radius: var(--radius);
-      border: 1px solid var(--border-color);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    input, select, button{
+      width:100%;
+      background:var(--bg-input);
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:12px 14px;
+      border-radius:var(--radius-sm);
+      font-size:1rem;
+      transition:var(--t);
+    }
+    input:focus, select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+    button{
+      background:var(--blue);
+      border:none;
+      font-weight:650;
+      letter-spacing:.2px;
+      cursor:pointer;
+    }
+    button:hover{background:var(--blue-2);transform:translateY(-1px)}
+    button:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+    .result{
+      margin-top:8px;
+      padding:16px;
+      background:var(--bg-input);
+      border-radius:var(--radius-sm);
+      border:1px solid var(--border);
+    }
+    .row{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:8px 0;border-bottom:1px dashed var(--border);
+      gap:12px;
+    }
+    .row:last-child{border-bottom:none}
+    .kpi{
+      font-variant-numeric: tabular-nums;
+      font-weight:650;
+    }
+    .pos{color:var(--green);font-weight:700}
+    .neg{color:var(--red);font-weight:700}
+    .neu{color:var(--amber);font-weight:700}
+
+    .score{
+      display:flex;align-items:center;gap:12px;margin-top:14px;
+      padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);
+      background:linear-gradient(180deg, rgba(37,99,235,.08), transparent);
+    }
+    .badge{
+      min-width:72px;text-align:center;padding:6px 10px;border-radius:999px;
+      border:1px solid var(--border);font-weight:700
     }
 
-    h2 {
-      text-align: center;
-      color: var(--accent-blue);
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
+    .meter{
+      height:12px;border-radius:99px;background:#0f172a;border:1px solid var(--border);overflow:hidden;
+    }
+    .meter > div{height:100%;width:0%;background:linear-gradient(90deg, #22c55e, #2563eb);transition:width .5s ease}
+
+    footer{
+      margin:24px auto 40px;
+      max-width:1100px;
+      padding:0 16px;
+      color:var(--muted);
+      text-align:center;
+    }
+    footer .foot{
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
     }
 
-    label {
-      display: block;
-      margin-top: 1rem;
-      margin-bottom: 0.4rem;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-
-    input, select, button {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border-color);
-      background-color: var(--bg-input);
-      color: var(--text-main);
-      font-size: 1rem;
-      transition: var(--transition);
-    }
-
-    input:focus, select:focus {
-      border-color: var(--accent-blue);
-      outline: none;
-      background-color: #1c222d;
-    }
-
-    button {
-      background-color: var(--accent-blue);
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      letter-spacing: 0.5px;
-    }
-
-    button:hover {
-      background-color: #1e40af;
-      transform: translateY(-2px);
-    }
-
-    /* ====================
-       RESULTADOS
-    ==================== */
-    .result {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      border-radius: var(--radius);
-      background-color: var(--bg-input);
-      font-size: 1rem;
-      border-left: 4px solid var(--accent-blue);
-      animation: fadeIn 0.3s ease-in-out;
-    }
-
-    .cumple {
-      color: var(--accent-green);
-      font-weight: 600;
-    }
-
-    .no-cumple {
-      color: var(--accent-red);
-      font-weight: 600;
-    }
-
-    /* ====================
-       FOOTER
-    ==================== */
-    footer {
-      background-color: var(--bg-card);
-      color: var(--text-muted);
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.9rem;
-      border-top: 1px solid var(--border-color);
-      margin-top: 2rem;
-    }
-
-    footer a {
-      color: var(--accent-blue);
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* ====================
-       ANIMACIONES
-    ==================== */
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(10px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    /* ====================
-       RESPONSIVIDAD
-    ==================== */
-    @media (max-width: 1024px) {
-      .container {
-        margin: 1.5rem;
-        padding: 1.5rem;
-      }
-      h2 {
-        font-size: 1.4rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .quote {
-        font-size: 1rem;
-      }
-      h2 {
-        font-size: 1.3rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 1rem;
-      }
-      input, select, button {
-        font-size: 0.95rem;
-        padding: 0.65rem;
-      }
-      .quote {
-        font-size: 0.95rem;
-      }
-    }
+    .sr{position:absolute;left:-9999px}
   </style>
 </head>
 <body>
+  <header>
+    <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Investor Cesar's">
+  </header>
 
-<header>
-  <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Logo Financiero">
-</header>
+  <div class="quote">
+    “Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada.” — Warren Buffett
+  </div>
 
-<div class="quote">
-  “Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada” - Warren Buffett
-</div>
+  <main class="wrap">
+    <!-- Panel de entrada -->
+    <section class="card" aria-labelledby="h-scoring">
+      <h2 id="h-scoring" class="title">Herramienta de Scoring de Acciones</h2>
 
-<div class="container">
-  <h2>Herramienta de Scoring de Acciones</h2>
-  
-  <label for="previousPrice">Precio anterior (USD o MXN):</label>
-  <input type="number" id="previousPrice" placeholder="Ej. 100">
+      <div class="grid" role="group" aria-label="Datos de precio">
+        <div>
+          <label for="previousPrice">
+            Precio anterior
+            <span class="kpi">USD/MXN</span>
+          </label>
+          <input id="previousPrice" type="number" min="0" step="any" placeholder="Ej. 100" inputmode="decimal" />
+          <p class="hint">Último máximo/precio previo al evento.</p>
+        </div>
 
-  <label for="currentPrice">Precio actual (USD o MXN):</label>
-  <input type="number" id="currentPrice" placeholder="Ej. 75">
+        <div>
+          <label for="currentPrice">
+            Precio actual
+            <span class="kpi">USD/MXN</span>
+          </label>
+          <input id="currentPrice" type="number" min="0" step="any" placeholder="Ej. 75" inputmode="decimal" />
+          <p class="hint">Precio de cierre/último.</p>
+        </div>
+      </div>
 
-  <label for="marketCap">Capitalización de mercado (en USD):</label>
-  <input type="number" id="marketCap" placeholder="Ej. 5000000000">
+      <div class="grid" role="group" aria-label="Cualitativo">
+        <div>
+          <label for="fundamentals">¿Fundamentales mejorando?</label>
+          <select id="fundamentals">
+            <option value="true">Sí</option>
+            <option value="false">No</option>
+          </select>
+          <p class="hint">Sí = tendencia positiva en márgenes, ROE, flujo, deuda.</p>
+        </div>
 
-  <label for="reason">Razón de la caída:</label>
-  <select id="reason">
-      <option value="problema interno solucionable">Problema interno solucionable</option>
-      <option value="restructuración">Reestructuración</option>
-      <option value="error temporal">Error temporal</option>
-      <option value="problema no solucionable">Problema no solucionable</option>
-  </select>
+        <div>
+          <label for="horizon">
+            Horizonte de caída
+            <span class="kpi">días</span>
+          </label>
+          <input id="horizon" type="number" min="1" step="1" value="90" />
+          <p class="hint">Solo informativo (no afecta el score por ahora).</p>
+        </div>
+      </div>
 
-  <label for="fundamentals">¿Fundamentales mejorarán con el tiempo?</label>
-  <select id="fundamentals">
-      <option value="true">Sí</option>
-      <option value="false">No</option>
-  </select>
+      <button id="btn" style="margin-top:8px">Calcular scoring</button>
 
-  <button onclick="calculateScore()">Evaluar acción</button>
+      <div id="result" class="result" style="display:none" aria-live="polite">
+        <div class="row">
+          <div>Caída reciente</div>
+          <div class="kpi" id="dropLine">—</div>
+        </div>
+        <div class="row">
+          <div>Puntos por Caída (0–60)</div>
+          <div class="kpi" id="dropPts">—</div>
+        </div>
+        <div class="row">
+          <div>Fundamentales (0 o 40)</div>
+          <div class="kpi" id="fundPts">—</div>
+        </div>
+        <div class="row">
+          <div>Puntaje total (0–100)</div>
+          <div class="kpi" id="totalPts">—</div>
+        </div>
 
-  <div id="result" class="result" style="display:none;"></div>
-</div>
+        <div class="score">
+          <div class="badge" id="grade">—</div>
+          <div style="flex:1">
+            <div class="meter" aria-hidden="true"><div id="bar"></div></div>
+            <div class="hint" id="explain" style="margin-top:8px">—</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<footer>
-  <p>Contacto: enviar un correo ✉️ a <a href="mailto:mabo050796@gmail.com">mabo050796@gmail.com</a></p>
-  <p>&copy; 2024-2025 Investor Cesar's.</p>
-</footer>
+    <!-- Panel de reglas (ayuda) -->
+    <aside class="card" aria-labelledby="h-rules">
+      <h2 id="h-rules" class="title">Reglas del modelo (v1)</h2>
+      <ul style="color:var(--muted); display:grid; gap:10px; padding-left:18px">
+        <li><strong>Escala total:</strong> 0–100.</li>
+        <li><strong>Peso Caída:</strong> hasta 60 pts con función no lineal.</li>
+        <li><strong>Peso Fundamentales:</strong> Sí = 40 pts, No = 0 pts.</li>
+        <li><strong>Función Caída (d = % de caída):</strong>
+          <div style="margin-top:8px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background:rgba(0,0,0,.25); padding:10px; border:1px solid var(--border); border-radius:8px">
+            1) d ≤ 0% → 0 pts<br/>
+            2) 0% &lt; d ≤ 10% → lineal hasta 30 pts<br/>
+            3) 10% &lt; d ≤ 25% → lineal suave hasta 60 pts (máx. atractivo)<br/>
+            4) 25% &lt; d ≤ 40% → penalización progresiva ↓ a 45 pts<br/>
+            5) d &gt; 40% → cap en 40 pts (riesgo elevado)
+          </div>
+        </li>
+        <li><strong>Interpretación:</strong>
+          <div style="margin-top:8px; display:grid; gap:6px">
+            <div>≥ 80 &nbsp; <span class="pos">Excelente</span></div>
+            <div>60–79 <span class="pos">Buena</span></div>
+            <div>40–59 <span class="neu">Neutral</span></div>
+            <div>&lt; 40 &nbsp; <span class="neg">Riesgosa</span></div>
+          </div>
+        </li>
+      </ul>
+    </aside>
+  </main>
 
-<script>
-function calculateScore() {
-  const previousPrice = parseFloat(document.getElementById('previousPrice').value);
-  const currentPrice = parseFloat(document.getElementById('currentPrice').value);
-  const marketCap = parseFloat(document.getElementById('marketCap').value);
-  const reason = document.getElementById('reason').value;
-  const fundamentalsWillImprove = document.getElementById('fundamentals').value === "true";
+  <footer>
+    <div class="foot">
+      Contacto: <a href="mailto:mabo050796@gmail.com" style="color:#93c5fd;text-decoration:none">mabo050796@gmail.com</a> • © 2024–2025 Investor Cesar's
+    </div>
+  </footer>
 
-  const results = {};
+  <script>
+    // Utilidades
+    const clamp = (x,min,max)=>Math.min(Math.max(x,min),max);
 
-  const dropPercent = ((previousPrice - currentPrice) / previousPrice) * 100;
-  results.drop = dropPercent > 20 ? "Cumple" : "No cumple";
+    /**
+     * Mapea % de caída a puntos (0–60) con pieza no lineal.
+     * d = porcentaje positivo de caída. Ej: 25% => 25
+     */
+    function dropToPoints(d){
+      if (!isFinite(d) || d <= 0) return 0;
 
-  results.size = marketCap < 10_000_000_000 ? "Cumple" : "No cumple";
+      // Tramo A: 0% → 10%  (0 → 30 pts)  pendiente 3.0
+      if (d > 0 && d <= 10) {
+        return d * 3.0; // 10% => 30
+      }
 
-  const solvableProblems = ["problema interno solucionable", "restructuración", "error temporal"];
-  results.reason = solvableProblems.includes(reason) ? "Cumple" : "No cumple";
+      // Tramo B: 10% → 25% (30 → 60 pts) pendiente 2.0
+      if (d > 10 && d <= 25) {
+        return 30 + (d - 10) * 2.0; // 25% => 60
+      }
 
-  results.fundamentals = fundamentalsWillImprove ? "Cumple" : "No cumple";
+      // Tramo C: 25% → 40% penaliza (60 → 45)
+      if (d > 25 && d <= 40) {
+        // baja 1 pt por cada 1% adicional: 60 - (d-25)*1 = 45 en 40%
+        return 60 - (d - 25) * 1.0;
+      }
 
-  const allPass = Object.values(results).every(r => r === "Cumple");
-  results.final = allPass ? "Oportunidad potencial ✅" : "No cumple ❌";
+      // Tramo D: > 40% cap fijo en 40 pts (riesgo alto)
+      return 40;
+    }
 
-  const resultDiv = document.getElementById('result');
-  resultDiv.style.display = "block";
-  resultDiv.innerHTML = `
-      <p>Caída &gt; 20%: <span class="${results.drop === "Cumple" ? "cumple" : "no-cumple"}">${results.drop} (${dropPercent.toFixed(2)}%)</span></p>
-      <p>Small Cap (&lt;10B USD): <span class="${results.size === "Cumple" ? "cumple" : "no-cumple"}">${results.size} (${marketCap.toLocaleString()})</span></p>
-      <p>Razón de caída solucionable: <span class="${results.reason === "Cumple" ? "cumple" : "no-cumple"}">${results.reason}</span></p>
-      <p>Fundamentales mejorarán: <span class="${results.fundamentals === "Cumple" ? "cumple" : "no-cumple"}">${results.fundamentals}</span></p>
-      <p><strong>${results.final}</strong></p>
-  `;
-}
-</script>
+    function fundamentalsToPoints(flag){
+      return flag ? 40 : 0;
+    }
 
+    function gradeFromScore(s){
+      if (s >= 80) return {label:"Excelente", cls:"pos"};
+      if (s >= 60) return {label:"Buena", cls:"pos"};
+      if (s >= 40) return {label:"Neutral", cls:"neu"};
+      return {label:"Riesgosa", cls:"neg"};
+    }
+
+    function fmtPct(x){
+      if (!isFinite(x)) return "—";
+      const sign = x >= 0 ? "" : "-";
+      return sign + Math.abs(x).toFixed(2) + "%";
+    }
+
+    // Interacción
+    const $ = id => document.getElementById(id);
+    const btn = $("btn");
+    const res = $("result");
+    const dropLine = $("dropLine");
+    const dropPts = $("dropPts");
+    const fundPts = $("fundPts");
+    const totalPts = $("totalPts");
+    const bar = $("bar");
+    const grade = $("grade");
+    const explain = $("explain");
+
+    btn.addEventListener("click", () => {
+      const prev = parseFloat($("previousPrice").value);
+      const curr = parseFloat($("currentPrice").value);
+      const fundamentalsWillImprove = $("fundamentals").value === "true";
+
+      // Validaciones básicas
+      if (!isFinite(prev) || !isFinite(curr) || prev <= 0 || curr <= 0){
+        alert("Ingresa precios válidos (mayores a 0).");
+        return;
+      }
+
+      // % caída (positivo si bajó)
+      const dropPct = ((prev - curr) / prev) * 100;
+
+      // Cálculo de puntos
+      const dropPoints = dropToPoints(dropPct);
+      const fPoints = fundamentalsToPoints(fundamentalsWillImprove);
+
+      // Total (0–100), clamp por seguridad
+      const total = clamp(Math.round(dropPoints + fPoints), 0, 100);
+
+      // UI
+      res.style.display = "block";
+      const trendClass = dropPct >= 0 ? "neg" : "pos"; // si es caída (>=0) la pintamos en rojo
+      dropLine.innerHTML = `<span class="${trendClass}">${fmtPct(dropPct)}</span>`;
+
+      dropPts.textContent = `${dropPoints.toFixed(1)} pts`;
+      fundPts.textContent = `${fPoints.toFixed(0)} pts`;
+      totalPts.textContent = `${total} pts`;
+
+      const g = gradeFromScore(total);
+      grade.textContent = g.label;
+      grade.className = `badge ${g.cls}`;
+
+      bar.style.width = `${total}%`;
+
+      // Explicación breve
+      if (dropPct <= 0){
+        explain.innerHTML = "No hay caída reciente: sin puntos por caída. Los fundamentales determinan el resultado.";
+      } else if (dropPct > 0 && dropPct <= 10){
+        explain.innerHTML = "Caída moderada: atractivo creciente hasta 10%.";
+      } else if (dropPct > 10 && dropPct <= 25){
+        explain.innerHTML = "Zona óptima de descuento: mayor atractivo hasta ~25%.";
+      } else if (dropPct > 25 && dropPct <= 40){
+        explain.innerHTML = "Caída profunda: se aplica penalización por riesgo de problema estructural.";
+      } else {
+        explain.innerHTML = "Caída extrema: cap de puntos por riesgo elevado.";
+      }
+    });
+  </script>
 </body>
 </html>
 
