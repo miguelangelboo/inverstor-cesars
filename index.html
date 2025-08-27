@@ -1,312 +1,281 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Investor Cesar's — Scoring Avanzado</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Cesar's — Scoring Avanzado</title>
 
-  <!-- Estilo financiero completo -->
-  <style>
-    :root{
-      --bg-main:#0d1117;
-      --bg-card:#161b22;
-      --bg-input:#1f242d;
-      --text:#e6e6e6;
-      --muted:#9ca3af;
-      --blue:#2563eb;
-      --blue-2:#1e40af;
-      --green:#22c55e;
-      --red:#ef4444;
-      --amber:#f59e0b;
-      --border:#2d333b;
-      --radius:12px;
-      --radius-sm:8px;
-      --shadow:0 10px 30px rgba(0,0,0,.45);
-      --t:all .25s ease;
-    }
+<style>
+  :root{
+    --bg-main:#0d1117;
+    --bg-card:#161b22;
+    --bg-input:#1f242d;
+    --text:#e6e6e6;
+    --muted:#9ca3af;
+    --green:#00ff6a;
+    --red:#ff4d4d;
+    --amber:#ffcc00;
+    --border:#2d333b;
+    --radius:12px;
+    --radius-sm:8px;
+    --shadow:0 10px 20px rgba(0,0,0,.5);
+    --t:all .25s ease;
+  }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background:var(--bg-main);
-      color:var(--text);
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
-    img{max-width:100%;height:auto;display:block}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    background:var(--bg-main);
+    color:var(--text);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    padding:16px;
+  }
+  img{max-width:100%;display:block;height:auto;}
 
-    header{
-      background:var(--bg-card);
-      border-bottom:1px solid var(--border);
-      padding:16px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    header img{max-width:160px}
+  header{
+    background:var(--bg-card);
+    border-bottom:1px solid var(--border);
+    padding:16px;
+    text-align:center;
+    border-radius:var(--radius);
+    margin-bottom:16px;
+  }
+  header img{max-width:160px;}
 
-    .quote{
-      text-align:center;
-      color:var(--blue);
-      font-style:italic;
-      padding:16px 20px;
-      border-bottom:1px solid var(--border);
-    }
+  .quote{
+    text-align:center;
+    color:var(--green);
+    font-style:italic;
+    padding:16px 20px;
+    border-bottom:1px solid var(--border);
+  }
 
-    .wrap{
-      max-width:1100px;
-      margin:24px auto;
-      padding:0 16px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:16px;
-    }
+  .wrap{
+    max-width:1100px;
+    margin:24px auto;
+    padding:0 16px;
+  }
 
-    .card{
-      background:var(--bg-card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:20px;
-      box-shadow:var(--shadow);
-    }
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow:var(--shadow);
+  }
 
-    .title{
-      font-size:1.25rem;
-      font-weight:650;
-      color:var(--blue);
-      margin-bottom:12px;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
+  .title{
+    font-size:1.25rem;
+    font-weight:650;
+    color:var(--green);
+    margin-bottom:12px;
+  }
 
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
-    }
-    @media (max-width: 720px){
-      .grid{grid-template-columns:1fr}
-    }
+  label{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    color:var(--muted);
+    font-weight:550;
+    margin-bottom:6px;
+    font-size:.95rem;
+  }
+  .hint{
+    font-size:.85rem;
+    color:var(--muted);
+    margin:-2px 0 10px;
+  }
 
-    label{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      color:var(--muted);
-      font-weight:550;
-      margin-bottom:6px;
-      font-size:.95rem;
-    }
-    .hint{
-      font-size:.85rem;
-      color:var(--muted);
-      margin:-2px 0 10px;
-    }
+  input, select, button{
+    width:100%;
+    background:var(--bg-input);
+    border:1px solid var(--border);
+    color:var(--text);
+    padding:12px 14px;
+    border-radius:var(--radius-sm);
+    font-size:1rem;
+    transition:var(--t);
+  }
+  input:focus, select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(0,255,106,.2);}
+  button{
+    background:var(--green);
+    border:none;
+    font-weight:650;
+    letter-spacing:.2px;
+    cursor:pointer;
+  }
+  button:hover{background:#00e65b;transform:translateY(-1px);}
+  button:disabled{opacity:.6;cursor:not-allowed;transform:none;}
 
-    input, select, button{
-      width:100%;
-      background:var(--bg-input);
-      border:1px solid var(--border);
-      color:var(--text);
-      padding:12px 14px;
-      border-radius:var(--radius-sm);
-      font-size:1rem;
-      transition:var(--t);
-    }
-    input:focus, select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
-    button{
-      background:var(--blue);
-      border:none;
-      font-weight:650;
-      letter-spacing:.2px;
-      cursor:pointer;
-    }
-    button:hover{background:var(--blue-2);transform:translateY(-1px)}
-    button:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .result{
+    margin-top:16px;
+    padding:16px;
+    background:var(--bg-input);
+    border-radius:var(--radius-sm);
+    border:1px solid var(--border);
+  }
 
-    .result{
-      margin-top:8px;
-      padding:16px;
-      background:var(--bg-input);
-      border-radius:var(--radius-sm);
-      border:1px solid var(--border);
-    }
-    .row{
-      display:flex;justify-content:space-between;align-items:center;
-      padding:8px 0;border-bottom:1px dashed var(--border);
-      gap:12px;
-    }
-    .row:last-child{border-bottom:none}
-    .kpi{
-      font-variant-numeric: tabular-nums;
-      font-weight:650;
-    }
-    .pos{color:var(--green);font-weight:700}
-    .neg{color:var(--red);font-weight:700}
-    .neu{color:var(--amber);font-weight:700}
+  .row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 0;border-bottom:1px dashed var(--border);
+    gap:12px;
+  }
+  .row:last-child{border-bottom:none}
+  .kpi{
+    font-variant-numeric: tabular-nums;
+    font-weight:700;
+  }
 
-    .score{
-      display:flex;align-items:center;gap:12px;margin-top:14px;
-      padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);
-      background:linear-gradient(180deg, rgba(37,99,235,.08), transparent);
-    }
-    .badge{
-      min-width:72px;text-align:center;padding:6px 10px;border-radius:999px;
-      border:1px solid var(--border);font-weight:700
-    }
+  .score{
+    display:flex;align-items:center;gap:12px;margin-top:14px;
+    padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);
+    background:#111827;
+  }
+  .badge{
+    min-width:72px;text-align:center;padding:6px 10px;border-radius:999px;
+    font-weight:700;color:#000;
+  }
+  .high{background:var(--green);}
+  .medium{background:var(--amber);}
+  .low{background:var(--red);}
 
-    .meter{
-      height:12px;border-radius:99px;background:#0f172a;border:1px solid var(--border);overflow:hidden;
-    }
-    .meter > div{height:100%;width:0%;background:linear-gradient(90deg, #22c55e, #2563eb);transition:width .5s ease}
+  .meter{
+    flex:1;
+    height:12px;
+    border-radius:99px;
+    background:#0f172a;
+    border:1px solid var(--border);
+    overflow:hidden;
+  }
+  .meter > div{
+    height:100%;
+    width:0%;
+    transition:width .5s ease;
+  }
 
-    footer{
-      margin:24px auto 40px;
-      max-width:1100px;
-      padding:0 16px;
-      color:var(--muted);
-      text-align:center;
-    }
-    footer .foot{
-      background:var(--bg-card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:16px;
-    }
-
-    .sr{position:absolute;left:-9999px}
-  </style>
+  footer{
+    margin:24px auto 40px;
+    max-width:1100px;
+    padding:0 16px;
+    color:var(--muted);
+    text-align:center;
+  }
+  footer .foot{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:16px;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Investor Cesar's">
-  </header>
 
-  <div class="quote">
-    “Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada.” — Warren Buffett
-  </div>
+<header>
+  <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Investor Cesar's">
+</header>
 
-  <main class="wrap">
-    <!-- Panel de entrada -->
-    <section class="card" aria-labelledby="h-scoring">
-      <h2 id="h-scoring" class="title">Herramienta de Scoring de Acciones</h2>
+<div class="quote">
+  “Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada.” — Warren Buffett
+</div>
 
-      <div class="grid" role="group" aria-label="Datos de precio">
-        <div>
-          <label for="previousPrice">
-            Precio anterior
-            <span class="kpi">USD/MXN</span>
-          </label>
-          <input id="previousPrice" type="number" min="0" step="any" placeholder="Ej. 100" inputmode="decimal" />
-          <p class="hint">Último máximo/precio previo al evento.</p>
-        </div>
+<main class="wrap">
+  <section class="card">
+    <h2 class="title">Herramienta de Scoring de Acciones</h2>
 
-        <div>
-          <label for="currentPrice">
-            Precio actual
-            <span class="kpi">USD/MXN</span>
-          </label>
-          <input id="currentPrice" type="number" min="0" step="any" placeholder="Ej. 75" inputmode="decimal" />
-          <p class="hint">Precio de cierre/último.</p>
-        </div>
+    <label for="previousPrice">Precio anterior</label>
+    <input id="previousPrice" type="number" placeholder="Ej. 100">
+
+    <label for="currentPrice">Precio actual</label>
+    <input id="currentPrice" type="number" placeholder="Ej. 75">
+
+    <label for="fundamentals">¿Fundamentales mejorarán?</label>
+    <select id="fundamentals">
+      <option value="true">Sí</option>
+      <option value="false">No</option>
+    </select>
+
+    <button id="btn">Calcular scoring</button>
+
+    <div id="result" class="result" style="display:none">
+      <div class="row">
+        <div>Caída reciente</div>
+        <div class="kpi" id="dropLine">—</div>
       </div>
-
-      <div class="grid" role="group" aria-label="Cualitativo">
-        <div>
-          <label for="fundamentals">¿Fundamentales mejorarán?</label>
-          <select id="fundamentals">
-            <option value="true">Sí</option>
-            <option value="false">No</option>
-          </select>
-          <p class="hint">Sí = tendencia positiva en márgenes, ROE, flujo, deuda.</p>
-        </div>
+      <div class="row">
+        <div>Puntos por Caída</div>
+        <div class="kpi" id="dropPts">—</div>
       </div>
-
-      <button id="btn" style="margin-top:8px">Calcular scoring</button>
-
-      <div id="result" class="result" aria-live="polite">
-        <div class="row">
-          <div>Caída reciente</div>
-          <div class="kpi" id="dropLine">—</div>
-        </div>
-        <div class="row">
-          <div>Puntos por Caída (0–60)</div>
-          <div class="kpi" id="dropPts">—</div>
-        </div>
-        <div class="row">
-          <div>Fundamentales (0 o 40)</div>
-          <div class="kpi" id="fundPts">—</div>
-        </div>
-        <div class="row">
-          <div>Puntaje total (0–100)</div>
-          <div class="kpi" id="totalPts">—</div>
-        </div>
-
-        <div class="score">
-          <div class="badge" id="grade">—</div>
-          <div class="meter"><div id="meterBar"></div></div>
-        </div>
+      <div class="row">
+        <div>Fundamentales</div>
+        <div class="kpi" id="fundPts">—</div>
       </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="foot">
-      Contacto: <a href="mailto:mabo050796@gmail.com">mabo050796@gmail.com</a> &copy; 2024-2025 Investor Cesar's
+      <div class="row">
+        <div>Puntaje total</div>
+        <div class="kpi" id="totalPts">—</div>
+      </div>
+      <div class="score">
+        <div id="grade" class="badge">—</div>
+        <div class="meter"><div id="meterBar"></div></div>
+      </div>
     </div>
-  </footer>
+  </section>
+</main>
 
-  <script>
-    const btn = document.getElementById('btn');
-    const result = document.getElementById('result');
-    const dropLine = document.getElementById('dropLine');
-    const dropPts = document.getElementById('dropPts');
-    const fundPts = document.getElementById('fundPts');
-    const totalPts = document.getElementById('totalPts');
-    const grade = document.getElementById('grade');
-    const meterBar = document.getElementById('meterBar');
+<footer>
+  <div class="foot">
+    Contacto: <a href="mailto:mabo050796@gmail.com">mabo050796@gmail.com</a> &copy; 2024-2025 Investor Cesar's
+  </div>
+</footer>
 
-    btn.addEventListener('click', ()=>{
-      const previous = parseFloat(document.getElementById('previousPrice').value);
-      const current = parseFloat(document.getElementById('currentPrice').value);
-      const fund = document.getElementById('fundamentals').value === 'true';
+<script>
+const btn = document.getElementById('btn');
+const result = document.getElementById('result');
+const dropLine = document.getElementById('dropLine');
+const dropPts = document.getElementById('dropPts');
+const fundPts = document.getElementById('fundPts');
+const totalPts = document.getElementById('totalPts');
+const grade = document.getElementById('grade');
+const meterBar = document.getElementById('meterBar');
 
-      if(isNaN(previous) || isNaN(current)){alert('Ingresa valores válidos'); return;}
+btn.addEventListener('click', ()=>{
+  const previous = parseFloat(document.getElementById('previousPrice').value);
+  const current = parseFloat(document.getElementById('currentPrice').value);
+  const fund = document.getElementById('fundamentals').value === 'true';
 
-      const dropPercent = ((previous - current)/previous)*100;
-      dropLine.textContent = dropPercent.toFixed(2) + '%';
+  if(isNaN(previous) || isNaN(current)){alert('Ingresa valores válidos'); return;}
 
-      // Puntos por caída
-      let dropScore = 0;
-      if(dropPercent >= 30) dropScore=60;
-      else if(dropPercent >=20) dropScore=50;
-      else if(dropPercent >=10) dropScore=35;
-      else if(dropPercent >=5) dropScore=20;
-      else dropScore=0;
-      dropPts.textContent = dropScore;
+  const dropPercent = ((previous - current)/previous)*100;
+  dropLine.textContent = dropPercent.toFixed(2) + '%';
 
-      // Puntos fundamentales
-      let fundScore = fund ? 40:0;
-      fundPts.textContent = fundScore;
+  let dropScore=0;
+  if(dropPercent>=30) dropScore=60;
+  else if(dropPercent>=20) dropScore=50;
+  else if(dropPercent>=10) dropScore=35;
+  else if(dropPercent>=5) dropScore=20;
+  else dropScore=0;
+  dropPts.textContent=dropScore;
 
-      const totalScore = dropScore + fundScore;
-      totalPts.textContent = totalScore;
+  let fundScore = fund ? 40:0;
+  fundPts.textContent=fundScore;
 
-      // Clasificación
-      let g='—';
-      if(totalScore>=80) g='ALTO';
-      else if(totalScore>=50) g='MEDIO';
-      else g='BAJO';
-      grade.textContent=g;
+  const totalScore = dropScore + fundScore;
+  totalPts.textContent=totalScore;
 
-      // Meter bar
-      meterBar.style.width = totalScore + '%';
+  let gClass='low';
+  let gText='BAJO';
+  if(totalScore>=80){gClass='high'; gText='ALTO';}
+  else if(totalScore>=50){gClass='medium'; gText='MEDIO';}
+  grade.textContent=gText;
+  grade.className='badge '+gClass;
 
-      result.style.display='block';
-    });
-  </script>
+  meterBar.style.width = totalScore + '%';
+  meterBar.style.background = gClass==='high'?'#00ff6a':gClass==='medium'?'#ffcc00':'#ff4d4d';
+
+  result.style.display='block';
+});
+</script>
 </body>
 </html>
