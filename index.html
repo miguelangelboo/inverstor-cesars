@@ -185,6 +185,9 @@ footer .foot{
   <section class="card">
     <h2 class="title">Herramienta de Scoring de Acciones</h2>
 
+    <label for="stockName">Nombre de la acción</label>
+    <input id="stockName" type="text" placeholder="Ej. Apple">
+
     <label for="dropPercent">Caída reciente (%)</label>
     <input id="dropPercent" type="number" placeholder="Ej. 25">
 
@@ -232,6 +235,7 @@ footer .foot{
     <table id="watchList">
       <thead>
         <tr>
+          <th>Nombre de la acción</th>
           <th>% de caída</th>
           <th>Fecha</th>
           <th>Situación actual</th>
@@ -261,10 +265,12 @@ const meterBar = document.getElementById('meterBar');
 const watchList = document.getElementById('watchList').querySelector('tbody');
 
 btn.addEventListener('click', ()=>{
+  const stockName = document.getElementById('stockName').value.trim();
   const drop = parseFloat(document.getElementById('dropPercent').value);
   const problem = document.getElementById('problemSolved').value==='true';
   const fund = document.getElementById('fundamentals').value==='true';
 
+  if(!stockName){alert('Ingresa el nombre de la acción'); return;}
   if(isNaN(drop)){alert('Ingresa un valor válido'); return;}
 
   dropLine.textContent = drop.toFixed(2)+'%';
@@ -299,7 +305,7 @@ btn.addEventListener('click', ()=>{
   // Agregar a lista de seguimiento
   const row = document.createElement('tr');
   const dateStr = new Date().toLocaleDateString();
-  row.innerHTML = `<td>${drop.toFixed(2)}%</td><td>${dateStr}</td><td>${gText}</td>`;
+  row.innerHTML = `<td>${stockName}</td><td>${drop.toFixed(2)}%</td><td>${dateStr}</td><td>${gText}</td>`;
   watchList.appendChild(row);
 });
 </script>
