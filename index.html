@@ -57,6 +57,7 @@ header img{max-width:160px;}
   border-radius:var(--radius);
   padding:20px;
   box-shadow:var(--shadow);
+  margin-bottom:24px;
 }
 .title{
   font-size:1.25rem;
@@ -73,11 +74,6 @@ label{
   font-weight:550;
   margin-bottom:6px;
   font-size:.95rem;
-}
-.hint{
-  font-size:.85rem;
-  color:var(--muted);
-  margin:-2px 0 10px;
 }
 input, select, button{
   width:100%;
@@ -96,9 +92,9 @@ button{
   font-weight:650;
   letter-spacing:.2px;
   cursor:pointer;
+  margin-top:12px;
 }
 button:hover{background:#00e65b;transform:translateY(-1px);}
-button:disabled{opacity:.6;cursor:not-allowed;transform:none;}
 .result{
   margin-top:16px;
   padding:16px;
@@ -141,6 +137,24 @@ button:disabled{opacity:.6;cursor:not-allowed;transform:none;}
   width:0%;
   transition:width .5s ease;
 }
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:16px;
+}
+th, td{
+  border:1px solid var(--border);
+  padding:8px 12px;
+  text-align:center;
+  font-size:.95rem;
+}
+th{
+  background:var(--bg-input);
+  color:var(--green);
+}
+td{
+  background:var(--bg-card);
+}
 footer{
   margin:24px auto 40px;
   max-width:1100px;
@@ -167,6 +181,7 @@ footer .foot{
 </div>
 
 <main class="wrap">
+  <!-- Scoring Card -->
   <section class="card">
     <h2 class="title">Herramienta de Scoring de Acciones</h2>
 
@@ -210,6 +225,23 @@ footer .foot{
       </div>
     </div>
   </section>
+
+  <!-- Lista de seguimiento -->
+  <section class="card">
+    <h2 class="title">Lista de seguimiento</h2>
+    <table id="watchList">
+      <thead>
+        <tr>
+          <th>% de caída</th>
+          <th>Fecha</th>
+          <th>Situación actual</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Filas se agregarán dinámicamente -->
+      </tbody>
+    </table>
+  </section>
 </main>
 
 <footer>
@@ -226,6 +258,7 @@ const fundPts = document.getElementById('fundPts');
 const totalPts = document.getElementById('totalPts');
 const grade = document.getElementById('grade');
 const meterBar = document.getElementById('meterBar');
+const watchList = document.getElementById('watchList').querySelector('tbody');
 
 btn.addEventListener('click', ()=>{
   const drop = parseFloat(document.getElementById('dropPercent').value);
@@ -236,7 +269,6 @@ btn.addEventListener('click', ()=>{
 
   dropLine.textContent = drop.toFixed(2)+'%';
 
-  // Puntos caída
   let dropScore=0;
   if(drop>=30) dropScore=60;
   else if(drop>=20) dropScore=50;
@@ -244,10 +276,7 @@ btn.addEventListener('click', ()=>{
   else if(drop>=5) dropScore=20;
   else dropScore=0;
 
-  // Puntos problema solucionable
   let problemScore = problem?20:-20;
-
-  // Puntos fundamentales
   let fundScore = fund?40:0;
 
   problemPts.textContent = problemScore;
@@ -256,18 +285,23 @@ btn.addEventListener('click', ()=>{
   const totalScore = dropScore + problemScore + fundScore;
   totalPts.textContent = totalScore;
 
-  // Badge y barra
   let gClass='low', gText='BAJO';
   if(totalScore>=80){gClass='high'; gText='ALTO';}
   else if(totalScore>=50){gClass='medium'; gText='MEDIO';}
   grade.textContent=gText;
   grade.className='badge '+gClass;
-  meterBar.style.width=totalScore+'%';
+
+  meterBar.style.width = totalScore+'%';
   meterBar.style.background = gClass==='high'?'#00ff6a':gClass==='medium'?'#ffcc00':'#ff4d4d';
 
   document.getElementById('result').style.display='block';
+
+  // Agregar a lista de seguimiento
+  const row = document.createElement('tr');
+  const dateStr = new Date().toLocaleDateString();
+  row.innerHTML = `<td>${drop.toFixed(2)}%</td><td>${dateStr}</td><td>${gText}</td>`;
+  watchList.appendChild(row);
 });
 </script>
 </body>
 </html>
-
