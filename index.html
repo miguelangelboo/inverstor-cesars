@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Header Responsivo</title>
+  <title>Scoring de Acciones</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -16,14 +16,13 @@
         <!-- LOGO -->
         <div class="flex items-center space-x-2">
           <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Logo" class="w-8 h-8">
-          <span class="font-semibold text-lg">Mi Herramienta</span>
+          <span class="font-semibold text-lg">Scoring Acciones</span>
         </div>
 
         <!-- NAVIGATION -->
         <nav class="hidden md:flex space-x-8">
           <a href="#" class="hover:text-gray-900 transition">Inicio</a>
-          <a href="#" class="hover:text-gray-900 transition">Funcionalidades</a>
-          <a href="#" class="hover:text-gray-900 transition">Precios</a>
+          <a href="#" class="hover:text-gray-900 transition">Herramienta</a>
           <a href="#" class="hover:text-gray-900 transition">Contacto</a>
         </nav>
 
@@ -43,28 +42,90 @@
     <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
       <nav class="px-4 py-2 space-y-2">
         <a href="#" class="block hover:text-gray-900">Inicio</a>
-        <a href="#" class="block hover:text-gray-900">Funcionalidades</a>
-        <a href="#" class="block hover:text-gray-900">Precios</a>
+        <a href="#" class="block hover:text-gray-900">Herramienta</a>
         <a href="#" class="block hover:text-gray-900">Contacto</a>
       </nav>
     </div>
   </header>
 
+  <!-- CONTENIDO -->
+  <main class="pt-28 max-w-4xl mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-6 text-center">Herramienta de Scoring de Acciones</h1>
+
+    <div class="bg-white shadow-md rounded-xl p-6 space-y-4">
+      <!-- Nombre -->
+      <div>
+        <label class="block font-semibold">Nombre de la acción</label>
+        <input id="nombre" type="text" placeholder="Ej: AAPL, TSLA..." class="w-full border p-2 rounded-md">
+      </div>
+
+      <!-- Fundamentales -->
+      <div>
+        <label class="block font-semibold">¿Los fundamentales mejorarán?</label>
+        <select id="fundamentales" class="w-full border p-2 rounded-md">
+          <option value="si">Sí</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <!-- % de caída -->
+      <div>
+        <label class="block font-semibold">% de caída</label>
+        <input id="caida" type="number" min="0" max="100" placeholder="Ej: 25" class="w-full border p-2 rounded-md">
+      </div>
+
+      <!-- Capitalización -->
+      <div>
+        <label class="block font-semibold">Capitalización de mercado</label>
+        <select id="cap" class="w-full border p-2 rounded-md">
+          <option value="small">Small Cap ($300M - $2B)</option>
+          <option value="mid">Mid Cap ($2B - $10B)</option>
+          <option value="large">Large Cap (>$10B)</option>
+        </select>
+      </div>
+
+      <!-- Botón -->
+      <button onclick="calcularScore()" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700">
+        Calcular Scoring
+      </button>
+
+      <!-- Resultado -->
+      <div id="resultado" class="text-center font-bold text-lg mt-4"></div>
+    </div>
+  </main>
+
   <script>
     // Toggle menú móvil
     const menuBtn = document.getElementById("menu-btn");
     const mobileMenu = document.getElementById("mobile-menu");
-
     menuBtn.addEventListener("click", () => {
       mobileMenu.classList.toggle("hidden");
     });
+
+    // Lógica del Scoring
+    function calcularScore() {
+      const nombre = document.getElementById("nombre").value;
+      const fundamentales = document.getElementById("fundamentales").value;
+      const caida = parseFloat(document.getElementById("caida").value) || 0;
+      const cap = document.getElementById("cap").value;
+
+      let score = 0;
+
+      if (fundamentales === "no") {
+        score = 0; // Anula todo
+      } else {
+        // Base = caída
+        score = caida;
+
+        // Bonus por capitalización
+        if (cap === "small") score += 30;
+        if (cap === "mid") score += 15;
+        if (cap === "large") score += 5;
+      }
+
+      document.getElementById("resultado").innerHTML = 
+        `📊 Acción: <b>${nombre || "N/A"}</b> <br> ✅ Score: <span class="text-blue-600">${score}</span>`;
+    }
   </script>
-
-  <!-- CONTENIDO DE PRUEBA -->
-  <main class="pt-24 max-w-4xl mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-4">Bienvenido</h1>
-    <p>Aquí empieza tu herramienta.</p>
-  </main>
-
 </body>
 </html>
