@@ -3,194 +3,247 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Herramienta de Análisis</title>
+  <title>Herramienta de Scoring</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      line-height: 1.6;
-      background: #f9f9f9;
+      background: #f4f6f8;
       color: #333;
     }
+
     header {
-      background: #111;
-      color: white;
-      padding: 15px 20px;
+      background: #000;
+      color: #fff;
+      padding: 20px;
       text-align: center;
     }
+
     header img {
-      max-height: 50px;
-      vertical-align: middle;
+      max-height: 60px;
     }
-    h2 {
+
+    h1 {
+      margin: 10px 0 0;
+    }
+
+    .frase {
       text-align: center;
-      margin: 20px 0;
-      color: #222;
+      font-size: 1.2rem;
+      margin: 20px;
+      font-style: italic;
     }
-    .container {
-      width: 95%;
-      max-width: 1100px;
+
+    main {
+      max-width: 900px;
       margin: auto;
       padding: 20px;
     }
+
+    h2 {
+      margin-top: 40px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin: 20px 0;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    table th, table td {
-      padding: 12px;
-      border: 1px solid #ddd;
+
+    table, th, td {
+      border: 1px solid #aaa;
+    }
+
+    th, td {
+      padding: 10px;
       text-align: center;
     }
-    table th {
-      background: #222;
-      color: white;
+
+    th {
+      background: #ddd;
     }
-    .score {
+
+    footer {
+      background: #000;
+      color: #fff;
       text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+
+    .admin-controls {
       margin: 20px 0;
       padding: 15px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      background: #eef;
+      border: 1px solid #99c;
+      display: none; /* solo visible si eres admin */
     }
-    button {
-      padding: 8px 14px;
+
+    .admin-controls input, 
+    .admin-controls select, 
+    .admin-controls button {
       margin: 5px;
-      border: none;
-      border-radius: 6px;
+      padding: 8px;
+    }
+
+    .btn {
+      padding: 6px 12px;
       cursor: pointer;
-      background: #007BFF;
-      color: white;
-      font-weight: bold;
     }
-    button:hover {
-      background: #0056b3;
-    }
-    .hidden {
-      display: none;
-    }
-    /* Responsividad */
-    @media (max-width: 768px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-      th {
-        display: none;
-      }
-      td {
-        text-align: right;
-        padding-left: 50%;
-        position: relative;
-      }
-      td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 15px;
-        width: 45%;
-        text-align: left;
-        font-weight: bold;
-      }
-    }
+    .btn-edit { background: #ffc107; border: none; }
+    .btn-delete { background: #dc3545; border: none; color: white; }
   </style>
 </head>
 <body>
-  <!-- HEADER con logo -->
+
+  <!-- HEADER -->
   <header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Logo">
+    <img src="logo.png" alt="Logo">
+    <h1>Herramienta de Scoring</h1>
   </header>
 
-  <!-- FRASE fuera del header -->
-  <h2>Una herramienta simple pero poderosa para analizar caídas de acciones</h2>
+  <!-- FRASE -->
+  <p class="frase">"Invertir con criterio es mejor que seguir la multitud."</p>
 
-  <div class="container">
-    <!-- SCORING -->
-    <div class="score">
-      <h3>Scoring de la Acción</h3>
-      <p>Introduce valores para calcular:</p>
-      <input type="number" id="valor1" placeholder="Valor 1">
-      <input type="number" id="valor2" placeholder="Valor 2">
-      <button onclick="calcularScore()">Calcular</button>
-      <p id="resultado"></p>
-    </div>
+  <main>
+    <!-- SECCIÓN DE SCORING -->
+    <h2>Scoring de Acciones</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Acción</th>
+          <th>Puntuación</th>
+          <th>Motivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>AMZN</td>
+          <td>85</td>
+          <td>Gran potencial de crecimiento</td>
+        </tr>
+        <tr>
+          <td>TSLA</td>
+          <td>70</td>
+          <td>Alta volatilidad, pero innovadora</td>
+        </tr>
+      </tbody>
+    </table>
 
     <!-- LISTA DE SEGUIMIENTO -->
-    <h3>Lista de seguimiento</h3>
-    <table id="tablaSeguimiento">
+    <h2>Lista de Seguimiento</h2>
+    <table id="watchlist">
       <thead>
         <tr>
           <th>Nombre de la acción</th>
           <th>% de caída</th>
           <th>Fecha</th>
           <th>Situación actual</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td data-label="Nombre">AMZN</td>
-          <td data-label="% de caída">-12%</td>
-          <td data-label="Fecha">2025-08-20</td>
-          <td data-label="Situación">Problema técnico (solucionable)</td>
-        </tr>
-        <tr>
-          <td data-label="Nombre">TSLA</td>
-          <td data-label="% de caída">-18%</td>
-          <td data-label="Fecha">2025-08-25</td>
-          <td data-label="Situación">Investigación regulatoria</td>
+          <td>MSFT</td>
+          <td>-12%</td>
+          <td>2025-08-01</td>
+          <td>Problema resuelto</td>
+          <td></td>
         </tr>
       </tbody>
     </table>
 
-    <!-- Botones de administrador -->
-    <div id="adminControls" class="hidden">
-      <button onclick="habilitarEdicion()">Editar</button>
-      <button onclick="guardarCambios()" class="hidden" id="guardarBtn">Guardar Cambios</button>
+    <!-- CONTROLES SOLO PARA ADMIN -->
+    <div class="admin-controls" id="adminPanel">
+      <h3>Agregar / Editar entrada</h3>
+      <input type="hidden" id="editIndex">
+      <input type="text" id="stockName" placeholder="Nombre de la acción">
+      <input type="text" id="dropPercent" placeholder="% de caída">
+      <input type="date" id="date">
+      <select id="status">
+        <option value="Problema resuelto">Problema resuelto</option>
+        <option value="Problema no resuelto">Problema no resuelto</option>
+      </select>
+      <button onclick="addOrUpdateRow()">Guardar</button>
     </div>
-  </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Herramienta de Scoring - Todos los derechos reservados</p>
+  </footer>
 
   <script>
-    // ---- SCORING ----
-    function calcularScore() {
-      let v1 = parseFloat(document.getElementById('valor1').value) || 0;
-      let v2 = parseFloat(document.getElementById('valor2').value) || 0;
-      let score = ((v1 + v2) / 2).toFixed(2);
-      document.getElementById('resultado').innerText = "Puntaje: " + score;
+    // Simulación de login simple
+    const isAdmin = confirm("¿Eres administrador?");
+
+    const adminPanel = document.getElementById("adminPanel");
+    if (isAdmin) {
+      adminPanel.style.display = "block";
+      enableEditing();
     }
 
-    // ---- ADMIN LOGIN ----
-    let esAdmin = false;
-    window.onload = function() {
-      let clave = prompt("Ingresa la contraseña de administrador (déjalo vacío si eres visitante):");
-      if (clave === "admin123") {
-        esAdmin = true;
-        document.getElementById("adminControls").classList.remove("hidden");
+    function enableEditing() {
+      const table = document.getElementById("watchlist").getElementsByTagName("tbody")[0];
+      for (let row of table.rows) {
+        addRowButtons(row);
       }
-    };
-
-    // ---- EDICIÓN DE TABLA ----
-    function habilitarEdicion() {
-      let celdas = document.querySelectorAll("#tablaSeguimiento td");
-      celdas.forEach(celda => {
-        celda.contentEditable = true;
-        celda.style.background = "#f0f8ff";
-      });
-      document.getElementById("guardarBtn").classList.remove("hidden");
     }
 
-    function guardarCambios() {
-      let celdas = document.querySelectorAll("#tablaSeguimiento td");
-      celdas.forEach(celda => {
-        celda.contentEditable = false;
-        celda.style.background = "white";
-      });
-      document.getElementById("guardarBtn").classList.add("hidden");
-      alert("Cambios guardados (solo visibles en esta sesión, en un sistema real se guardarían en la base de datos).");
+    function addRowButtons(row) {
+      let actionsCell = row.cells[row.cells.length - 1];
+      actionsCell.innerHTML = `
+        <button class="btn btn-edit" onclick="editRow(this)">Editar</button>
+        <button class="btn btn-delete" onclick="deleteRow(this)">Eliminar</button>
+      `;
+    }
+
+    function addOrUpdateRow() {
+      const name = document.getElementById("stockName").value;
+      const percent = document.getElementById("dropPercent").value;
+      const date = document.getElementById("date").value;
+      const status = document.getElementById("status").value;
+      const editIndex = document.getElementById("editIndex").value;
+
+      if (editIndex) {
+        const row = document.getElementById("watchlist").rows[editIndex];
+        row.cells[0].innerText = name;
+        row.cells[1].innerText = percent;
+        row.cells[2].innerText = date;
+        row.cells[3].innerText = status;
+      } else {
+        const table = document.getElementById("watchlist").getElementsByTagName("tbody")[0];
+        const newRow = table.insertRow();
+        newRow.insertCell(0).innerText = name;
+        newRow.insertCell(1).innerText = percent;
+        newRow.insertCell(2).innerText = date;
+        newRow.insertCell(3).innerText = status;
+        newRow.insertCell(4);
+        addRowButtons(newRow);
+      }
+
+      document.getElementById("editIndex").value = "";
+      document.getElementById("stockName").value = "";
+      document.getElementById("dropPercent").value = "";
+      document.getElementById("date").value = "";
+      document.getElementById("status").value = "Problema resuelto";
+    }
+
+    function editRow(button) {
+      const row = button.parentNode.parentNode;
+      const index = row.rowIndex;
+      document.getElementById("editIndex").value = index;
+      document.getElementById("stockName").value = row.cells[0].innerText;
+      document.getElementById("dropPercent").value = row.cells[1].innerText;
+      document.getElementById("date").value = row.cells[2].innerText;
+      document.getElementById("status").value = row.cells[3].innerText;
+    }
+
+    function deleteRow(button) {
+      const row = button.parentNode.parentNode;
+      row.parentNode.removeChild(row);
     }
   </script>
 </body>
