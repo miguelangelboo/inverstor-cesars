@@ -1,238 +1,153 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Investor Cesar's — Scoring Avanzado</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Seguimiento</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
 
-<style>
-:root{
-  --bg-main:#0d1117;
-  --bg-card:#161b22;
-  --bg-input:#1f242d;
-  --text:#e6e6e6;
-  --muted:#9ca3af;
-  --green:#00ff6a;
-  --red:#ff4d4d;
-  --amber:#ffcc00;
-  --border:#2d333b;
-  --radius:12px;
-  --radius-sm:8px;
-  --shadow:0 10px 20px rgba(0,0,0,.5);
-  --t:all .25s ease;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-  font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  background:var(--bg-main);
-  color:var(--text);
-  line-height:1.6;
-  padding:16px;
-}
-img{max-width:100%;display:block;height:auto;}
-header{
-  background:var(--bg-card);
-  border-bottom:1px solid var(--border);
-  padding:16px;
-  text-align:center;
-  border-radius:var(--radius);
-  margin-bottom:16px;
-}
-header img{max-width:160px;}
-.quote{
-  text-align:center;
-  color:var(--green);
-  font-style:italic;
-  padding:16px 20px;
-  border-bottom:1px solid var(--border);
-}
-.wrap{
-  max-width:1100px;
-  margin:24px auto;
-  padding:0 16px;
-}
-.card{
-  background:var(--bg-card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:20px;
-  box-shadow:var(--shadow);
-  margin-bottom:24px;
-}
-.title{
-  font-size:1.25rem;
-  font-weight:650;
-  color:var(--green);
-  margin-bottom:12px;
-}
-label{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  color:var(--muted);
-  font-weight:550;
-  margin-bottom:6px;
-  font-size:.95rem;
-}
-input, select, button{
-  width:100%;
-  background:var(--bg-input);
-  border:1px solid var(--border);
-  color:var(--text);
-  padding:12px 14px;
-  border-radius:var(--radius-sm);
-  font-size:1rem;
-  transition:var(--t);
-}
-input:focus, select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(0,255,106,.2);}
-button{
-  background:var(--green);
-  border:none;
-  font-weight:650;
-  letter-spacing:.2px;
-  cursor:pointer;
-  margin-top:12px;
-}
-button:hover{background:#00e65b;transform:translateY(-1px);}
-.result{
-  margin-top:16px;
-  padding:16px;
-  background:var(--bg-input);
-  border-radius:var(--radius-sm);
-  border:1px solid var(--border);
-}
-.row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:8px 0;border-bottom:1px dashed var(--border);
-  gap:12px;
-}
-.row:last-child{border-bottom:none}
-.kpi{
-  font-variant-numeric: tabular-nums;
-  font-weight:700;
-}
-.score{
-  display:flex;align-items:center;gap:12px;margin-top:14px;
-  padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);
-  background:#111827;
-}
-.badge{
-  min-width:72px;text-align:center;padding:6px 10px;border-radius:999px;
-  font-weight:700;color:#000;
-}
-.high{background:var(--green);}
-.medium{background:var(--amber);}
-.low{background:var(--red);}
-.meter{
-  flex:1;
-  height:12px;
-  border-radius:99px;
-  background:#0f172a;
-  border:1px solid var(--border);
-  overflow:hidden;
-}
-.meter > div{
-  height:100%;
-  width:0%;
-  transition:width .5s ease;
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:16px;
-}
-th, td{
-  border:1px solid var(--border);
-  padding:8px 12px;
-  text-align:center;
-  font-size:.95rem;
-}
-th{
-  background:var(--bg-input);
-  color:var(--green);
-}
-td{
-  background:var(--bg-card);
-}
-footer{
-  margin:24px auto 40px;
-  max-width:1100px;
-  padding:0 16px;
-  color:var(--muted);
-  text-align:center;
-}
-footer .foot{
-  background:var(--bg-card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:16px;
-}
-</style>
+    header {
+      background: #1a1a1a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+    }
+
+    header img {
+      height: 40px;
+    }
+
+    .frase {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    table th, table td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    table th {
+      background: #f1f1f1;
+    }
+
+    footer {
+      background: #1a1a1a;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* Formulario admin oculto por defecto */
+    #adminPanel {
+      display: none;
+      margin: 1rem 0;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    #adminPanel input, #adminPanel button {
+      padding: 8px;
+      margin: 4px;
+    }
+
+    /* Login */
+    #login {
+      text-align: center;
+      margin: 1rem;
+    }
+
+    #login input {
+      padding: 8px;
+      margin: 4px;
+    }
+
+    #login button {
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      table th, table td {
+        font-size: 0.9rem;
+        padding: 8px;
+      }
+
+      .frase {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      table, table tr, table td, table th {
+        display: block;
+        width: 100%;
+      }
+      table tr {
+        margin-bottom: 1rem;
+      }
+      table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+      table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        text-align: left;
+        font-weight: bold;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <img src="logo.png" alt="Logo">
+    <h1>Mi Página de Inversiones</h1>
+  </header>
 
-<header>
-  <img src="https://raw.githubusercontent.com/miguelangelboo/inverstor-cesars/refs/heads/main/uno.png" alt="Investor Cesar's">
-</header>
+  <div class="frase">“La mejor inversión es en uno mismo”</div>
 
-<div class="quote">
-  “Ya se trate de calcetines o acciones, me gusta comprar mercancía de calidad cuando está rebajada.” — Warren Buffett
-</div>
-
-<main class="wrap">
-  <!-- Scoring Card -->
-  <section class="card">
-    <h2 class="title">Herramienta de Scoring de Acciones</h2>
-
-    <label for="stockName">Nombre de la acción</label>
-    <input id="stockName" type="text" placeholder="Ej. Apple">
-
-    <label for="dropPercent">Caída reciente (%)</label>
-    <input id="dropPercent" type="number" placeholder="Ej. 25">
-
-    <label for="problemSolved">¿La caída es por un problema solucionable?</label>
-    <select id="problemSolved">
-      <option value="true">Sí</option>
-      <option value="false">No</option>
-    </select>
-
-    <label for="fundamentals">¿Fundamentales mejorarán?</label>
-    <select id="fundamentals">
-      <option value="true">Sí</option>
-      <option value="false">No</option>
-    </select>
-
-    <button id="btn">Calcular scoring</button>
-
-    <div id="result" class="result" style="display:none">
-      <div class="row">
-        <div>Caída reciente</div>
-        <div class="kpi" id="dropLine">—</div>
-      </div>
-      <div class="row">
-        <div>Problema solucionable</div>
-        <div class="kpi" id="problemPts">—</div>
-      </div>
-      <div class="row">
-        <div>Fundamentales</div>
-        <div class="kpi" id="fundPts">—</div>
-      </div>
-      <div class="row">
-        <div>Puntaje total</div>
-        <div class="kpi" id="totalPts">—</div>
-      </div>
-      <div class="score">
-        <div id="grade" class="badge">—</div>
-        <div class="meter"><div id="meterBar"></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Lista de seguimiento -->
-  <section class="card">
-    <h2 class="title">Lista de seguimiento</h2>
-    <table id="watchList">
+  <div class="container">
+    <h2>Lista de Seguimiento</h2>
+    <table id="stockTable">
       <thead>
         <tr>
           <th>Nombre de la acción</th>
@@ -242,72 +157,76 @@ footer .foot{
         </tr>
       </thead>
       <tbody>
-        <!-- Filas se agregarán dinámicamente -->
+        <tr>
+          <td data-label="Nombre de la acción">EjemploCorp</td>
+          <td data-label="% de caída">-12%</td>
+          <td data-label="Fecha">2025-08-29</td>
+          <td data-label="Situación actual">Problema temporal</td>
+        </tr>
       </tbody>
     </table>
-  </section>
-</main>
 
-<footer>
-  <div class="foot">
-    Contacto: <a href="mailto:mabo050796@gmail.com">mabo050796@gmail.com</a> &copy; 2024-2025 Investor Cesar's
+    <!-- Panel de administración -->
+    <div id="adminPanel">
+      <h3>Agregar acción</h3>
+      <input type="text" id="nombre" placeholder="Nombre de la acción">
+      <input type="text" id="caida" placeholder="% de caída">
+      <input type="date" id="fecha">
+      <input type="text" id="situacion" placeholder="Situación actual">
+      <button onclick="agregarFila()">Agregar</button>
+    </div>
+
+    <!-- Login -->
+    <div id="login">
+      <input type="password" id="password" placeholder="Contraseña de admin">
+      <button onclick="login()">Entrar</button>
+    </div>
   </div>
-</footer>
 
-<script>
-const btn = document.getElementById('btn');
-const dropLine = document.getElementById('dropLine');
-const problemPts = document.getElementById('problemPts');
-const fundPts = document.getElementById('fundPts');
-const totalPts = document.getElementById('totalPts');
-const grade = document.getElementById('grade');
-const meterBar = document.getElementById('meterBar');
-const watchList = document.getElementById('watchList').querySelector('tbody');
+  <footer>
+    <p>© 2025 Mi Página de Inversiones</p>
+  </footer>
 
-btn.addEventListener('click', ()=>{
-  const stockName = document.getElementById('stockName').value.trim();
-  const drop = parseFloat(document.getElementById('dropPercent').value);
-  const problem = document.getElementById('problemSolved').value==='true';
-  const fund = document.getElementById('fundamentals').value==='true';
+  <script>
+    const ADMIN_PASSWORD = "12345"; // cámbiala por una segura
 
-  if(!stockName){alert('Ingresa el nombre de la acción'); return;}
-  if(isNaN(drop)){alert('Ingresa un valor válido'); return;}
+    function login() {
+      const pass = document.getElementById("password").value;
+      if (pass === ADMIN_PASSWORD) {
+        document.getElementById("adminPanel").style.display = "block";
+        document.getElementById("login").style.display = "none";
+      } else {
+        alert("Contraseña incorrecta");
+      }
+    }
 
-  dropLine.textContent = drop.toFixed(2)+'%';
+    function agregarFila() {
+      const nombre = document.getElementById("nombre").value;
+      const caida = document.getElementById("caida").value;
+      const fecha = document.getElementById("fecha").value;
+      const situacion = document.getElementById("situacion").value;
 
-  let dropScore=0;
-  if(drop>=30) dropScore=60;
-  else if(drop>=20) dropScore=50;
-  else if(drop>=10) dropScore=35;
-  else if(drop>=5) dropScore=20;
-  else dropScore=0;
+      if (!nombre || !caida || !fecha || !situacion) {
+        alert("Completa todos los campos");
+        return;
+      }
 
-  let problemScore = problem?20:-20;
-  let fundScore = fund?40:0;
+      const table = document.getElementById("stockTable").getElementsByTagName('tbody')[0];
+      const row = table.insertRow();
 
-  problemPts.textContent = problemScore;
-  fundPts.textContent = fundScore;
+      row.innerHTML = `
+        <td data-label="Nombre de la acción">${nombre}</td>
+        <td data-label="% de caída">${caida}</td>
+        <td data-label="Fecha">${fecha}</td>
+        <td data-label="Situación actual">${situacion}</td>
+      `;
 
-  const totalScore = dropScore + problemScore + fundScore;
-  totalPts.textContent = totalScore;
-
-  let gClass='low', gText='BAJO';
-  if(totalScore>=80){gClass='high'; gText='ALTO';}
-  else if(totalScore>=50){gClass='medium'; gText='MEDIO';}
-  grade.textContent=gText;
-  grade.className='badge '+gClass;
-
-  meterBar.style.width = totalScore+'%';
-  meterBar.style.background = gClass==='high'?'#00ff6a':gClass==='medium'?'#ffcc00':'#ff4d4d';
-
-  document.getElementById('result').style.display='block';
-
-  // Agregar a lista de seguimiento
-  const row = document.createElement('tr');
-  const dateStr = new Date().toLocaleDateString();
-  row.innerHTML = `<td>${stockName}</td><td>${drop.toFixed(2)}%</td><td>${dateStr}</td><td>${gText}</td>`;
-  watchList.appendChild(row);
-});
-</script>
+      document.getElementById("nombre").value = "";
+      document.getElementById("caida").value = "";
+      document.getElementById("fecha").value = "";
+      document.getElementById("situacion").value = "";
+    }
+  </script>
 </body>
 </html>
+
