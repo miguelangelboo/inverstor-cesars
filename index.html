@@ -3,129 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scoring de Acciones</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Mi Proyecto</title>
+  <style>
+    /* Reset moderno */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fff;
+      color: #111;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      width: 100%;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      border-bottom: 1px solid #eaeaea;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      z-index: 1000;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: #111;
+    }
+
+    .logo img {
+      height: 32px;
+      width: auto;
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #0070f3;
+    }
+
+    /* Botón hamburguesa */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background: #111;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: #fff;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 220px;
+        padding: 1rem;
+        border: 1px solid #eaeaea;
+        border-radius: 8px;
+        gap: 1rem;
+        transform: translateX(110%);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      nav.active {
+        transform: translateX(0%);
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
+  <header>
+    <!-- Logo -->
+    <a href="#" class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Logo">
+      Investor Tool
+    </a>
 
-  <!-- HEADER -->
-  <header class="w-full fixed top-0 left-0 bg-white shadow-md z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center py-4">
-        
-        <!-- LOGO -->
-        <div class="flex items-center space-x-2">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Logo" class="w-8 h-8">
-          <span class="font-semibold text-lg">Scoring Acciones</span>
-        </div>
+    <!-- Menú -->
+    <nav id="nav">
+      <a href="#">Inicio</a>
+      <a href="#">Scoring</a>
+      <a href="#">Lista de seguimiento</a>
+      <a href="#">Contacto</a>
+    </nav>
 
-        <!-- NAVIGATION -->
-        <nav class="hidden md:flex space-x-8">
-          <a href="#" class="hover:text-gray-900 transition">Inicio</a>
-          <a href="#" class="hover:text-gray-900 transition">Herramienta</a>
-          <a href="#" class="hover:text-gray-900 transition">Contacto</a>
-        </nav>
-
-        <!-- BOTÓN HAMBURGUESA -->
-        <div class="md:hidden">
-          <button id="menu-btn" class="focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- MENÚ MÓVIL -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
-      <nav class="px-4 py-2 space-y-2">
-        <a href="#" class="block hover:text-gray-900">Inicio</a>
-        <a href="#" class="block hover:text-gray-900">Herramienta</a>
-        <a href="#" class="block hover:text-gray-900">Contacto</a>
-      </nav>
+    <!-- Botón hamburguesa -->
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
   </header>
 
-  <!-- CONTENIDO -->
-  <main class="pt-28 max-w-4xl mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-6 text-center">Herramienta de Scoring de Acciones</h1>
-
-    <div class="bg-white shadow-md rounded-xl p-6 space-y-4">
-      <!-- Nombre -->
-      <div>
-        <label class="block font-semibold">Nombre de la acción</label>
-        <input id="nombre" type="text" placeholder="Ej: AAPL, TSLA..." class="w-full border p-2 rounded-md">
-      </div>
-
-      <!-- Fundamentales -->
-      <div>
-        <label class="block font-semibold">¿Los fundamentales mejorarán?</label>
-        <select id="fundamentales" class="w-full border p-2 rounded-md">
-          <option value="si">Sí</option>
-          <option value="no">No</option>
-        </select>
-      </div>
-
-      <!-- % de caída -->
-      <div>
-        <label class="block font-semibold">% de caída</label>
-        <input id="caida" type="number" min="0" max="100" placeholder="Ej: 25" class="w-full border p-2 rounded-md">
-      </div>
-
-      <!-- Capitalización -->
-      <div>
-        <label class="block font-semibold">Capitalización de mercado</label>
-        <select id="cap" class="w-full border p-2 rounded-md">
-          <option value="small">Small Cap ($300M - $2B)</option>
-          <option value="mid">Mid Cap ($2B - $10B)</option>
-          <option value="large">Large Cap (>$10B)</option>
-        </select>
-      </div>
-
-      <!-- Botón -->
-      <button onclick="calcularScore()" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700">
-        Calcular Scoring
-      </button>
-
-      <!-- Resultado -->
-      <div id="resultado" class="text-center font-bold text-lg mt-4"></div>
-    </div>
-  </main>
-
   <script>
-    // Toggle menú móvil
-    const menuBtn = document.getElementById("menu-btn");
-    const mobileMenu = document.getElementById("mobile-menu");
-    menuBtn.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden");
+    // Toggle menú responsivo
+    const toggle = document.getElementById("menu-toggle");
+    const nav = document.getElementById("nav");
+
+    toggle.addEventListener("click", () => {
+      nav.classList.toggle("active");
     });
-
-    // Lógica del Scoring
-    function calcularScore() {
-      const nombre = document.getElementById("nombre").value;
-      const fundamentales = document.getElementById("fundamentales").value;
-      const caida = parseFloat(document.getElementById("caida").value) || 0;
-      const cap = document.getElementById("cap").value;
-
-      let score = 0;
-
-      if (fundamentales === "no") {
-        score = 0; // Anula todo
-      } else {
-        // Base = caída
-        score = caida;
-
-        // Bonus por capitalización
-        if (cap === "small") score += 30;
-        if (cap === "mid") score += 15;
-        if (cap === "large") score += 5;
-      }
-
-      document.getElementById("resultado").innerHTML = 
-        `📊 Acción: <b>${nombre || "N/A"}</b> <br> ✅ Score: <span class="text-blue-600">${score}</span>`;
-    }
   </script>
 </body>
 </html>
