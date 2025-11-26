@@ -1,190 +1,1078 @@
+ggle("active")
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inversión Inteligente</title>
-  <style>
-    /* -------------------- RESET -------------------- */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios Generales. Calidad Clara.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Importaciones Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, addDoc, setDoc, updateDoc, onSnapshot, collection, query, where, getDocs, setLogLevel, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // Las dependencias de Firebase son expuestas globalmente.
+        window.firebaseDependencies = {
+            initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, doc, addDoc, setDoc, updateDoc, onSnapshot, collection, query, where, getDocs, setLogLevel, deleteDoc
+        };
+    </script>
+    <!-- Fuente Inter: moderna y legible -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Iconos limpios (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* Estilos alineados a la claridad y el minimalismo */
+        :root {
+            --apple-blue: #0077E6; /* Azul refinado */
+            --text-color: #1d1d1f;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            background-color: #f7f7f7; /* Fondo sutil */
+        }
+        .header-sticky {
+            backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+        }
+        /* Estilo compacto para botones de categoría */
+        .category-btn { 
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            padding: 8px 16px; 
+            border: 1px solid #e5e5e5;
+            flex-shrink: 0; 
+        }
+        .category-btn:hover {
+            border-color: var(--apple-blue);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+        .category-btn-icon {
+            margin-right: 8px; 
+        }
+        .cta-button {
+            background-color: var(--apple-blue);
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-align: center;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .cta-button:hover { background-color: #005bb5; transform: translateY(-1px); }
+        .secondary-link { 
+            color: var(--apple-blue);
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: block;
+            margin-top: 8px;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: opacity 0.2s;
+        }
+        .secondary-link:hover { opacity: 0.7; }
+        .rating-star { color: #facc15; cursor: pointer; transition: color 0.1s; }
+        .rating-star.filled { color: #f59e0b; }
 
-    body {
-      font-family: "Inter", Arial, sans-serif;
-      background-color: #f9f9f9;
-      color: #111;
-      line-height: 1.5;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    /* -------------------- HEADER -------------------- */
-    header {
-      width: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    /* Logo */
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -1px;
-      color: #111;
-      transition: color 0.3s ease;
-    }
-    .logo span {
-      color: #0070f3;
-    }
-
-    /* Navigation */
-    nav ul {
-      display: flex;
-      gap: 2rem;
-    }
-
-    nav ul li a {
-      font-size: 1rem;
-      font-weight: 500;
-      position: relative;
-      padding-bottom: 0.2rem;
-      transition: color 0.3s ease;
-    }
-
-    nav ul li a:hover {
-      color: #0070f3;
-    }
-
-    nav ul li a::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 2px;
-      left: 0;
-      bottom: 0;
-      background: #0070f3;
-      transition: width 0.3s ease;
-    }
-
-    nav ul li a:hover::after {
-      width: 100%;
-    }
-
-    /* Hamburger button */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-    }
-
-    .hamburger span {
-      width: 25px;
-      height: 3px;
-      background: #111;
-      border-radius: 3px;
-      transition: all 0.3s ease;
-    }
-
-    /* Mobile Menu */
-    .mobile-nav {
-      display: none;
-      flex-direction: column;
-      gap: 1.5rem;
-      padding: 1.5rem;
-      background: white;
-      position: absolute;
-      top: 100%;
-      right: 0;
-      width: 100%;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-
-    .mobile-nav.active {
-      display: flex;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* -------------------- RESPONSIVE -------------------- */
-    @media (max-width: 768px) {
-      nav ul {
-        display: none;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-    }
-  </style>
+        /* Estilo para la tarjeta de servicio */
+        .service-card {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        .service-card:hover {
+             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+             transform: translateY(-2px);
+        }
+        .search-container {
+            border: 1px solid #e5e7eb;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .search-container:focus-within {
+             border-color: var(--apple-blue);
+             box-shadow: 0 0 0 3px rgba(0, 119, 230, 0.1);
+        }
+        /* Ocultar scrollbar en el slider de imágenes (para un aspecto limpio en WebKit) */
+        .slider-container::-webkit-scrollbar {
+            display: none;
+        }
+        .slider-container {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        /* Estilo para los enlaces de servicio/ayuda en el footer */
+        .footer-link {
+            @apply text-xs text-gray-400 hover:text-blue-600 transition;
+        }
+    </style>
 </head>
-<body>
-  <!-- Header -->
-  <header>
-    <div class="nav-container">
-      <a href="#" class="logo">Investor<span>Cesars</span></a>
-      <nav>
-        <ul>
-          <li><a href="#">Inicio</a></li>
-          <li><a href="#">Scoring</a></li>
-          <li><a href="#">Mercado</a></li>
-          <li><a href="#">Contacto</a></li>
-        </ul>
-      </nav>
-      <!-- Hamburger button -->
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-    <!-- Mobile menu -->
-    <div class="mobile-nav" id="mobileNav">
-      <a href="#">Inicio</a>
-      <a href="#">Scoring</a>
-      <a href="#">Mercado</a>
-      <a href="#">Contacto</a>
-    </div>
-  </header>
+<body class="antialiased">
 
-  <script>
-    // Toggle mobile nav
-    const hamburger = document.getElementById("hamburger");
-    const mobileNav = document.getElementById("mobileNav");
+    <!-- HEADER: Minimalista y Sticky -->
+    <header class="header-sticky sticky top-0 z-50 w-full px-4 md:px-12 py-3 flex justify-between items-center border-b border-gray-200">
+        <div class="text-xl font-bold">Servicios Generales</div>
+        <div class="flex items-center space-x-4">
+            <!-- Espacio libre -->
+        </div>
+    </header>
 
-    hamburger.addEventListener("click", () => {
-      mobileNav.classList.toggle("active");
-      hamburger.classList.toggle("active");
-    });
-  </script>
+    <main>
+        <!-- SECCIÓN HERO: El Pitch de Venta (Foco y Claridad) -->
+        <section class="text-center pt-20 pb-16 bg-white">
+            <div class="max-w-4xl mx-auto px-4">
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-4">La Calidad que Exiges.</h1>
+                <h2 class="text-xl font-normal text-gray-500 max-w-2xl mx-auto">
+                    El estándar definitivo para profesionales y oficios. Tu opinión es la garantía.
+                </h2>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE BÚSQUEDA Y FILTRO INTEGRADA (UNIFICADA) -->
+        <section class="py-10 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4">
+                
+                <!-- BARRA DE BÚSQUEDA PROMINENTE Y ELEGANTE -->
+                <div class="max-w-3xl mx-auto mb-6">
+                    <div class="flex rounded-xl overflow-hidden search-container bg-white shadow-lg">
+                        <input type="text" id="search-input" placeholder="Busca por nombre, ID o categoría (Ej: Fotografía)..." 
+                               class="flex-grow p-4 text-gray-700 focus:outline-none focus:ring-0 text-base" aria-label="Búsqueda de servicios">
+                        <button id="search-button" class="bg-gray-100 text-gray-600 px-6 font-semibold hover:bg-gray-200 transition duration-150 border-l border-gray-200">
+                            <i class="fas fa-magnifying-glass text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CATEGORÍAS COMPACTAS (HORIZONTAL SCROLL) -->
+                <div>
+                    <h3 class="text-base font-semibold mb-3 text-gray-700">Explorar por Categoría</h3>
+                    <!-- Contenedor con Scroll Horizontal y Flexbox -->
+                    <div class="flex space-x-3 pb-2 overflow-x-auto" id="category-buttons-container" style="-webkit-overflow-scrolling: touch;">
+                        
+                        <!-- Botones de Categoría (Misma apariencia compacta) -->
+                        <button class="category-btn bg-white rounded-full flex items-center shadow-sm text-sm" data-category="profesionales">
+                            <i class="fas fa-briefcase category-btn-icon text-blue-600"></i><span class="font-medium text-gray-700">Profesionales</span>
+                        </button>
+                        <button class="category-btn bg-white rounded-full flex items-center shadow-sm text-sm" data-category="oficios">
+                            <i class="fas fa-tools category-btn-icon text-orange-600"></i><span class="font-medium text-gray-700">Oficios Esenciales</span>
+                        </button>
+                        <button class="category-btn bg-white rounded-full flex items-center shadow-sm text-sm" data-category="entretenimiento">
+                            <i class="fas fa-mask category-btn-icon text-purple-600"></i><span class="font-medium text-gray-700">Entretenimiento</span>
+                        </button>
+                        <button class="category-btn bg-white rounded-full flex items-center shadow-sm text-sm" data-category="rentas">
+                            <i class="fas fa-home category-btn-icon text-green-600"></i><span class="font-medium text-gray-700">Alquileres / Rentas</span>
+                        </button>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIRECTORIO DE SERVICIOS - Foco en los resultados -->
+        <section class="pt-10 pb-16 px-4 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <!-- TÍTULO DINÁMICO QUE MUESTRA EL ESTADO DEL FILTRO/BÚSQUEDA -->
+                <h3 class="text-3xl font-bold mb-8 text-gray-800" id="results-title">Directorio de Servicios</h3>
+
+                <!-- Filtros Simples y Elegantes -->
+                <div class="flex justify-start mb-10 space-x-4">
+                    <button id="filter-all" class="filter-btn px-5 py-2 text-sm font-medium rounded-full bg-black text-white transition duration-150" data-filter="todos">Todos</button>
+                    <button id="filter-top" class="filter-btn px-5 py-2 text-sm font-medium rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition duration-150" data-filter="top-rated">Mejor Calificados</button>
+                </div>
+                
+                <!-- Retícula Impecable de Servicios -->
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8" id="service-directory">
+                    <p id="loading-message" class="col-span-full text-center text-gray-500">Cargando servicios...</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-4 border-t border-gray-200 mt-12 text-sm text-gray-500 relative bg-white">
+        <!-- Contenedor principal con Flexbox para alinear contenido -->
+        <div class="flex flex-col md:flex-row justify-center md:justify-between items-center px-4 max-w-6xl mx-auto space-y-4 md:space-y-0">
+            
+            <!-- COLUMNA 1: REDES SOCIALES -->
+            <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
+                <!-- ICONOS DE REDES SOCIALES (Black & White) -->
+                <div class="flex space-x-4 text-xl text-gray-600">
+                    <a href="#" class="hover:text-black transition duration-200" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="hover:text-black transition duration-200" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-black transition duration-200" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-black transition duration-200" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            
+            <!-- COLUMNA 2: ENLACES DE AYUDA, ESTADO DE ADMIN Y COPYRIGHT (MOVIMIENTO REALIZADO AQUÍ) -->
+            <div class="flex flex-col items-center md:items-end space-y-1">
+                <!-- Enlaces de Funcionalidad Adicional -->
+                <div class="flex flex-wrap justify-center md:justify-end space-x-4">
+                    <a href="#" class="footer-link" onclick="alert('Formulario de Inscripción de Proveedor (Funcionalidad pendiente)')">
+                        <i class="fas fa-handshake mr-1"></i> Quiero ofrecer un servicio
+                    </a>
+                    <a href="#" class="footer-link" onclick="alert('Formulario para Presentar una Queja (Funcionalidad pendiente)')">
+                        <i class="fas fa-comment-dots mr-1"></i> Presentar una queja
+                    </a>
+                    <a href="#" class="footer-link" onclick="alert('Formulario para Reclamo de Garantía (Funcionalidad pendiente)')">
+                        <i class="fas fa-shield-halved mr-1"></i> Hacer válida una garantía
+                    </a>
+                </div>
+
+                <!-- Estado del Administrador -->
+                <div class="flex items-center space-x-4 mt-2">
+                    <span id="auth-status" class="text-xs text-gray-400">Estado Admin: Cargando...</span>
+                    
+                    <!-- BOTÓN DE ADMINISTRACIÓN DISCRETO -->
+                    <button id="admin-reviews-btn" onclick="openPasswordModal()" class="text-xs font-medium text-gray-400 hover:text-blue-600 transition hidden">
+                        <i class="fas fa-screwdriver-wrench mr-1"></i> Panel de Verificación (<span id="pending-count">0</span>)
+                    </button>
+                </div>
+                
+                <!-- El Copyright, movido a la parte inferior de esta columna -->
+                <p class="text-xs text-gray-400 mt-2 md:mt-1">&copy; 2025 Servicios Generales. Calidad Curada.</p> 
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL ÚNICO: Usado para Contraseña, Subir Reseñas y Administrar -->
+    <div id="app-modal" class="modal fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center p-4 hidden" onclick="if (event.target === this) closeModal()">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg md:max-w-3xl overflow-hidden" id="modal-content">
+            <!-- El contenido se inyecta con JavaScript -->
+        </div>
+    </div>
+
+    <!-- SCRIPT PRINCIPAL CON LÓGICA DE FIREBASE Y RESEÑAS -->
+    <script type="module">
+        const { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, doc, addDoc, setDoc, updateDoc, onSnapshot, collection, query, where, getDocs, setLogLevel, deleteDoc } = window.firebaseDependencies;
+        setLogLevel('Debug');
+
+        // Contraseña local de acceso simple para la interfaz del administrador
+        const ADMIN_PASSWORD = 'admin123'; 
+
+        // --- FIREBASE SETUP ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        
+        let app, db, auth, isAdminAuthenticated = false;
+        let servicesData = []; // Almacenamiento dinámico de servicios
+        let currentFilter = 'todos'; // Estado del filtro activo (todos, top-rated, o una categoría)
+        let currentSearchQuery = ''; // Nueva variable para la búsqueda activa
+
+        // Rutas de Colecciones
+        const serviceCollectionPath = `artifacts/${appId}/public/data/services`;
+        const reviewCollectionPath = `artifacts/${appId}/public/data/reviews`;
+
+        if (firebaseConfig) {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+        } else {
+            console.error("Firebase config no está disponible. Las funciones de persistencia no funcionarán.");
+        }
+
+        const adminButton = document.getElementById('admin-reviews-btn');
+        const authStatusSpan = document.getElementById('auth-status');
+        const pendingCountSpan = document.getElementById('pending-count');
+        const serviceDirectory = document.getElementById('service-directory');
+        const searchInput = document.getElementById('search-input');
+        const resultsTitle = document.getElementById('results-title'); 
+        
+        // Datos iniciales con múltiples URLs de imagen
+        const DEFAULT_SERVICES = [
+            { 
+                id: 'FOTO-001', 
+                name: 'Fotografía de Producto & UX', 
+                category: 'profesionales', 
+                priceInfo: 'Desde **$3,500 MXN**', 
+                imageUrls: [
+                    'https://placehold.co/600x400/F0F0F0/0077E6?text=Foto+1',
+                    'https://placehold.co/600x400/E5E5FF/0055CC?text=Foto+2',
+                    'https://placehold.co/600x400/D0D0FF/0033AA?text=Foto+3'
+                ] 
+            },
+            { 
+                id: 'EB-002', 
+                name: 'Ebanistería Fina a Medida', 
+                category: 'oficios', 
+                priceInfo: 'Solicitar **Presupuesto**', 
+                imageUrls: [
+                    'https://placehold.co/600x400/E5E5E5/333333?text=Mueble+1',
+                    'https://placehold.co/600x400/D0D0D0/111111?text=Mueble+2'
+                ] 
+            },
+            { 
+                id: 'JAZZ-003', 
+                name: 'Banda de Jazz Fusión', 
+                category: 'entretenimiento', 
+                priceInfo: 'Desde **$8,000 MXN / hr**', 
+                imageUrls: [
+                    'https://placehold.co/600x400/FFF8E5/AA8844?text=Banda+Vivo'
+                ] 
+            },
+            { 
+                id: 'MANT-004', 
+                name: 'Mantenimiento Climatización', 
+                category: 'oficios', 
+                priceInfo: '**$500 MXN / hr**', 
+                imageUrls: [
+                    'https://placehold.co/600x400/E9F5FF/0066AA?text=Climatizacion+A/C',
+                    'https://placehold.co/600x400/C0D9FF/004488?text=Instalacion'
+                ] 
+            },
+        ];
+        
+        // 1. AUTENTICACIÓN
+        const initAuth = async () => {
+            try {
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Error al iniciar sesión en Firebase:", error);
+                authStatusSpan.textContent = 'Estado Admin: Error de Auth';
+            }
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user && initialAuthToken) {
+                isAdminAuthenticated = true;
+                adminButton.classList.remove('hidden');
+                authStatusSpan.textContent = `Estado Admin: Conectado (ID: ${user.uid.substring(0, 8)}...)`;
+                if (db) {
+                    startServiceListener();
+                }
+            } else {
+                isAdminAuthenticated = false;
+                authStatusSpan.textContent = 'Estado Admin: Desconectado';
+                adminButton.classList.add('hidden');
+                if (db) {
+                    startServiceListener();
+                } else {
+                    // Si no hay Firebase, cargar solo los defaults 
+                    servicesData = DEFAULT_SERVICES.map(s => ({ ...s, currentRating: 0.0, reviewCount: 0 }));
+                    renderServiceCards(servicesData);
+                }
+            }
+        });
+        
+        if (db) initAuth();
+
+        // 2. LÓGICA DE SERVICIOS (CRUD y UI)
+
+        /**
+         * Renderiza las tarjetas de servicio en el DOM aplicando el filtro y la búsqueda activos.
+         * @param {Array} services La lista completa de servicios.
+         */
+        const renderServiceCards = (services) => {
+            serviceDirectory.innerHTML = '';
+            
+            // 1. Convertir la consulta a minúsculas
+            const query = currentSearchQuery.toLowerCase().trim();
+
+            // 2. Aplicar Filtros y Búsqueda
+            const filteredServices = services.filter(service => {
+                const serviceName = service.name.toLowerCase();
+                const serviceCategory = service.category.toLowerCase();
+                const serviceId = service.id.toLowerCase();
+
+                // FILTRO DE BÚSQUEDA (Toma precedencia si hay query)
+                if (query.length > 0) {
+                    return serviceName.includes(query) || serviceCategory.includes(query) || serviceId.includes(query);
+                }
+
+                // FILTRO PRINCIPAL (Categoría/Top-Rated)
+                if (currentFilter === 'todos') return true;
+                if (currentFilter === 'top-rated') {
+                     // Filtrado por Categoría
+                return serviceCategory === currentFilter;
+            }).sort((a, b) => {
+                // Ordenar por rating de mayor a menor si el filtro es top-rated, sino por nombre
+                if (currentFilter === 'top-rated') {
+                    return b.currentRating - a.currentRating;
+                }
+                return a.name.localeCompare(b.name);
+            });
+            
+            // 3. Actualizar el título de los resultados
+            if (query.length > 0) {
+                 resultsTitle.textContent = `Resultados para '${currentSearchQuery}' (${filteredServices.length})`;
+            } else if (currentFilter === 'top-rated') {
+                 resultsTitle.textContent = 'Servicios Mejor Calificados (4.5+)';
+            } else if (currentFilter !== 'todos') {
+                 // Capitalizar la categoría para el título
+                 const categoryName = servicesData.find(s => s.category === currentFilter)?.category || currentFilter;
+                 resultsTitle.textContent = `Explorando: ${categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} (${filteredServices.length})`;
+            } else {
+                 resultsTitle.textContent = 'Directorio de Servicios';
+            }
+
+
+            if (filteredServices.length === 0) {
+                 serviceDirectory.innerHTML = '<p class="col-span-full text-center text-gray-500 py-10">No se encontraron servicios que coincidan con la búsqueda o el filtro aplicado.</p>';
+                 return;
+            }
+
+            filteredServices.forEach(service => {
+                const card = document.createElement('article');
+                card.className = `service-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300`;
+                card.setAttribute('data-category', service.category);
+                card.setAttribute('data-service-id', service.id);
+
+                const ratingHtml = service.reviewCount > 0 
+                    ? `<i class="fas fa-star text-yellow-400 mr-1"></i> ${service.currentRating} (${service.reviewCount} Reseñas)`
+                    : `<i class="fas fa-star text-yellow-400 mr-1"></i> 0.0 (0 Reseñas)`;
+                
+                // Nuevo HTML para el slider de imágenes
+                const imageSliderHtml = service.imageUrls && service.imageUrls.length > 0 ? 
+                    `<div class="h-48 overflow-x-scroll flex snap-x snap-mandatory slider-container">
+                        ${service.imageUrls.map((url, index) => `
+                            <img src="${url}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/999999/FFFFFF?text=Servicio'" 
+                                 alt="${service.name} Image ${index + 1}" 
+                                 class="w-full h-full object-cover flex-shrink-0 snap-center" style="width: 100%; height: 100%;">
+                        `).join('')}
+                    </div>`
+                    : 
+                    `<div class="h-48 overflow-hidden">
+                        <img src="https://placehold.co/600x400/999999/FFFFFF?text=Sin+Imagen" alt="Sin Imagen" class="w-full h-full object-cover">
+                    </div>`;
+
+
+                card.innerHTML = `
+                    ${imageSliderHtml}
+                    <div class="p-5 text-center">
+                        <h4 class="text-lg font-semibold mb-1">${service.name}</h4>
+                        <div class="rating text-sm text-gray-500 mb-2">${ratingHtml}</div>
+                        <p class="text-base font-medium text-blue-600 mb-4">${service.priceInfo}</p>
+                         <!-- BOTÓN PREDOMINANTE: Contratar Servicio -->
+                        <button class="cta-button w-full mb-2" onclick="alert('Funcionalidad de Contratar/Más Información para ${service.name} (ID: ${service.id})')">
+                            Contratar Servicio
+                        </button>
+                        
+                        <!-- ENLACE DISCRETO DE RESEÑA -->
+                        <span class="secondary-link" onclick="openReviewModal('${service.id}')">
+                            Dejar una Reseña
+                        </span>
+                    </div>
+                `;
+                serviceDirectory.appendChild(card);
+            });
+        };
+
+        /**
+         * Escucha los cambios en la colección de servicios y maneja la carga inicial.
+         */
+        const startServiceListener = () => {
+             onSnapshot(collection(db, serviceCollectionPath), async (snapshot) => {
+                const newServices = [];
+                snapshot.forEach(doc => {
+                    newServices.push({ id: doc.id, ...doc.data(), currentRating: 0, reviewCount: 0 });
+                });
+
+                // Si la base de datos está vacía, inicializar con los datos por defecto
+                if (newServices.length === 0 && isAdminAuthenticated) { // Solo inicializar si es administrador
+                    await Promise.all(DEFAULT_SERVICES.map(async (service) => {
+                        await setDoc(doc(db, serviceCollectionPath, service.id), service);
+                        newServices.push({ ...service, currentRating: 0, reviewCount: 0 });
+                    }));
+                } else if (newServices.length === 0) {
+                     // Caso no admin y sin data en DB, usar solo defaults temporales
+                     servicesData = DEFAULT_SERVICES.map(s => ({ ...s, currentRating: 0.0, reviewCount: 0 }));
+                     renderServiceCards(servicesData);
+                     return;
+                }
+                
+                servicesData = newServices;
+                
+                // Una vez que tenemos los servicios, podemos escuchar las reseñas para calcular ratings.
+                startReviewListeners(); 
+                renderServiceCards(servicesData); // Renderizar inicialmente
+                
+                document.getElementById('loading-message')?.remove(); // Remover mensaje de carga
+                
+            }, (error) => {
+                console.error("Error al escuchar servicios:", error);
+            });
+        };
+
+
+        // 3. LÓGICA DE RESEÑAS Y CÁLCULO DE PROMEDIOS
+        
+        /**
+         * Calcula el promedio y el conteo de reseñas aprobadas por servicio.
+         */
+        const calculateAverageRatings = (reviews) => {
+            const ratingsMap = {};
+
+            servicesData.forEach(service => {
+                ratingsMap[service.id] = { sum: 0, count: 0 };
+            });
+
+            reviews.forEach(review => {
+                // SOLO se cuentan las reseñas APROBADAS para el rating público
+                if (review.status === 'approved' && ratingsMap[review.serviceId]) {
+                    ratingsMap[review.serviceId].sum += review.rating;
+                    ratingsMap[review.serviceId].count += 1;
+                }
+            });
+             // Actualizar los datos del servicio
+            servicesData.forEach(service => {
+                const data = ratingsMap[service.id];
+                service.reviewCount = data.count;
+                service.currentRating = data.count > 0 ? (data.sum / data.count).toFixed(1) : 0.0;
+            });
+            
+            renderServiceCards(servicesData); // Re-renderizar después de actualizar ratings
+        };
+
+        /**
+         * Escucha los cambios en la colección de reseñas.
+         */
+        const startReviewListeners = () => {
+            // Escucha para actualizar la calificación visible (solo reseñas aprobadas) y el conteo
+            onSnapshot(collection(db, reviewCollectionPath), (snapshot) => {
+                const allReviews = [];
+                let pendingCount = 0;
+                snapshot.forEach(doc => {
+                    const review = { id: doc.id, ...doc.data() };
+                    allReviews.push(review);
+                    if (review.status === 'pending') {
+                        pendingCount++;
+                    }
+                });
+                calculateAverageRatings(allReviews);
+                pendingCountSpan.textContent = pendingCount;
+            }, (error) => {
+                console.error("Error al escuchar reseñas:", error);
+            });
+        };
+
+        // 4. LÓGICA DEL MODAL Y FORMULARIOS
+
+        const modal = document.getElementById('app-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        window.closeModal = () => {
+            modal.classList.add('hidden');
+        };
+        
+        // --- CÓDIGO NUEVO/CORREGIDO PARA GESTIÓN ---
+
+        /**
+         * Actualiza el estado de una reseña (Aprobar o Rechazar).
+         */
+        window.updateReviewStatus = async (reviewId, status) => {
+            if (!isAdminAuthenticated) {
+                console.error("Acceso denegado.");
+                return;
+            }
+            try {
+                const reviewRef = doc(db, reviewCollectionPath, reviewId);
+                await updateDoc(reviewRef, { status: status });
+                // Re-renderizar el modal para mostrar la lista actualizada de pendientes.
+                renderAdminModalInternal('reviews'); 
+            } catch (error) {
+                console.error("Error al actualizar estado de la reseña:", error);
+            }
+        };
+
+        /**
+         * Maneja el envío del formulario para agregar un nuevo servicio.
+         */
+        window.handleAddService = async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const messageEl = document.getElementById('service-message');
+            messageEl.classList.add('hidden');
+            
+            const serviceId = document.getElementById('service-id').value.toUpperCase().trim();
+            const serviceName = document.getElementById('service-name').value.trim();
+            const serviceCategory = document.getElementById('service-category').value;
+            const priceInfo = document.getElementById('service-price').value.trim();
+            const imageUrlsText = document.getElementById('service-image-urls').value.trim();
+
+            const imageUrls = imageUrlsText.split(',')
+                                            .map(url => url.trim())
+                                            .filter(url => url.length > 0)
+                                            .slice(0, 3); // Máximo 3 imágenes
+
+            if (servicesData.some(s => s.id === serviceId)) {
+                messageEl.textContent = `Error: Ya existe un servicio con el ID ${serviceId}.`;
+                messageEl.classList.remove('hidden');
+                messageEl.classList.add('text-red-500');
+                return;
+            }
+
+            const newService = {
+                id: serviceId,
+                name: serviceName,
+                category: serviceCategory,
+                priceInfo: priceInfo,
+                imageUrls: imageUrls
+            };
+          try {
+                // Usar setDoc para definir el ID del documento
+                await setDoc(doc(db, serviceCollectionPath, serviceId), newService);
+
+                messageEl.textContent = `¡Servicio '${serviceName}' creado exitosamente!`;
+                messageEl.classList.remove('hidden', 'text-red-500');
+                messageEl.classList.add('text-green-600');
+                form.reset();
+            } catch (error) {
+                console.error("Error al añadir servicio:", error);
+                messageEl.textContent = `Error al guardar: ${error.message}`;
+                messageEl.classList.remove('hidden', 'text-green-600');
+                messageEl.classList.add('text-red-500');
+            }
+        };
+
+        // --- A. Gated Access: Password Prompt Modal ---
+        window.openPasswordModal = () => {
+            if (!isAdminAuthenticated) return;
+
+            modalContent.classList.remove('max-w-3xl', 'max-w-lg');
+            modalContent.classList.add('max-w-sm');
+            
+            modalContent.innerHTML = `
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Acceso de Administrador</h3>
+                        <button class="text-gray-400 hover:text-gray-600" onclick="closeModal()"><i class="fas fa-times text-xl"></i></button>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4">Introduce la contraseña de verificación (Demo: <strong>admin123</strong>).</p>
+                    
+                    <form id="password-form">
+                        <div class="mb-4">
+                            <label for="admin-password" class="sr-only">Contraseña</label>
+                            <input type="password" id="admin-password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                        <button type="submit" class="w-full cta-button">Acceder al Panel</button>
+                        <p id="password-message" class="mt-3 text-center text-sm text-red-500 hidden"></p>
+                    </form>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+
+            document.getElementById('password-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const inputPassword = document.getElementById('admin-password').value;
+                const message = document.getElementById('password-message');
+
+                if (inputPassword === ADMIN_PASSWORD) {
+                    closeModal(); // Cerrar el modal de contraseña
+                    renderAdminModalInternal(); // Abrir el modal del administrador
+                } else {
+                    message.textContent = "Contraseña incorrecta. Inténtalo de nuevo.";
+                    message.classList.remove('hidden');
+                }
+            });
+        };
+      // --- B. Modal de Administración de Reseñas y Servicios ---
+        window.renderAdminModalInternal = async (activeTab = 'reviews') => {
+            if (!isAdminAuthenticated) return;
+
+            // 1. Obtener reseñas pendientes
+            const q = query(collection(db, reviewCollectionPath), where('status', '==', 'pending'));
+            const snapshot = await getDocs(q);
+            const pendingReviews = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            modalContent.classList.remove('max-w-sm', 'max-w-lg');
+            modalContent.classList.add('max-w-3xl');
+            
+            let reviewsHtml = '';
+            if (pendingReviews.length === 0) {
+                reviewsHtml = '<p class="text-gray-500 p-8 text-center">No hay reseñas pendientes de verificación.</p>';
+            } else {
+                reviewsHtml = pendingReviews.map(review => {
+                    const service = servicesData.find(s => s.id === review.serviceId);
+                    const serviceName = service ? service.name : 'Servicio Desconocido';
+                    return `
+                        <div class="p-4 border-b border-gray-100 flex justify-between items-start hover:bg-gray-50 transition">
+                            <div>
+                                <p class="font-semibold">${serviceName}</p>
+                                <div class="text-sm text-gray-700 mb-1">
+                                    <i class="fas fa-star text-yellow-500"></i> **${review.rating}.0** por **${review.authorName}**
+                                </div>
+                                <p class="text-gray-500 italic text-sm mt-1">${review.comment}</p>
+                            </div>
+                            <div class="flex space-x-2 flex-shrink-0 ml-4 pt-1">
+                                <!-- La llamada a updateReviewStatus ahora funciona -->
+                                <button class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-3 rounded-lg text-xs transition" data-id="${review.id}" onclick="updateReviewStatus(this.dataset.id, 'approved')">
+                                    <i class="fas fa-check"></i> Aprobar
+                                </button>
+                                <button class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg text-xs transition" data-id="${review.id}" onclick="updateReviewStatus(this.dataset.id, 'rejected')">
+                                    <i class="fas fa-xmark"></i> Rechazar
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            modalContent.innerHTML = `
+                <div class="flex justify-between items-center p-6 border-b">
+                    <h3 class="text-xl font-bold">Panel de Administración</h3>
+                    <button class="text-gray-400 hover:text-gray-600" onclick="closeModal()"><i class="fas fa-times text-xl"></i></button>
+                </div>
+
+                 <!-- CONTENIDO CON PESTAÑAS SIMPLES -->
+                <div class="p-6">
+                    <div class="mb-6 flex space-x-6 border-b border-gray-200">
+                        <button id="tab-reviews" class="pb-3 text-sm font-semibold transition" onclick="renderAdminModalInternal('reviews')">Verificación de Reseñas</button>
+                        <button id="tab-add-service" class="pb-3 text-sm font-semibold transition" onclick="renderAdminModalInternal('add-service')">Agregar Servicio</button>
+                        <button id="tab-manage-services" class="pb-3 text-sm font-semibold transition" onclick="renderAdminModalInternal('manage-services')">Gestionar Servicios</button>
+                    </div>
+
+                    <!-- PESTAÑA 1: REVIEWS -->
+                    <div id="content-reviews" class="max-h-96 overflow-y-auto ${activeTab === 'reviews' ? '' : 'hidden'}">
+                        <h4 class="text-lg font-semibold mb-3">Reseñas Pendientes (${pendingReviews.length})</h4>
+                        ${reviewsHtml}
+                    </div>
+
+                    <!-- PESTAÑA 2: ADD SERVICE -->
+                    <div id="content-add-service" class="${activeTab === 'add-service' ? '' : 'hidden'}">
+                        <h4 class="text-lg font-semibold mb-4">Registrar un Nuevo Servicio</h4>
+                        <form id="add-service-form">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Nombre del Servicio</label>
+                                    <input type="text" id="service-name" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">ID Único (Ej: PLOM-005)</label>
+                                    <!-- Importante: el ID debe ser un string sin espacios o caracteres especiales -->
+                                    <input type="text" id="service-id" class="w-full p-3 border border-gray-300 rounded-lg uppercase" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Categoría</label>
+                                    <select id="service-category" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                                        <option value="profesionales">Profesionales</option>
+                                        <option value="oficios">Oficios Esenciales</option>
+                                        <option value="entretenimiento">Entretenimiento</option>
+                                        <option value="rentas">Alquileres / Rentas</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Info de Precio/Costo</label>
+                                    <input type="text" id="service-price" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Ej: Desde $1,500 MXN o Contactar para Presupuesto" required>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <label class="block text-sm font-medium text-gray-700">URLs de Imágenes (Máx 3, separadas por coma)</label>
+                                <textarea id="service-image-urls" rows="3" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="URL 1, URL 2, URL 3 (Opcional)" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full cta-button mt-6">Guardar Nuevo Servicio</button>
+                            <!-- El mensaje ahora será controlado por handleAddService -->
+                            <p id="service-message" class="mt-3 text-center text-sm hidden"></p>
+                        </form>
+                    </div>
+                      <!-- PESTAÑA 3: MANAGE SERVICES -->
+                    <div id="content-manage-services" class="${activeTab === 'manage-services' ? '' : 'hidden'}">
+                        <!-- El contenido se inyectará por renderServiceManagementTab -->
+                        ${renderServiceManagementTab()}
+                    </div>
+                </div>
+            `;
+
+            // Lógica de Pestañas (Activación visual)
+            document.querySelectorAll('button[id^="tab-"]').forEach(button => {
+                button.classList.remove('border-blue-600', 'text-blue-600');
+                button.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700');
+            });
+
+            const activeTabButton = document.getElementById(`tab-${activeTab}`);
+            if (activeTabButton) {
+                activeTabButton.classList.add('border-blue-600', 'text-blue-600', 'border-b-2');
+                activeTabButton.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700');
+            }
+            
+            // Asegurar que el listener se adjunte después de la inyección de HTML
+            if(activeTab === 'add-service') {
+                document.getElementById('add-service-form').addEventListener('submit', handleAddService);
+            }
+
+            modal.classList.remove('hidden');
+        };
+
+        /**
+         * Genera el HTML para la pestaña de gestión y eliminación de servicios.
+         */
+        window.renderServiceManagementTab = () => {
+             if (servicesData.length === 0) {
+                return '<p class="text-gray-500 p-8 text-center">No hay servicios registrados para gestionar.</p>';
+            }
+
+            const servicesListHtml = servicesData.map(service => {
+                return `
+                    <div class="p-3 border-b border-gray-100 flex justify-between items-center hover:bg-gray-50 transition">
+                        <div>
+                            <p class="font-semibold text-gray-800">${service.name}</p>
+                            <p class="text-sm text-gray-500">ID: ${service.id} | Categoría: ${service.category}</p>
+                        </div>
+                        <button class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-3 rounded-lg text-xs transition flex items-center" 
+                                onclick="confirmServiceDeletion('${service.id}', '${service.name}')">
+                            <i class="fas fa-trash-alt mr-1"></i> Eliminar
+                        </button>
+                    </div>
+                `;
+            }).join('');
+            
+            return `<div class="max-h-96 overflow-y-auto border border-gray-200 rounded-lg">${servicesListHtml}</div>`;
+        };
+           // --- C. Lógica de Eliminación (Requiere Confirmación) ---
+        window.confirmServiceDeletion = (serviceId, serviceName) => {
+             // Usamos el modal existente, pero cambiamos su contenido y estilo
+             modalContent.classList.remove('max-w-3xl', 'max-w-lg');
+             modalContent.classList.add('max-w-sm');
+             
+             modalContent.innerHTML = `
+                <div class="p-6 text-center">
+                    <div class="mb-4 text-red-500 text-4xl"><i class="fas fa-triangle-exclamation"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Confirmar Eliminación</h3>
+                    <p class="text-gray-600 mb-6">¿Estás seguro de que deseas eliminar el servicio **${serviceName}** (ID: ${serviceId})? Esta acción es irreversible y eliminará el documento de Firestore.</p>
+                    <div class="flex justify-center space-x-3">
+                        <button class="px-5 py-2 text-sm font-medium rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition" onclick="renderAdminModalInternal('manage-services')">Cancelar</button>
+                        <button class="px-5 py-2 text-sm font-medium rounded-lg bg-red-600 text-white hover:bg-red-700 transition" onclick="deleteService('${serviceId}')">Eliminar Permanentemente</button>
+                    </div>
+                </div>
+             `;
+             modal.classList.remove('hidden');
+        };
+        
+        window.deleteService = async (serviceId) => {
+            if (!isAdminAuthenticated) {
+                console.error("Solo el administrador autenticado puede realizar esta acción.");
+                return;
+            }
+            try {
+                const serviceRef = doc(db, serviceCollectionPath, serviceId);
+                await deleteDoc(serviceRef);
+                
+                // Mostrar mensaje de éxito y actualizar la vista
+                modalContent.innerHTML = `
+                    <div class="p-6 text-center">
+                        <div class="mb-4 text-green-500 text-4xl"><i class="fas fa-circle-check"></i></div>
+                        <h3 class="text-xl font-bold mb-2">¡Servicio Eliminado!</h3>
+                        <p class="text-gray-600 mb-6">El servicio con ID **${serviceId}** ha sido eliminado permanentemente de la base de datos.</p>
+                        <button class="cta-button" onclick="renderAdminModalInternal('manage-services')">Volver a Gestión</button>
+                    </div>
+                `;
+                // La lista de servicios se actualizará automáticamente gracias al listener (onSnapshot)
+            } catch (e) {
+                console.error("Error al eliminar servicio:", e);
+                modalContent.innerHTML = `
+                    <div class="p-6 text-center">
+                        <div class="mb-4 text-red-500 text-4xl"><i class="fas fa-triangle-exclamation"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Error</h3>
+                        <p class="text-gray-600 mb-6">No se pudo eliminar el servicio. Revise la consola: ${e.message}</p>
+                        <button class="cta-button" onclick="renderAdminModalInternal('manage-services')">Volver a Gestión</button>
+                    </div>
+                `;
+            }
+        };
+        // Evento principal para abrir el panel de administración
+        adminButton.addEventListener('click', openPasswordModal);
+
+        // --- D. Modal de Envío de Reseñas (Experiencia Amigable) ---
+        window.openReviewModal = (serviceId) => {
+            const serviceName = servicesData.find(s => s.id === serviceId)?.name || 'Servicio';
+            modalContent.classList.remove('max-w-3xl');
+            modalContent.classList.add('max-w-lg');
+            let currentRating = 0;
+
+            modalContent.innerHTML = `
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Dejar una Reseña para **${serviceName}**</h3>
+                        <button class="text-gray-400 hover:text-gray-600" onclick="closeModal()"><i class="fas fa-times text-xl"></i></button>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4 bg-blue-50 p-3 rounded-xl border border-blue-100">
+                        <i class="fas fa-info-circle mr-1 text-blue-600"></i> Su opinión es crucial. La reseña se publicará después de una verificación manual para garantizar la calidad.
+                    </p>
+                    
+                    <form id="review-form" data-service-id="${serviceId}">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tu Nombre</label>
+                            <input type="text" id="author-name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ej. Juan D." required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tu Calificación</label>
+                            <div id="star-rating" class="text-3xl space-x-1 cursor-pointer">
+                                ${Array(5).fill(0).map((_, i) => `<i class="fas fa-star rating-star" data-rating="${i + 1}"></i>`).join('')}
+                            </div>
+                            <input type="hidden" id="rating-value" value="0" required>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Comentario</label>
+                            <textarea id="review-comment" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Describe tu experiencia para ayudar a otros." required></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full cta-button">Enviar Reseña</button>
+                        <p id="review-message" class="mt-3 text-center text-sm text-gray-600 hidden"></p>
+                    </form>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+
+            // Lógica para las estrellas (Rating UI)
+            document.querySelectorAll('.rating-star').forEach(star => {
+                star.addEventListener('click', (e) => {
+                    currentRating = parseInt(e.target.dataset.rating);
+                    document.getElementById('rating-value').value = currentRating;
+                    document.querySelectorAll('.rating-star').forEach(s => {
+                        s.classList.toggle('filled', parseInt(s.dataset.rating) <= currentRating);
+                    });
+                });
+            });
+            // Lógica para el Envío del Formulario
+            document.getElementById('review-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const form = e.target;
+                const message = document.getElementById('review-message');
+                
+                const newReview = {
+                    serviceId: form.dataset.serviceId,
+                    authorName: document.getElementById('author-name').value,
+                    rating: parseInt(document.getElementById('rating-value').value),
+                    comment: document.getElementById('review-comment').value,
+                    timestamp: new Date().toISOString(),
+                    status: 'pending' // El core de la verificación
+                };
+
+                if (newReview.rating === 0) {
+                    message.textContent = "Por favor, selecciona una calificación con estrellas.";
+                    message.classList.remove('hidden', 'text-gray-600');
+                    message.classList.add('text-red-500');
+                    return;
+                }
+
+                try {
+                    await addDoc(collection(db, reviewCollectionPath), newReview);
+                    message.textContent = "¡Reseña enviada! Está en verificación y pronto aparecerá.";
+                    message.classList.remove('hidden', 'text-red-500');
+                    message.classList.add('text-green-600');
+                    form.reset();
+                    document.querySelectorAll('.rating-star').forEach(s => s.classList.remove('filled'));
+                    setTimeout(closeModal, 3000); // Cerrar después de 3 segundos
+                } catch (error) {
+                    message.textContent = `Error al enviar: ${error.message}. Intenta de nuevo.`;
+                    message.classList.remove('hidden', 'text-gray-600');
+                    message.classList.add('text-red-500');
+                    console.error("Error al añadir reseña:", error);
+                }
+            });
+        };
+          // --- 5. LÓGICA DE FILTRADO Y BÚSQUEDA
+
+        /**
+         * Maneja el cambio de filtro principal (Todos, Mejor Calificados, Categoría).
+         */
+        const applyFilter = (filterType) => {
+            currentFilter = filterType; 
+            currentSearchQuery = ''; // Limpiar búsqueda al aplicar un filtro
+            searchInput.value = '';
+
+            // Manejo de la selección de botones
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-black', 'text-white', 'border-gray-300');
+                btn.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+            });
+            // También manejar la selección de botones de categoría
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-50', 'border-blue-600', 'text-blue-700');
+                btn.classList.add('bg-white', 'border-gray-200', 'text-gray-700');
+            });
+
+
+            const activeFilterBtn = document.querySelector(`.filter-btn[data-filter="${filterType}"]`);
+            if(activeFilterBtn) { 
+                activeFilterBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
+                activeFilterBtn.classList.add('bg-black', 'text-white');
+            }
+
+            const activeCategoryBtn = document.querySelector(`.category-btn[data-category="${filterType}"]`);
+            if (activeCategoryBtn) {
+                 activeCategoryBtn.classList.remove('bg-white', 'border-gray-200', 'text-gray-700');
+                 activeCategoryBtn.classList.add('bg-blue-50', 'border-blue-600', 'text-blue-700');
+            }
+            
+            renderServiceCards(servicesData);
+        };
+
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                applyFilter(button.dataset.filter);
+            });
+        });
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                applyFilter(button.dataset.category);
+            });
+        });
+
+        /**
+         * Maneja la lógica de búsqueda en tiempo real.
+         */
+        const handleSearch = () => {
+            // Actualizar la consulta de búsqueda global
+            currentSearchQuery = searchInput.value;
+            
+            // Si hay una búsqueda activa, desactivar la selección de filtros visualmente
+            if (currentSearchQuery.length > 0) {
+                 document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('bg-black', 'text-white');
+                    btn.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+                });
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('bg-blue-50', 'border-blue-600', 'text-blue-700');
+                    btn.classList.add('bg-white', 'border-gray-200', 'text-gray-700');
+                });
+                // También desactivar el filtro lógico para que la búsqueda tome precedencia
+                currentFilter = 'todos'; 
+            } else {
+                // Si la búsqueda se vacía, restablecer el filtro a 'todos' (visual y lógicamente)
+                applyFilter('todos');
+                return; // Evitar el doble renderizado
+            }
+
+            renderServiceCards(servicesData);
+        };
+        
+        // Asignar eventos al input y botón de búsqueda
+        searchInput.addEventListener('input', handleSearch);
+        document.getElementById('search-button').addEventListener('click', handleSearch);
+        
+        // Inicializar el filtro "Todos" al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+             // Asegura que el botón 'Todos' esté activo visualmente al inicio
+            const filterAllBtn = document.getElementById('filter-all');
+            filterAllBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
+            filterAllBtn.classList.add('bg-black', 'text-white');
+            
+            // También asegurar que el scroll horizontal se vea bien en navegadores que lo soportan
+            const container = document.getElementById('category-buttons-container');
+            if (container) {
+                 const style = document.createElement('style');
+                 // Ocultar la barra de desplazamiento en navegadores WebKit (Chrome, Safari)
+                 style.textContent = '#category-buttons-container::-webkit-scrollbar { display: none; }';
+                 document.head.append(style);
+            }
+        });
+
+    </script>
 </body>
 </html>
-
