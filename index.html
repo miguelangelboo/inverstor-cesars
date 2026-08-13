@@ -3,635 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InverTrack - Gestión y Análisis de Inversiones</title>
-    <!-- Carga de Tailwind CSS para el diseño responsive y moderno -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ícono de la app -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
-    <!-- Configuración de la fuente Inter -->
+    <title>Mis Recomendaciones | Audio Report & Deals</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        /* Estilos personalizados para la carga */
-        #loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* CSS Reset & Variables */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            margin-top: 10px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Grid Responsivo para los Productos */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Tarjeta del Producto */
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Contenedor de la Imagen / Prevista */
+        .image-container {
+            width: 100%;
+            height: 220px;
+            background-color: #eef2f5;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-container img {
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
+            object-fit: cover;
+        }
+
+        .image-container .placeholder {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Contenido de la Tarjeta */
+        .card-content {
+            padding: 16px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
         }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-top: 4px solid #3b82f6; /* Tailwind blue-500 */
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: #222;
+            margin-bottom: 12px;
+            /* Recortar texto a máximo 2 líneas */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .btn-buy {
+            background-color: #ffe600; /* Amarillo Mercado Libre */
+            color: #2d3277; /* Azul Mercado Libre */
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body>
 
-    <!-- Overlay de Carga -->
-    <div id="loading-overlay" class="hidden">
-        <div class="flex flex-col items-center p-6 bg-white rounded-xl shadow-2xl">
-            <div class="spinner mb-4"></div>
-            <p class="text-lg text-gray-700 font-medium">Cargando datos y autenticación...</p>
-        </div>
-    </div>
+    <header>
+        <h1>Productos Recomendados</h1>
+        <p>Selección de ofertas directamente en Mercado Libre</p>
+    </header>
 
-    <!-- Contenedor Principal (Flexbox para centrar y adaptar) -->
-    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-
-        <!-- Header y Navegación -->
-        <header class="bg-white shadow-lg rounded-xl mb-6">
-            <div class="flex flex-col sm:flex-row justify-between items-center p-4">
-                <h1 class="text-3xl font-extrabold text-blue-600 tracking-tight mb-2 sm:mb-0 flex items-center">
-                    <span class="mr-2">📈</span> InverTrack
-                </h1>
-                <nav class="flex space-x-2 sm:space-x-4">
-                    <button data-view="dashboard" class="nav-link bg-blue-500 text-white px-3 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors shadow-md">Dashboard</button>
-                    <button data-view="analysis" class="nav-link text-gray-700 px-3 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">Análisis IA</button>
-                    <button data-view="blog" class="nav-link text-gray-700 px-3 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">Blog/Noticias</button>
-                </nav>
+    <main class="container">
+        <!-- Producto 1 -->
+        <a href="https://meli.la/1cj6fW6" target="_blank" rel="noopener noreferrer" class="card" data-url="https://meli.la/1cj6fW6">
+            <div class="image-container">
+                <span class="placeholder">Cargando imagen...</span>
             </div>
-            <div class="p-2 bg-gray-100 rounded-b-xl text-sm text-gray-500">
-                <p>ID de Usuario (para compartir/admin): <span id="user-id-display" class="font-mono text-gray-800 break-all">Cargando...</span></p>
+            <div class="card-content">
+                <div class="card-title">Ver producto en Mercado Libre</div>
+                <div class="btn-buy">Ver en Mercado Libre</div>
             </div>
-        </header>
+        </a>
 
-        <!-- Contenido Dinámico -->
-        <main id="content-area">
-            <!-- El contenido de las vistas (Dashboard, Análisis, Blog) se inyecta aquí -->
-        </main>
+        <!-- Producto 2 -->
+        <a href="https://meli.la/2NwGbbu" target="_blank" rel="noopener noreferrer" class="card" data-url="https://meli.la/2NwGbbu">
+            <div class="image-container">
+                <span class="placeholder">Cargando imagen...</span>
+            </div>
+            <div class="card-content">
+                <div class="card-title">Ver producto en Mercado Libre</div>
+                <div class="btn-buy">Ver en Mercado Libre</div>
+            </div>
+        </a>
+    </main>
 
-        <!-- Mensaje Modal/Toast (para reemplazar alert()) -->
-        <div id="app-message" class="fixed bottom-4 right-4 bg-red-600 text-white px-6 py-3 rounded-xl shadow-2xl transition-opacity duration-300 opacity-0 pointer-events-none" role="alert">
-            <!-- Mensajes de error/info se mostrarán aquí -->
-        </div>
+    <footer>
+        <p>Links de afiliado. Las compras realizadas a través de estos enlaces apoyan nuestro proyecto.</p>
+    </footer>
 
-    </div>
+    <!-- JavaScript para extraer la imagen miniatura automáticamente -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cards = document.querySelectorAll(".card");
 
-    <!-- Scripts de Firebase -->
-    <script type="module">
-        // Importaciones de Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, collection, query, setDoc, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+            cards.forEach(card => {
+                const targetUrl = card.getAttribute("data-url");
+                const imgContainer = card.querySelector(".image-container");
+                const titleElement = card.querySelector(".card-title");
 
-        // Establecer nivel de log para depuración de Firestore
-        setLogLevel('Debug');
+                // Usamos un microservicio público gratuito (Microlink API) para extraer la metadata/imagen de Mercado Libre
+                fetch(`https://api.microlink.io?url=${encodeURIComponent(targetUrl)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === "success") {
+                            // Extraer Imagen
+                            if (data.data.image && data.data.image.url) {
+                                imgContainer.innerHTML = `<img src="${data.data.image.url}" alt="Miniatura del producto" loading="lazy">`;
+                            } else {
+                                imgContainer.innerHTML = `<span class="placeholder">Sin imagen</span>`;
+                            }
 
-        // Variables globales de Canvas (obligatorias)
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-        
-        let app, db, auth;
-        let userId = null;
-        let isAuthReady = false;
-
-        const loadingOverlay = document.getElementById('loading-overlay');
-
-        // --- FUNCIONES DE UTILIDAD ---
-
-        // Función para mostrar mensajes de la app (sustituto de alert())
-        const showAppMessage = (message, isError = true) => {
-            const messageEl = document.getElementById('app-message');
-            messageEl.textContent = message;
-            messageEl.className = `fixed bottom-4 right-4 px-6 py-3 rounded-xl shadow-2xl transition-opacity duration-300 pointer-events-none ${isError ? 'bg-red-600' : 'bg-green-600'} text-white`;
-            
-            // Forzar reflow para reiniciar la transición
-            void messageEl.offsetWidth; 
-            
-            messageEl.style.opacity = '1';
-            
-            setTimeout(() => {
-                messageEl.style.opacity = '0';
-                setTimeout(() => {
-                    messageEl.className = `fixed bottom-4 right-4 transition-opacity duration-300 opacity-0 pointer-events-none`;
-                }, 300);
-            }, 5000);
-        };
-
-        // Función de delay con backoff exponencial
-        const exponentialBackoffDelay = async (retryAttempt) => {
-            const delay = Math.min(1000 * Math.pow(2, retryAttempt), 30000);
-            return new Promise(resolve => setTimeout(resolve, delay));
-        };
-
-        // --- INICIALIZACIÓN DE FIREBASE Y AUTENTICACIÓN ---
-
-        const initFirebase = async () => {
-            if (!firebaseConfig) {
-                console.error("Error: Configuración de Firebase no disponible.");
-                showAppMessage("Error: La configuración de la base de datos es inválida.", true);
-                return;
-            }
-
-            try {
-                loadingOverlay.classList.remove('hidden');
-
-                app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                // Autenticación: Usar Custom Token si está disponible, sino, Anónimo
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                // Listener de cambio de estado de autenticación
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        document.getElementById('user-id-display').textContent = userId;
-                    } else {
-                        // Esto solo debería pasar si la sesión expira o hay un error, 
-                        // pero la autenticación inicial ya ocurrió.
-                        userId = 'Anonimo-' + crypto.randomUUID();
-                        document.getElementById('user-id-display').textContent = userId;
-                    }
-                    isAuthReady = true;
-                    // Una vez que la autenticación está lista, cargamos la vista inicial
-                    loadView('dashboard');
-                    loadingOverlay.classList.add('hidden');
-                });
-
-            } catch (error) {
-                console.error("Error durante la inicialización de Firebase/Autenticación:", error);
-                showAppMessage(`Error grave de autenticación: ${error.message}`, true);
-                loadingOverlay.classList.add('hidden');
-            }
-        };
-
-        // --- FUNCIÓN PARA CARGAR VISTAS ---
-
-        const contentArea = document.getElementById('content-area');
-        const navLinks = document.querySelectorAll('.nav-link');
-        let currentView = null;
-
-        const loadView = (viewName) => {
-            if (currentView === viewName) return;
-
-            // Actualizar botones de navegación
-            navLinks.forEach(link => {
-                if (link.getAttribute('data-view') === viewName) {
-                    link.classList.remove('text-gray-700', 'hover:bg-gray-100');
-                    link.classList.add('bg-blue-500', 'text-white', 'shadow-md');
-                } else {
-                    link.classList.remove('bg-blue-500', 'text-white', 'shadow-md');
-                    link.classList.add('text-gray-700', 'hover:bg-gray-100');
-                }
-            });
-
-            currentView = viewName;
-            contentArea.innerHTML = '';
-
-            switch (viewName) {
-                case 'dashboard':
-                    renderDashboard();
-                    break;
-                case 'analysis':
-                    renderAnalysisTool();
-                    break;
-                case 'blog':
-                    renderBlog();
-                    break;
-                default:
-                    contentArea.innerHTML = '<p class="text-xl text-center p-8 bg-white rounded-xl shadow-lg">Selecciona una opción del menú.</p>';
-            }
-        };
-
-        // --- VISTA 1: DASHBOARD (Gestión de Inversiones) ---
-
-        const renderDashboard = () => {
-            contentArea.innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Tarjeta de Resumen -->
-                    <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-xl">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Resumen de Cartera</h2>
-                        <div id="summary-data">
-                            <p class="text-gray-500 italic">Cargando resumen...</p>
-                        </div>
-                        <div class="mt-4 pt-4 border-t">
-                            <p class="text-sm text-gray-600">
-                                <span class="font-semibold text-blue-500">Nota del Admin:</span> Esta data es gestionada por el administrador y se actualiza en tiempo real para todos los visitantes.
-                            </p>
-                            <button id="add-investment-btn" class="mt-3 w-full bg-green-500 text-white p-2 rounded-lg font-semibold hover:bg-green-600 transition-colors">Añadir Inversión (Admin)</button>
-                        </div>
-                    </div>
-                    <!-- Tarjeta de Lista de Posiciones -->
-                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-xl">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Posiciones Actuales</h2>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Activo</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio Actual</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ganancia/Pérdida</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="investments-list" class="bg-white divide-y divide-gray-200">
-                                    <tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">Cargando posiciones...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('add-investment-btn').addEventListener('click', mockAddInvestment);
-            fetchInvestments();
-        };
-
-        // Path para data pública (inversiones)
-        const getPublicInvestmentsPath = () => `artifacts/${appId}/public/data/investments`;
-        const getPublicSummaryDoc = () => doc(db, `artifacts/${appId}/public/data/summary/portfolio`);
-
-        // Mock para añadir inversión (simula acción de administrador)
-        const mockAddInvestment = async () => {
-            if (!isAuthReady) return;
-            try {
-                // Generar datos aleatorios de ejemplo
-                const symbols = ["AAPL", "GOOGL", "MSFT", "TSLA", "NVDA"];
-                const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-                const quantity = Math.floor(Math.random() * 50) + 1;
-                const currentPrice = (Math.random() * 200 + 50).toFixed(2);
-                const costBasis = (currentPrice * (1 + (Math.random() * 0.2 - 0.1))).toFixed(2); // Costo entre -10% y +10% del precio actual
-                const gainLoss = ((currentPrice - costBasis) * quantity).toFixed(2);
-
-                const investmentData = {
-                    symbol: symbol,
-                    quantity: quantity,
-                    currentPrice: parseFloat(currentPrice),
-                    costBasis: parseFloat(costBasis),
-                    gainLoss: parseFloat(gainLoss),
-                    lastUpdated: new Date().toISOString()
-                };
-
-                const investmentDocRef = doc(db, getPublicInvestmentsPath(), symbol);
-                await setDoc(investmentDocRef, investmentData, { merge: true });
-                
-                // Actualizar resumen (esto sería más complejo en un app real)
-                const totalValue = (parseFloat(currentPrice) * quantity);
-                await setDoc(getPublicSummaryDoc(), { 
-                    totalAssets: totalValue,
-                    portfolioChange: parseFloat(gainLoss)
-                }, { merge: true });
-
-                showAppMessage(`Inversión de ${symbol} añadida/actualizada.`, false);
-
-            } catch (error) {
-                console.error("Error al añadir inversión:", error);
-                showAppMessage(`Error al añadir inversión: ${error.message}`, true);
-            }
-        };
-
-
-        const fetchInvestments = () => {
-            if (!isAuthReady || !db) return;
-
-            // 1. Obtener la lista de inversiones (colección)
-            const investmentsCollectionRef = collection(db, getPublicInvestmentsPath());
-            onSnapshot(investmentsCollectionRef, (snapshot) => {
-                const investments = [];
-                snapshot.forEach(doc => {
-                    investments.push(doc.data());
-                });
-                renderInvestmentsTable(investments);
-            }, (error) => {
-                console.error("Error al obtener inversiones:", error);
-                document.getElementById('investments-list').innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-red-500">Error al cargar inversiones.</td></tr>`;
-            });
-
-            // 2. Obtener el resumen (documento)
-            onSnapshot(getPublicSummaryDoc(), (docSnapshot) => {
-                if (docSnapshot.exists()) {
-                    renderSummary(docSnapshot.data());
-                } else {
-                    document.getElementById('summary-data').innerHTML = `<p class="text-red-500">No hay datos de resumen.</p>`;
-                }
-            }, (error) => {
-                console.error("Error al obtener resumen:", error);
-                document.getElementById('summary-data').innerHTML = `<p class="text-red-500">Error al cargar resumen.</p>`;
-            });
-        };
-
-        const renderInvestmentsTable = (investments) => {
-            const tableBody = document.getElementById('investments-list');
-            tableBody.innerHTML = ''; // Limpiar tabla
-
-            if (investments.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">No hay posiciones de inversión registradas.</td></tr>`;
-                return;
-            }
-
-            investments.forEach(inv => {
-                const isPositive = inv.gainLoss >= 0;
-                const gainLossClass = isPositive ? 'text-green-600' : 'text-red-600';
-                const sign = isPositive ? '+' : '';
-
-                const row = document.createElement('tr');
-                row.className = 'hover:bg-gray-50 transition-colors';
-                row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">${inv.symbol}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${inv.quantity.toLocaleString('es-ES')}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">$${inv.currentPrice.toFixed(2)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm ${gainLossClass} font-bold">${sign}$${inv.gainLoss.toFixed(2)}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        };
-
-        const renderSummary = (summary) => {
-            const summaryDiv = document.getElementById('summary-data');
-            const isPositive = summary.portfolioChange >= 0;
-            const changeClass = isPositive ? 'text-green-600' : 'text-red-600';
-            const sign = isPositive ? '+' : '';
-
-            summaryDiv.innerHTML = `
-                <div class="space-y-3">
-                    <p class="text-lg font-medium text-gray-600">Valor Total de la Cartera:</p>
-                    <p class="text-4xl font-extrabold text-blue-800">$${summary.totalAssets ? summary.totalAssets.toFixed(2).toLocaleString('es-ES') : '0.00'}</p>
-                    <p class="text-lg font-medium text-gray-600">Cambio Total (Día):</p>
-                    <p class="text-3xl font-bold ${changeClass}">${sign}$${summary.portfolioChange ? Math.abs(summary.portfolioChange).toFixed(2).toLocaleString('es-ES') : '0.00'}</p>
-                </div>
-            `;
-        };
-
-        // --- VISTA 2: ANÁLISIS DE ACCIONES (Integración Gemini) ---
-
-        const renderAnalysisTool = () => {
-            contentArea.innerHTML = `
-                <div class="bg-white p-6 rounded-xl shadow-xl max-w-4xl mx-auto">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center">
-                        <span class="mr-2 text-yellow-500">✨</span> Análisis de Caídas de Precios (IA)
-                    </h2>
-                    <p class="mb-4 text-gray-600">Ingresa el nombre de una acción o un evento de caída de precio. La inteligencia artificial lo analizará usando información reciente de Google.</p>
-                    
-                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 mb-6">
-                        <input type="text" id="analysis-input" class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Ej: ¿Por qué cayó NVIDIA 10% la semana pasada?" />
-                        <button id="run-analysis-btn" class="bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-md active:scale-[.98]">
-                            <span id="analysis-btn-text">Analizar</span>
-                            <span id="analysis-spinner" class="spinner-small hidden ml-2"></span>
-                        </button>
-                    </div>
-                    
-                    <div id="analysis-result" class="mt-8 bg-gray-50 p-4 sm:p-6 rounded-xl border border-gray-200">
-                        <p class="text-gray-500 italic" id="result-placeholder">El análisis se mostrará aquí.</p>
-                    </div>
-                </div>
-            `;
-            document.getElementById('run-analysis-btn').addEventListener('click', runAnalysis);
-        };
-
-        // Función para simular un spinner pequeño
-        const showSpinner = (show) => {
-            const btnText = document.getElementById('analysis-btn-text');
-            const spinner = document.getElementById('analysis-spinner');
-            const button = document.getElementById('run-analysis-btn');
-            
-            if (show) {
-                btnText.textContent = 'Analizando...';
-                spinner.style.display = 'inline-block';
-                button.disabled = true;
-                button.classList.add('opacity-70', 'cursor-not-allowed');
-            } else {
-                btnText.textContent = 'Analizar';
-                spinner.style.display = 'none';
-                button.disabled = false;
-                button.classList.remove('opacity-70', 'cursor-not-allowed');
-            }
-        };
-
-        const runAnalysis = async () => {
-            const input = document.getElementById('analysis-input').value.trim();
-            if (!input) {
-                showAppMessage("Por favor, ingresa tu consulta de análisis.", false);
-                return;
-            }
-
-            const resultDiv = document.getElementById('analysis-result');
-            resultDiv.innerHTML = '<p class="text-blue-600 font-medium animate-pulse">Consultando el mercado en tiempo real... Esto puede tardar unos segundos.</p>';
-            showSpinner(true);
-
-            // Instrucciones para el modelo: Actuar como analista financiero, enfocándose en caídas
-            const systemPrompt = "Eres un analista financiero experto y objetivo. Tu tarea es analizar la consulta del usuario, enfocándote en caídas de precios de acciones o eventos bursátiles recientes. Utiliza la herramienta de búsqueda de Google para encontrar información actualizada y fundamentada. Tu respuesta debe ser concisa, profesional, y debe explicar claramente la causa del movimiento, las implicaciones y el sentimiento actual del mercado.";
-            const userQuery = `Analiza la siguiente consulta financiera y explica la causa de la caída (o movimiento) y su impacto: "${input}"`;
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                tools: [{ "google_search": {} }], // Habilitar Google Search para grounding
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-            };
-            
-            let responseData = null;
-            let maxRetries = 3;
-
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (response.status === 429) {
-                        // 429 Too Many Requests: aplicar backoff exponencial
-                        if (i < maxRetries - 1) {
-                            await exponentialBackoffDelay(i);
-                            continue; // Reintentar
+                            // Extraer Título (opcional, si viene disponible)
+                            if (data.data.title) {
+                                titleElement.textContent = data.data.title;
+                            }
                         }
-                    }
-
-                    if (!response.ok) {
-                        throw new Error(`Error HTTP: ${response.status}`);
-                    }
-
-                    responseData = await response.json();
-                    break; // Salir del bucle si es exitoso
-
-                } catch (error) {
-                    console.error(`Intento ${i + 1} fallido:`, error);
-                    if (i < maxRetries - 1) {
-                        await exponentialBackoffDelay(i);
-                    } else {
-                        showAppMessage("Error: No se pudo obtener la respuesta del servidor de IA.", true);
-                    }
-                }
-            }
-            
-            showSpinner(false);
-            
-            if (!responseData) {
-                resultDiv.innerHTML = '<p class="text-red-500 font-semibold">❌ Lo siento, no se pudo completar el análisis después de varios intentos.</p>';
-                return;
-            }
-            
-            // Procesamiento de la respuesta
-            const candidate = responseData.candidates?.[0];
-            const text = candidate?.content?.parts?.[0]?.text || "No se pudo generar un análisis conciso.";
-            let sources = [];
-
-            // Extracción de fuentes si se usó grounding
-            const groundingMetadata = candidate?.groundingMetadata;
-            if (groundingMetadata && groundingMetadata.groundingAttributions) {
-                sources = groundingMetadata.groundingAttributions
-                    .map(attribution => ({
-                        uri: attribution.web?.uri,
-                        title: attribution.web?.title,
-                    }))
-                    .filter(source => source.uri && source.title);
-            }
-            
-            // Renderizar el resultado
-            let htmlContent = `<div class="p-4 bg-blue-50 border-l-4 border-blue-400 rounded-lg mb-4">
-                <p class="text-blue-800 font-semibold">Respuesta del Analista IA:</p>
-            </div>`;
-            
-            // Reemplazar saltos de línea con etiquetas <br> y envolver en un contenedor de texto
-            const formattedText = text.replace(/\n/g, '<br>');
-            htmlContent += `<div class="text-gray-700 leading-relaxed">${formattedText}</div>`;
-            
-            if (sources.length > 0) {
-                htmlContent += `<div class="mt-6 pt-4 border-t border-gray-200">
-                    <p class="text-sm font-semibold text-gray-700 mb-2">Fuentes Consultadas:</p>
-                    <ul class="list-disc ml-5 text-sm text-blue-600 space-y-1">`;
-                sources.forEach((source, index) => {
-                    htmlContent += `<li><a href="${source.uri}" target="_blank" class="hover:underline">${source.title}</a></li>`;
-                });
-                htmlContent += `</ul></div>`;
-            } else {
-                 htmlContent += `<div class="mt-4 text-sm text-gray-500">
-                    <p>El análisis se realizó sin fuentes web específicas, utilizando el conocimiento base del modelo.</p>
-                </div>`;
-            }
-
-            resultDiv.innerHTML = htmlContent;
-        };
-        
-        // --- VISTA 3: BLOG/NOTICIAS ---
-
-        const renderBlog = () => {
-            contentArea.innerHTML = `
-                <div class="bg-white p-6 rounded-xl shadow-xl">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 flex items-center">
-                        <span class="mr-2 text-red-500">📰</span> Blog y Noticias de Inversión
-                    </h2>
-                    <div id="blog-posts-container" class="space-y-6">
-                        <p class="text-gray-500 italic">Cargando artículos...</p>
-                    </div>
-                    <button id="add-post-btn" class="mt-6 bg-red-500 text-white p-2 rounded-lg font-semibold hover:bg-red-600 transition-colors w-full sm:w-auto">Crear Nuevo Post (Admin)</button>
-                </div>
-            `;
-            document.getElementById('add-post-btn').addEventListener('click', mockAddPost);
-            fetchBlogPosts();
-        };
-        
-        // Path para data pública (blog)
-        const getPublicBlogPath = () => `artifacts/${appId}/public/data/blog_posts`;
-
-        // Mock para añadir post (simula acción de administrador)
-        const mockAddPost = async () => {
-            if (!isAuthReady) return;
-            try {
-                const mockPosts = [
-                    { title: "El Impacto de la Inflación en Mercados Emergentes", author: "Admin", summary: "Un vistazo a cómo las tasas de interés afectan a los países en desarrollo...", tag: "Mercados" },
-                    { title: "5 Lecciones de la Caída del Precio del Petróleo", author: "Admin", summary: "Análisis de la volatilidad reciente en el sector energético global y perspectivas.", tag: "Commodities" },
-                    { title: "Guía para Principiantes: Invertir en Renta Fija", author: "Admin", summary: "Desglosamos los conceptos básicos de los bonos y cómo usarlos en tu cartera.", tag: "Educación" }
-                ];
-                const postData = mockPosts[Math.floor(Math.random() * mockPosts.length)];
-                
-                // Usamos un ID basado en el tiempo para asegurar unicidad y que se ordene por defecto
-                const postId = Date.now().toString(); 
-                const postRef = doc(db, getPublicBlogPath(), postId);
-                
-                await setDoc(postRef, {
-                    ...postData,
-                    content: `Este es el contenido completo del artículo sobre ${postData.title}. El contenido aquí es solo un simulacro, pero en un entorno real, el administrador subiría el texto completo.`,
-                    createdAt: new Date().toISOString()
-                });
-
-                showAppMessage(`Post "${postData.title}" creado exitosamente.`, false);
-
-            } catch (error) {
-                console.error("Error al crear post:", error);
-                showAppMessage(`Error al crear post: ${error.message}`, true);
-            }
-        };
-
-        const fetchBlogPosts = () => {
-            if (!isAuthReady || !db) return;
-
-            const blogCollectionRef = collection(db, getPublicBlogPath());
-            // Nota: No usamos orderBy, ordenaremos en memoria si es necesario
-            onSnapshot(blogCollectionRef, (snapshot) => {
-                let posts = [];
-                snapshot.forEach(doc => {
-                    posts.push(doc.data());
-                });
-                
-                // Ordenar por fecha de creación (simulando, ya que usamos el timestamp como ID)
-                posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                
-                renderBlogPosts(posts);
-            }, (error) => {
-                console.error("Error al obtener posts del blog:", error);
-                document.getElementById('blog-posts-container').innerHTML = `<p class="text-red-500">Error al cargar el blog.</p>`;
+                    })
+                    .catch(err => {
+                        console.error("Error al obtener la vista previa:", err);
+                        imgContainer.innerHTML = `<span class="placeholder">Mercado Libre</span>`;
+                    });
             });
-        };
-        
-        const renderBlogPosts = (posts) => {
-            const container = document.getElementById('blog-posts-container');
-            container.innerHTML = ''; // Limpiar
-
-            if (posts.length === 0) {
-                container.innerHTML = `<p class="text-gray-500">Aún no hay artículos publicados.</p>`;
-                return;
-            }
-
-            posts.forEach(post => {
-                const postEl = document.createElement('div');
-                postEl.className = 'p-5 bg-gray-50 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow';
-                postEl.innerHTML = `
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-semibold uppercase px-2 py-0.5 rounded-full bg-blue-100 text-blue-800">${post.tag || 'Noticia'}</span>
-                        <span class="text-sm text-gray-500">${post.createdAt ? new Date(post.createdAt).toLocaleDateString('es-ES') : 'N/A'}</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-1">${post.title}</h3>
-                    <p class="text-gray-700 mb-3">${post.summary}</p>
-                    <p class="text-sm text-gray-500 italic">Autor: ${post.author || 'Desconocido'}</p>
-                    <button class="text-blue-600 hover:text-blue-800 font-medium mt-2">Leer más &rarr;</button>
-                `;
-                container.appendChild(postEl);
-            });
-        };
-
-        // --- EVENT LISTENERS E INICIO ---
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => loadView(e.target.getAttribute('data-view')));
         });
-
-        // Iniciar la aplicación de Firebase
-        initFirebase();
-
     </script>
 </body>
 </html>
